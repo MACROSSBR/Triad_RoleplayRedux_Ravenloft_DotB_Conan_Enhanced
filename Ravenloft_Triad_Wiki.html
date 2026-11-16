@@ -1,0 +1,2066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ravenloft Triad Wiki</title>
+<meta name="description" content="The Triad System — a Ravenloft-inspired d20 RPG: 3 base classes, 9 progressions, 9 hybrids. Occultism, shapeshifters, terrain. Full rulebook wiki.">
+<style>/* ============ RAVENLOFT TRIAD WIKI — gothic theme ============ */
+:root {
+  --bg: #0b0a10;
+  --bg2: #12101a;
+  --panel: #171422;
+  --panel2: #1d1930;
+  --line: #2c2740;
+  --ink: #d8cfc0;
+  --ink-dim: #9a917f;
+  --ink-faint: #6f6858;
+  --blood: #c0392f;
+  --blood-deep: #7e1f1a;
+  --veil: #8b7bd8;
+  --land: #8a9a5b;
+  --gold: #d9a441;
+  --bone: #e8e0d0;
+  --serif: Georgia, "Palatino Linotype", "Book Antiqua", "Times New Roman", serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(139,123,216,0.07), transparent),
+    radial-gradient(ellipse 60% 40% at 90% 110%, rgba(192,57,47,0.05), transparent),
+    radial-gradient(ellipse 50% 35% at 5% 100%, rgba(138,154,91,0.04), transparent);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 16.5px;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+a { color: var(--gold); text-decoration: none; }
+a:hover { color: var(--bone); text-decoration: underline; text-underline-offset: 3px; }
+code { font-family: "Courier New", monospace; background: var(--panel2); border: 1px solid var(--line); padding: 1px 6px; border-radius: 4px; font-size: 0.88em; color: var(--bone); }
+h1, h2, h3 { font-weight: 600; color: var(--bone); letter-spacing: 0.02em; }
+h2 { font-size: 1.45rem; margin: 2.2rem 0 0.8rem; padding-bottom: 0.35rem; border-bottom: 1px solid var(--line); font-variant: small-caps; letter-spacing: 0.06em; }
+h3 { font-size: 1.08rem; margin: 1.2rem 0 0.5rem; }
+p { margin: 0.65rem 0; }
+ul, ol { margin: 0.65rem 0 0.65rem 1.5rem; }
+li { margin: 0.3rem 0; }
+.dim { color: var(--ink-dim); }
+.small { font-size: 0.9rem; }
+.note { font-size: 0.92rem; color: var(--ink-dim); border-left: 3px solid var(--line); padding-left: 0.9rem; margin: 1rem 0; }
+.warn { color: #ff8f7a; font-weight: bold; }
+.lede { font-size: 1.12rem; color: var(--bone); font-style: italic; border-left: 3px solid var(--blood-deep); padding-left: 1rem; margin: 1rem 0 1.6rem; }
+
+/* ---------- layout ---------- */
+#layout { display: flex; min-height: 100vh; }
+#sidebar {
+  width: 290px; flex: 0 0 290px; background: var(--bg2);
+  border-right: 1px solid var(--line); padding: 1.2rem 0 3rem;
+  position: sticky; top: 0; height: 100vh; overflow-y: auto;
+}
+#sidebar::-webkit-scrollbar { width: 8px; }
+#sidebar::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+.side-head { display: flex; align-items: center; gap: 0.7rem; padding: 0 1.1rem 1rem; border-bottom: 1px solid var(--line); margin-bottom: 0.8rem; }
+.side-head .sigil { width: 46px; height: 46px; flex: 0 0 46px; }
+.side-head b { display: block; color: var(--bone); font-variant: small-caps; letter-spacing: 0.08em; font-size: 1.02rem; line-height: 1.2; }
+.side-head span { font-size: 0.72rem; color: var(--ink-faint); letter-spacing: 0.14em; text-transform: uppercase; }
+.nav-group { margin: 0.9rem 0; }
+.nav-section { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-faint); padding: 0.25rem 1.1rem; }
+#sidebar-nav a { display: block; padding: 0.28rem 1.1rem 0.28rem 1.4rem; color: var(--ink-dim); font-size: 0.93rem; border-left: 2px solid transparent; }
+#sidebar-nav a:hover { color: var(--bone); background: rgba(255,255,255,0.025); text-decoration: none; }
+#sidebar-nav a.active { color: var(--gold); border-left-color: var(--blood); background: rgba(192,57,47,0.07); }
+#sidebar-nav a.nav-hybrid { padding-left: 2.2rem; font-size: 0.88rem; }
+#main { flex: 1; min-width: 0; }
+#topbar {
+  position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: 0.8rem;
+  padding: 0.65rem 1.6rem; background: rgba(11,10,16,0.92); backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--line);
+}
+#nav-toggle { display: none; background: var(--panel); border: 1px solid var(--line); color: var(--ink); font-size: 1.05rem; padding: 0.3rem 0.7rem; border-radius: 6px; cursor: pointer; }
+.search-wrap { position: relative; flex: 1; max-width: 560px; }
+#search {
+  width: 100%; background: var(--panel); border: 1px solid var(--line); color: var(--bone);
+  font-family: var(--serif); font-size: 0.95rem; padding: 0.5rem 0.9rem; border-radius: 8px; outline: none;
+}
+#search:focus { border-color: var(--veil); }
+#search::placeholder { color: var(--ink-faint); font-style: italic; }
+#search-results {
+  display: none; position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 60;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.6); max-height: 60vh; overflow-y: auto;
+}
+#search-results.open { display: block; }
+.search-hit { display: block; padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--line); color: var(--ink); }
+.search-hit:hover { background: var(--panel2); text-decoration: none; }
+.search-hit strong { color: var(--bone); margin-right: 0.6rem; }
+.search-hit .dim { font-size: 0.78rem; }
+.search-hit .snip { display: block; font-size: 0.8rem; color: var(--ink-faint); margin-top: 2px; }
+.topbar-tag { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); white-space: nowrap; }
+#page { max-width: 980px; margin: 0 auto; padding: 2rem 2.2rem 5rem; }
+.page-head { margin-bottom: 1.4rem; }
+.page-section { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blood); }
+.page-title { font-size: 2.3rem; margin-top: 0.2rem; font-variant: small-caps; letter-spacing: 0.04em; }
+footer { border-top: 1px solid var(--line); padding: 1.6rem 2.2rem 2.4rem; color: var(--ink-faint); font-size: 0.82rem; text-align: center; font-style: italic; }
+
+/* ---------- home ---------- */
+.hero { text-align: center; padding: 1.5rem 0 0.5rem; }
+.hero .sigil { width: 130px; height: 130px; margin: 0 auto 0.8rem; display: block; filter: drop-shadow(0 0 24px rgba(139,123,216,0.25)); }
+.kicker { font-size: 0.75rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-faint); }
+.hero h1 { font-size: 3rem; font-variant: small-caps; letter-spacing: 0.06em; margin: 0.3rem 0; text-shadow: 0 0 40px rgba(192,57,47,0.3); }
+.hero-sub { color: var(--ink-dim); font-size: 1.08rem; }
+.hero-sub strong { color: var(--bone); }
+.hero-stats { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin: 1.6rem 0 0.6rem; }
+.hero-stats div { text-align: center; }
+.hero-stats b { display: block; font-size: 1.9rem; color: var(--gold); }
+.hero-stats span { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); }
+.quick-links { display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 1.4rem 0; }
+.quick-links a { background: var(--panel); border: 1px solid var(--line); padding: 0.55rem 1rem; border-radius: 8px; font-size: 0.92rem; }
+.quick-links a:hover { border-color: var(--blood); text-decoration: none; }
+
+/* ---------- triad cards ---------- */
+.triad-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.4rem 0; }
+.triad-card { background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--tc, var(--line)); border-radius: 10px; padding: 1.1rem 1.2rem; color: var(--ink); }
+.triad-card.link:hover { text-decoration: none; border-color: var(--tc); transform: translateY(-2px); transition: 0.15s; }
+.triad-card h3 { color: var(--tc); font-size: 1.3rem; font-variant: small-caps; margin-top: 0; }
+.triad-card .axis { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); margin: 0.1rem 0 0.6rem; }
+.triad-line { font-size: 0.88rem; color: var(--ink-dim); }
+.triad-motto { font-style: italic; color: var(--tc); font-size: 0.92rem; }
+
+/* ---------- tables ---------- */
+.rules-table { width: 100%; border-collapse: collapse; margin: 0.9rem 0; font-size: 0.93rem; }
+.rules-table th { text-align: left; font-variant: small-caps; letter-spacing: 0.05em; color: var(--gold); border-bottom: 2px solid var(--line); padding: 0.5rem 0.7rem; font-size: 0.88rem; }
+.rules-table td { border-bottom: 1px solid var(--line); padding: 0.5rem 0.7rem; vertical-align: top; }
+.rules-table tr:hover td { background: rgba(255,255,255,0.02); }
+.stat-table .totals td { font-size: 1.35rem; color: var(--bone); font-weight: bold; text-align: center; }
+.stat-table th { text-align: center; }
+.family { margin: 1.8rem 0; border-left: 3px solid var(--tc); padding-left: 1.1rem; }
+.family h2 { border: none; margin-top: 0; }
+.family h2 a { color: var(--tc); }
+.ability-index td { font-size: 0.86rem; }
+.glossary td:first-child { white-space: nowrap; }
+
+/* ---------- chips ---------- */
+.chip { display: inline-block; background: var(--panel2); border: 1px solid var(--line); border-radius: 20px; padding: 0.12rem 0.7rem; font-size: 0.8rem; margin: 0.15rem 0.2rem 0.15rem 0; color: var(--ink); }
+.chip.delta { color: var(--gold); border-color: rgba(217,164,65,0.4); }
+.chip.cost { color: var(--bone); }
+.chip.cd { color: var(--veil); }
+.chip.range { color: var(--ink-dim); }
+.chip.attr { color: var(--land); }
+.triad-badge { background: transparent; border-color: var(--tc); color: var(--tc); font-variant: small-caps; letter-spacing: 0.06em; }
+.kind-badge { color: var(--ink-dim); }
+
+/* ---------- class pages ---------- */
+.class-hero { border-left: 4px solid var(--tc); padding: 0.4rem 0 0.4rem 1.2rem; margin-bottom: 1.2rem; }
+.class-hero h1 { font-size: 2.6rem; font-variant: small-caps; color: var(--bone); margin: 0.3rem 0 0.1rem; }
+.class-badges { margin-bottom: 0.2rem; }
+.epithet { font-style: italic; color: var(--tc); font-size: 1.1rem; }
+.role-line { color: var(--ink-dim); font-size: 0.92rem; }
+.crossing-box { background: linear-gradient(90deg, rgba(192,57,47,0.08), transparent); border: 1px solid var(--tc); border-radius: 10px; padding: 0.9rem 1.1rem; margin: 1rem 0; font-size: 0.95rem; }
+.trait-card { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--tc); border-radius: 8px; padding: 0.9rem 1.1rem; }
+.ability { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.2rem; margin: 0.9rem 0; }
+.ability.special { border-color: rgba(139,123,216,0.45); background: linear-gradient(135deg, rgba(139,123,216,0.06), var(--panel)); }
+.ability-head { display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; }
+.ability-head h3 { margin: 0; font-size: 1.15rem; }
+.rank { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(217,164,65,0.4); padding: 0.1rem 0.5rem; border-radius: 4px; }
+.atype { margin-left: auto; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); }
+.ability-meta { margin: 0.5rem 0; }
+.horror-line { color: #e0705f; font-size: 0.9rem; }
+.flavor { font-style: italic; color: var(--ink-faint); font-size: 0.9rem; }
+.lore p { margin: 0.9rem 0; }
+.dropcap::first-letter { font-size: 3.1rem; float: left; line-height: 0.85; padding: 0.08em 0.12em 0 0; color: var(--blood); font-weight: bold; }
+.lore-quote { border-left: 3px solid var(--blood-deep); margin: 1.6rem 0; padding: 0.6rem 0 0.6rem 1.2rem; font-style: italic; color: var(--bone); font-size: 1.05rem; }
+.lore-quote cite { display: block; margin-top: 0.5rem; font-size: 0.85rem; color: var(--ink-faint); font-style: normal; }
+.mini-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.9rem; margin: 1rem 0; }
+.mini-card { background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--tc); border-radius: 8px; padding: 0.8rem 1rem; color: var(--ink); }
+.mini-card:hover { text-decoration: none; border-color: var(--tc); }
+.mini-card h3 { margin: 0 0 0.2rem; color: var(--tc); }
+.mini-card p { font-size: 0.85rem; margin: 0.2rem 0; }
+
+/* ---------- rules blocks ---------- */
+.attr-block { border-left: 3px solid var(--ac); background: var(--panel); border-radius: 8px; padding: 0.8rem 1.1rem; margin: 0.8rem 0; }
+.attr-block h3 { color: var(--ac); margin: 0 0 0.2rem; }
+.skill-chips { margin-top: 0.4rem; }
+.track-block { border: 1px solid var(--line); border-top: 3px solid var(--tc); border-radius: 10px; padding: 1rem 1.3rem; margin: 1.4rem 0; background: var(--panel); }
+.track-block h2 { border: none; margin: 0 0 0.3rem; color: var(--tc); }
+.track-axis { font-size: 0.8rem; color: var(--ink-faint); font-variant: normal; letter-spacing: 0.1em; text-transform: uppercase; margin-left: 0.6rem; }
+.track-triad { font-style: italic; color: var(--ink-dim); }
+.steps li { margin: 0.5rem 0; }
+.steps li::marker { color: var(--blood); font-weight: bold; }
+
+/* ---------- forge ---------- */
+.forge-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+.forge-col h2 { margin-top: 1.4rem; }
+.field { margin: 0.7rem 0; }
+.field label { display: block; font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 0.25rem; }
+select, input[type="text"], input[type="number"] {
+  width: 100%; background: var(--panel); border: 1px solid var(--line); color: var(--bone);
+  font-family: var(--serif); font-size: 0.95rem; padding: 0.45rem 0.7rem; border-radius: 7px; outline: none;
+}
+select:focus, input:focus { border-color: var(--veil); }
+select:disabled { opacity: 0.45; }
+input[type="range"] { width: 100%; accent-color: var(--blood); }
+.budget { font-size: 0.85rem; color: var(--land); font-variant: normal; letter-spacing: 0; margin-left: 0.5rem; }
+.budget.over { color: #ff8f7a; }
+.stepper-row { display: flex; align-items: center; gap: 0.5rem; padding: 0.22rem 0; border-bottom: 1px dashed rgba(44,39,64,0.6); font-size: 0.92rem; }
+.stepper-row label { flex: 1; min-width: 0; }
+.step { width: 26px; height: 26px; background: var(--panel2); border: 1px solid var(--line); color: var(--bone); border-radius: 6px; cursor: pointer; font-size: 1rem; line-height: 1; }
+.step:hover { border-color: var(--gold); }
+.step-val { width: 30px; text-align: center; color: var(--bone); font-weight: bold; }
+.step-cost { width: 48px; text-align: right; color: var(--ink-faint); font-size: 0.8rem; }
+.step-eff { width: 42px; text-align: right; color: var(--land); font-size: 0.85rem; }
+.bg-tag { color: var(--gold); font-size: 0.72rem; }
+.skill-steppers { max-height: 430px; overflow-y: auto; padding-right: 6px; }
+.skill-steppers::-webkit-scrollbar { width: 8px; }
+.skill-steppers::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+.sheet-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.7rem; margin: 0.9rem 0; }
+.sheet-stat { background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--sc); border-radius: 8px; text-align: center; padding: 0.6rem 0.3rem; }
+.sheet-stat b { display: block; font-size: 1.5rem; color: var(--bone); }
+.sheet-stat span { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
+.sheet-pools { margin: 0.6rem 0; }
+.unlocks { list-style: none; margin-left: 0; }
+.unlocks li { border-bottom: 1px dashed rgba(44,39,64,0.6); padding: 0.25rem 0; }
+.eff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.15rem 1rem; font-size: 0.88rem; margin: 0.6rem 0 1rem; }
+.eff-grid div { display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(44,39,64,0.6); padding: 0.15rem 0; }
+.eff-grid b { color: var(--land); }
+.crossing-note { color: #e0705f; }
+.btn { background: var(--panel2); border: 1px solid var(--line); color: var(--bone); font-family: var(--serif); font-size: 0.92rem; padding: 0.5rem 1.1rem; border-radius: 8px; cursor: pointer; }
+.btn:hover { border-color: var(--blood); color: var(--gold); }
+.btn.big { font-size: 1.05rem; padding: 0.6rem 1.6rem; background: var(--blood-deep); border-color: var(--blood); }
+.btn.big:hover { background: var(--blood); color: var(--bone); }
+.btn.tiny { font-size: 0.78rem; padding: 0.25rem 0.6rem; }
+.btn.mode.active { border-color: var(--veil); color: var(--veil); }
+
+/* ---------- compare ---------- */
+.compare-controls { display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center; margin: 1rem 0 1.4rem; }
+.compare-controls select { width: auto; flex: 1; min-width: 180px; }
+.compare-controls label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--ink-dim); }
+.compare-controls input[type="range"] { width: 120px; }
+.compare-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; align-items: start; }
+.compare-col { background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--tc); border-radius: 10px; padding: 1rem 1.1rem; }
+.compare-col h2 { border: none; margin: 0 0 0.2rem; font-size: 1.3rem; }
+.compare-col h2 a { color: var(--tc); }
+.compare-col h3 { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin: 0.9rem 0 0.25rem; }
+.bar { position: relative; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; height: 24px; overflow: hidden; }
+.bar-fill { height: 100%; opacity: 0.55; }
+.bar span { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; color: var(--bone); font-weight: bold; }
+.compare-minis { margin: 0.7rem 0; }
+
+/* ---------- dice ---------- */
+.dice-panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 1.2rem 1.4rem; margin: 1rem 0; }
+.dice-controls { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.dice-controls label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--ink-dim); }
+.dice-controls input[type="number"] { width: 80px; }
+.dice-modes { display: flex; gap: 0.4rem; }
+.dice-expr-row { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; margin: 1rem 0; }
+.dice-expr-row input[type="text"] { width: 220px; }
+.dice-log { margin-top: 0.8rem; }
+.dice-row { display: flex; gap: 1rem; align-items: baseline; padding: 0.45rem 0.6rem; border-bottom: 1px dashed rgba(44,39,64,0.6); font-size: 0.92rem; flex-wrap: wrap; }
+.dice-row.latest { background: rgba(217,164,65,0.05); border-radius: 6px; }
+.dice-row.crit { background: rgba(138,154,91,0.12); }
+.dice-row.fumble { background: rgba(192,57,47,0.12); }
+.dice-row.err { color: #ff8f7a; }
+.dice-expr { color: var(--ink-dim); min-width: 110px; }
+.dice-kept { color: var(--ink-faint); font-family: "Courier New", monospace; font-size: 0.85rem; }
+.dice-total { font-size: 1.3rem; font-weight: bold; color: var(--bone); }
+.dice-crit { font-size: 0.72rem; letter-spacing: 0.14em; color: var(--gold); }
+.dice-row.crit .dice-crit { color: var(--land); }
+.dice-row.fumble .dice-crit { color: var(--blood); }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1100px) {
+  .forge-grid { grid-template-columns: 1fr; }
+  .compare-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 860px) {
+  #sidebar { position: fixed; left: 0; top: 0; z-index: 80; transform: translateX(-100%); transition: transform 0.2s; box-shadow: 20px 0 60px rgba(0,0,0,0.5); }
+  body.nav-open #sidebar { transform: translateX(0); }
+  #nav-toggle { display: block; }
+  #page { padding: 1.4rem 1.1rem 4rem; }
+  .page-title { font-size: 1.8rem; }
+  .hero h1 { font-size: 2.1rem; }
+  .sheet-stats { grid-template-columns: repeat(2, 1fr); }
+  .topbar-tag { display: none; }
+}
+</style>
+</head>
+<body>
+<div id="layout">
+  <aside id="sidebar">
+    <div class="side-head">
+      <svg viewBox="0 0 120 120" class="sigil" aria-hidden="true">
+  <defs><radialGradient id="sg2" cx="50%" cy="45%" r="60%">
+    <stop offset="0%" stop-color="#2a2438"/><stop offset="100%" stop-color="#0b0a10"/>
+  </radialGradient></defs>
+  <circle cx="60" cy="60" r="56" fill="url(#sg2)" stroke="#4a4258" stroke-width="1.5"/>
+  <path d="M60 18 L98 86 L22 86 Z" fill="none" stroke="#6f6486" stroke-width="1.5"/>
+  <circle cx="60" cy="18" r="7" fill="none" stroke="#8b7bd8" stroke-width="1.5"/>
+  <circle cx="60" cy="18" r="2.4" fill="#8b7bd8"/>
+  <path d="M94 82 a7 7 0 1 0 8 8 a5.4 5.4 0 1 1 -8 -8" fill="#c0392f"/>
+  <rect x="17" y="80" width="10" height="13" rx="2" fill="none" stroke="#8a9a5b" stroke-width="1.5"/>
+  <line x1="22" y1="83" x2="22" y2="90" stroke="#8a9a5b" stroke-width="1.2"/>
+  <circle cx="60" cy="63" r="3" fill="#d8cfc0" opacity="0.85"/>
+  <path d="M60 40 L60 60 M48 74 L57 65 M72 74 L63 65" stroke="#4a4258" stroke-width="1"/>
+</svg>
+      <div><b>Ravenloft<br>Triad Wiki</b><span>The Veil · Blood · Land</span></div>
+    </div>
+    <nav id="sidebar-nav"></nav>
+  </aside>
+  <div id="main">
+    <div id="topbar">
+      <button id="nav-toggle" aria-label="Toggle navigation">☰</button>
+      <div class="search-wrap">
+        <input id="search" type="text" placeholder="Search the wiki… (classes, abilities, rules, lore)" autocomplete="off">
+        <div id="search-results"></div>
+      </div>
+      <span class="topbar-tag">d20 · Gothic Horror · 21 Classes</span>
+    </div>
+    <main id="page"></main>
+    <footer>The Triad System — an original adaptation inspired by Ravenloft &amp; Dungeons &amp; Dragons, for Conan Exiles · Tot! Roleplay Redux.<br>Values marked ⚖ are playtest-calibratable. The Mists keep what they take.</footer>
+  </div>
+</div>
+<script>/* ============================================================
+   RAVENLOFT — THE TRIAD SYSTEM · CLASS CATALOG
+   3 base classes × 3 progressions × 9 hybrids = 21 entries
+   All values marked "playtest" are calibratable per project plan.
+   ============================================================ */
+
+const TRIAD = {
+  veil: {
+    id: "veil", name: "The Veil", axis: "Occultism", color: "#8b7bd8",
+    base: "occultist", resource: "Mana", horror: "Sanity",
+    motto: "What is known can be unmade.",
+    blurb: "Rites, pacts and forbidden knowledge. The Veil is the thin membrane between the living world and what waits behind it. Those who work it pay in Sanity."
+  },
+  blood: {
+    id: "blood", name: "The Blood", axis: "Shapeshifters", color: "#c0392f",
+    base: "skinwalker", resource: "Stamina", horror: "Corruption",
+    motto: "What is lived can be worn.",
+    blurb: "Cursed bloodlines and borrowed shapes. The Blood remembers every form it has ever taken — and every form takes a piece of the taker. Its workers pay in Corruption."
+  },
+  land: {
+    id: "land", name: "The Land", axis: "Terrain", color: "#8a9a5b",
+    base: "landsworn", resource: "Stamina", horror: "Fear",
+    motto: "What is owned can be reclaimed.",
+    blurb: "Soil, stone, road and mist. The Land of the Domains belongs to the Darklords — the Landsworn dispute that claim, one hearth, one grave, one border at a time. They master Fear."
+  }
+};
+
+const CHASSIS = { hp: 100, mana: 50, stamina: 75, ac: 10, dr: 1, acc: 1, dodge: 0, spelldef: 0 };
+
+const CLASSES = [
+/* ============================ THE VEIL ============================ */
+{
+  id: "occultist", name: "Occultist", kind: "base", triad: "veil",
+  epithet: "Bearer of the Pallid Lantern", role: "Ritual caster · controller",
+  primary: "mana", attributes: ["Fortitude", "Charisma"],
+  skills: ["Deciphering", "Willpower", "Alchemy"],
+  armor: "Cloth",
+  weapons: [
+    { name: "Athame (ritual dagger)", cat: "One-handed", dmg: "1d4 + Strength", tags: "Ritual focus" },
+    { name: "Iron-shod Quarterstaff", cat: "Two-handed", dmg: "2d3 + Strength", tags: "—" },
+    { name: "Censer & Chain", cat: "One-handed", dmg: "1d4 + Strength", tags: "Ritual focus · smoke" }
+  ],
+  stats: { hp: 0, mana: 30, stamina: -15, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "Veil-Sight", text: "You sense active magic, spirits and undead within 10 tiles (Perception DC 13, 1 AP). Your Magic Bolt costs 3 Mana instead of 4." },
+  abilities: [
+    { rank: "Initiate", name: "Witchlight", type: "Action", cost: "1 AP · 3 Mana", cd: 2, range: "10 tiles",
+      effect: "Conjure a cold orb of light for 3 turns. It reveals hidden and stealthed creatures within 5 tiles of it. Allies who can see it reduce Fear by 5 (once per casting).",
+      horror: null, flavor: "The lantern burns without oil, and the dark leans away from it." },
+    { rank: "Adept", name: "Hex", type: "Action", cost: "1 AP · 6 Mana", cd: 2, range: "10 tiles",
+      effect: "Roll vs Spell Defense. On a hit, the target suffers −2 Accuracy for 3 turns as misfortune clings to it.",
+      horror: null, flavor: "A knot tied in the air; a thread pulled from someone's luck." },
+    { rank: "Master", name: "The Unveiling", type: "Special", cost: "1 SP · 12 Mana", cd: 4, range: "10 tiles",
+      effect: "Force every shapeshifted, disguised or invisible creature within range into its true form for 3 turns. Revealed enemies gain +10 Fear.",
+      horror: "You lose 5 Sanity — you glimpse what stands behind the forms.", flavor: "For one heartbeat, the world is seen without its skin." }
+  ],
+  lore: [
+    "In the Domains of Dread, knowledge is not power — it is debt. The Occultists of the Pallid Lantern learn this first: every page turned in a forbidden tome is a page turned in the reader. They are hedge-mages, defrocked priests, village wise-women and disgraced scholars who have accepted that the Mists hide a second world, and that someone must read it.",
+    "The Order takes its name from the lantern each initiate carries: a pale flame that burns nothing, lit from a candle held at a deathbed. It reveals what pretends to be ordinary. Occultists are feared by the very villagers they protect — in Barovia, a person who speaks comfortably with the dead is one accusation away from the pyre. They work anyway. The Veil is thinning, and no one else is watching."
+  ],
+  quote: { text: "I do not open doors. I only read what is written on them.", by: "Mother Ilvane, Lantern-Keeper of Vallaki" }
+},
+{
+  id: "inquisitor", name: "Inquisitor", kind: "path", triad: "veil", parent: "occultist",
+  epithet: "The Conviction", role: "Anti-monster striker · judge",
+  primary: "mana", attributes: ["Fortitude", "Body"],
+  skills: ["Willpower", "Intimidation", "Binding"],
+  armor: "Light or Medium",
+  weapons: [
+    { name: "Blessed Mace", cat: "One-handed", dmg: "1d4 + Strength", tags: "Blessed" },
+    { name: "Stake & Hammer", cat: "One-handed", dmg: "1d4 + Strength", tags: "Blessed · vs undead" },
+    { name: "Judgment Warhammer", cat: "Two-handed", dmg: "2d3 + Strength", tags: "Blessed" }
+  ],
+  stats: { hp: 10, mana: 10, stamina: 0, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "Conviction", text: "Whenever you would gain Fear, gain 5 less (minimum 0). You have +2 Willpower against possession and fear effects." },
+  abilities: [
+    { rank: "Initiate", name: "Denounce", type: "Action", cost: "1 AP · 4 Mana", cd: 2, range: "10 tiles",
+      effect: "Roll vs Spell Defense. Undead, lycanthropes and possessed targets: −2 to all rolls and cannot shapeshift for 2 turns. Other targets: −1 Accuracy for 2 turns.",
+      horror: null, flavor: "The word is older than the creature. It flinches." },
+    { rank: "Adept", name: "Brand of Judgment", type: "Action", cost: "1 AP · 6 Mana · 2 Stamina", cd: 3, range: "Melee",
+      effect: "Melee strike: 1d6 holy damage (1d4 vs the purely mundane). The branded target is marked for 3 turns: allies gain +1 Accuracy against it.",
+      horror: null, flavor: "The mark smoulders through cloth and hide alike." },
+    { rank: "Master", name: "Sentence", type: "Special", cost: "1 SP · 10 Mana", cd: 4, range: "10 tiles",
+      effect: "Pass judgment on a creature that harmed an ally this scene: 2d6 holy damage vs Spell Defense (+1d6 if undead or lycanthrope).",
+      horror: "You gain +5 Fear — unless the target is a true horror, in which case your conviction holds. Sentencing an innocent: +5 Corruption.", flavor: "No court, no scaffold. Only the weight of the word." }
+  ],
+  lore: [
+    "The Inquisitors began as the Lantern's prosecutors — the ones sent to decide whether the thing in the barn was a cursed child or a wearing-skin. They carry no holy symbol of any forgiving god; the gods do not answer in the Mists. What answers is Conviction: a discipline of will so absolute that monsters feel it as heat.",
+    "An Inquisitor's tragedy is arithmetic. Every denunciation saves a village and condemns someone, and the ledger is never clean. The Order keeps a Black Register of every sentence passed, and each Inquisitor must read their own entries aloud once a year. Those who stop reading are the ones the Order hunts first."
+  ],
+  quote: { text: "Mercy is a door. I have seen what uses doors.", by: "Inquisitor Radu Vex, Black Register, entry 112" }
+},
+{
+  id: "scholar", name: "Scholar", kind: "path", triad: "veil", parent: "occultist",
+  epithet: "The Forbidden Method", role: "Ritualist · knowledge engine",
+  primary: "mana", attributes: ["Fortitude", "Agility"],
+  skills: ["Deciphering", "Alchemy", "Eavesdropping"],
+  armor: "Cloth",
+  weapons: [
+    { name: "Athame", cat: "One-handed", dmg: "1d4 + Strength", tags: "Ritual focus" },
+    { name: "Tome-Chain", cat: "One-handed", dmg: "1d4 + Strength", tags: "Improvised · binding" },
+    { name: "Walking Staff", cat: "Two-handed", dmg: "2d3 + Strength", tags: "—" }
+  ],
+  stats: { hp: 0, mana: 20, stamina: -5, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "Forbidden Method", text: "+2 Deciphering and +2 Alchemy. You can read and cast rituals from tomes that are gibberish — or lethal — to other readers." },
+  abilities: [
+    { rank: "Initiate", name: "Ritual Preparation", type: "Action", cost: "1 AP · 5 Mana", cd: 3, range: "Self",
+      effect: "Chalk, salt and a whispered paradigm. Your next spell this scene gains +2 to its attack roll or +2 to its effect DC (choose when cast).",
+      horror: null, flavor: "Magic is a language. Scholars decline it correctly." },
+    { rank: "Adept", name: "Athame Cut", type: "Action", cost: "1 AP · 2 Stamina", cd: 0, range: "Melee",
+      effect: "A precise dagger strike: 1d4 + Strength. On a hit, the opened vein feeds the working — you regain 4 Mana.",
+      horror: "+1 Corruption per use. Blood is a currency the Dark Powers accept.", flavor: "The cut is always shallow. The price is always deeper." },
+    { rank: "Master", name: "Forbidden Working", type: "Special", cost: "1 SP · 15 Mana", cd: 4, range: "10 tiles",
+      effect: "Speak a word from the back of the book: 2d8 force damage vs Spell Defense, or banish one lesser spirit outright.",
+      horror: "You lose 5 Sanity. The word speaks you back.", flavor: "Some sentences read the reader." }
+  ],
+  lore: [
+    "Where the Inquisitor burns the book, the Scholar copies it. The Scholars of the Pallid Lantern are the Order's memory: cataloguers of curses, genealogists of monsters, chemists of silver and salt. They believe every horror has a grammar, and that grammar can be conjugated backward — a curse read in reverse is a cure.",
+    "They are usually right, and it usually costs them. A Scholar's mind is a library with one door left open, and things drift in. The eldest Scholars annotate their own margins in a second handwriting they do not remember learning. The Order calls this 'the correspondence' and does not discuss it at dinner."
+  ],
+  quote: { text: "Footnote forty-one: if you are reading this aloud, stop.", by: "Marginalia in the Vallaki Codex" }
+},
+{
+  id: "medium", name: "Medium", kind: "path", triad: "veil", parent: "occultist",
+  epithet: "The Listening", role: "Spirit speaker · support",
+  primary: "mana", attributes: ["Charisma", "Fortitude"],
+  skills: ["Sense Motive", "Perception", "Willpower"],
+  armor: "Cloth",
+  weapons: [
+    { name: "Silver Dagger", cat: "One-handed", dmg: "1d4 + Strength", tags: "Silver" },
+    { name: "Spirit Bell & Censer", cat: "One-handed", dmg: "1d4 + Strength", tags: "Ritual focus" },
+    { name: "Rowan Staff", cat: "Two-handed", dmg: "2d3 + Strength", tags: "Ward" }
+  ],
+  stats: { hp: 0, mana: 15, stamina: 5, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "The Listening", text: "+2 Sense Motive and +2 Perception against spirits and the undead. Once per scene you may ask a corpse or spirit one yes/no question (the GM answers truthfully, as the dead understand truth)." },
+  abilities: [
+    { rank: "Initiate", name: "Séance Whisper", type: "Action", cost: "1 AP · 4 Mana", cd: 2, range: "10 tiles",
+      effect: "A borrowed voice comforts or guides one ally: they gain +2 to their next roll, or reduce Fear by 10 (choose).",
+      horror: null, flavor: "The dead are kinder than the living. They have less to lose." },
+    { rank: "Adept", name: "Spirit Veil", type: "Action", cost: "1 AP · 6 Mana", cd: 3, range: "Self",
+      effect: "Step half into the grey for 1 turn: +3 Dodge Defense and +3 Spell Defense, but you cannot attack while veiled.",
+      horror: null, flavor: "For a moment, the sword passes through a memory of you." },
+    { rank: "Master", name: "Call the Departed", type: "Special", cost: "1 SP · 12 Mana", cd: 4, range: "10 tiles",
+      effect: "Summon one bound spirit for 3 turns. It either scouts (invisible, reports what it sees) or harries one enemy (−1 Accuracy, +10 Fear once).",
+      horror: "You lose 3 Sanity. The departed linger after the working ends.", flavor: "Everyone in Barovia knows someone on the other side." }
+  ],
+  lore: [
+    "The Mediums do not study the Veil; they listen at it. In a land where every family has an empty chair, the gift of hearing the occupant is both mercy and curse. Mediums sit at deathbeds and séances, translate last words, and occasionally ask the murdered to point.",
+    "The Order prizes them and worries about them in equal measure. A Medium's own voice grows quieter year by year, as if the borrowed voices take up room. The eldest are called the Choir-Bound: they speak rarely, and when they do, several people answer."
+  ],
+  quote: { text: "He says he forgives you. He is lying. The dead cannot lie — so it is not him.", by: "Medium Ana Dragomir, at the séance of the Broken Mill" }
+},
+/* hybrids born of the Veil */
+{
+  id: "sanctifier", name: "Sanctifier", kind: "hybrid", triad: "veil", parent: "inquisitor", partner: "land",
+  epithet: "Inquisitor × Landsworn", role: "Zone controller · consecrator",
+  primary: "mana", attributes: ["Fortitude", "Body"],
+  skills: ["Willpower", "Binding", "Perception"],
+  armor: "Medium",
+  weapons: [
+    { name: "Blessed Warhammer", cat: "Two-handed", dmg: "2d3 + Strength", tags: "Blessed" },
+    { name: "Boundary Nails", cat: "Thrown", dmg: "1d4 + Strength", tags: "Cold iron · ward" },
+    { name: "Censer-Mace", cat: "One-handed", dmg: "1d4 + Strength", tags: "Blessed · ritual focus" }
+  ],
+  stats: { hp: 10, mana: 5, stamina: 0, ac: 1, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "Consecrated Step", text: "Gain the Landsworn trait Terrain Bond (choose a home terrain: Forest, Ruins & Graves, or Roads & Mists). Your wards and sentences function as terrain features." },
+  abilities: [
+    { rank: "Initiate", name: "Hallowed Ground", type: "Action", cost: "1 AP · 6 Mana · 3 Stamina", cd: 3, range: "5-tile radius",
+      effect: "Consecrate the ground for 3 turns: undead and lycanthropes inside suffer −2 to all rolls; allies inside reduce Fear by 10 (once).",
+      horror: null, flavor: "The soil remembers being a churchyard." },
+    { rank: "Adept", name: "Boundary Nails", type: "Action", cost: "1 AP · 5 Stamina · 4 Mana", cd: 3, range: "5 tiles",
+      effect: "Drive a perimeter of iron nails. Shapeshifters crossing it take 1d6 damage and revert to true form (cannot shift for 1 turn); spirits cannot cross for 2 turns.",
+      horror: null, flavor: "A border is an argument. Iron argues well." },
+    { rank: "Master", name: "The Field of Judgment", type: "Special", cost: "1 SP · 12 Mana", cd: 4, range: "10-tile radius",
+      effect: "For 3 turns the ground itself passes sentence: enemies inside gain +15 Fear; undead inside take 1d6 holy damage at the start of each of their turns.",
+      horror: "You gain +5 Fear. Judgment, at this scale, is heavy to hold.", flavor: "Every furrow a verdict; every stone a witness." }
+  ],
+  lore: [
+    "The first Sanctifier was an Inquisitor who ran out of pyres. During the Gallows Winter she found that a condemned field — soil where the unjust were buried — would hold a consecration longer than any church. She stopped burning monsters and started fencing them out.",
+    "Sanctifiers walk the boundaries of villages with a bag of iron nails and a censer that never cools. They are the reason some doors in Barovia have three thresholds. The Landsworn call them cousins; the Inquisitors call them necessary; the things outside the nails call them nothing, because they cannot enter to speak."
+  ],
+  quote: { text: "I cannot save the world. I can save this acre, and the acre is where the children are.", by: "Sanctifier Mirela of the Three Thresholds" }
+},
+{
+  id: "chimerist", name: "Chimerist", kind: "hybrid", triad: "veil", parent: "scholar", partner: "blood",
+  epithet: "Scholar × Skinwalker", role: "Self-transmuter · alchemist",
+  primary: "mana", attributes: ["Fortitude", "Agility"],
+  skills: ["Alchemy", "Deciphering", "Athletics"],
+  armor: "Cloth or Light",
+  weapons: [
+    { name: "Bone Athame", cat: "One-handed", dmg: "1d4 + Strength", tags: "Ritual focus" },
+    { name: "Grafting Claws", cat: "Natural", dmg: "1d4 + Strength", tags: "Cannot be disarmed" },
+    { name: "Mutagen Syringe", cat: "One-handed", dmg: "1d4 + Strength", tags: "Alchemical" }
+  ],
+  stats: { hp: 10, mana: 5, stamina: 10, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "The Examined Beast", text: "Gain the Skinwalker trait The Beast Within (Shift: 1 AP, 5 Stamina — natural weapons 1d4 + Strength, +1 DR for 3 turns; +1 Corruption per Shift). Your grafts and mutagens count as shifting for abilities that care." },
+  abilities: [
+    { rank: "Initiate", name: "Mutagen", type: "Action", cost: "1 AP · 5 Mana · 3 Stamina", cd: 3, range: "Self",
+      effect: "Brew and inject: +2 Body or +2 Agility (choose) for 3 turns. When it ends, −1 to that attribute for 1 turn.",
+      horror: "+1 Corruption. The formula improves you the way rust improves a hinge.", flavor: "The needle is glass. The patience is not." },
+    { rank: "Adept", name: "Grafted Aspect", type: "Action", cost: "1 AP · 6 Mana · 5 Stamina", cd: 3, range: "Self",
+      effect: "Attach a prepared beast-graft until your next safe rest: claws (1d4 + Strength), carapace (+1 DR), or predator eyes (+2 Perception). Maximum 2 grafts at once.",
+      horror: "+2 Corruption per graft. The parts dream of their original owners.", flavor: "Anatomy is a first draft." },
+    { rank: "Master", name: "The Masterwork", type: "Special", cost: "1 SP · 12 Mana · 8 Stamina", cd: 4, range: "Self",
+      effect: "Become your own thesis for 3 turns: +2 DR, natural attacks deal 2d3 + Strength, +2 Body. Witnesses gain +10 Fear.",
+      horror: "+4 Corruption and −3 Sanity. You understand the monster now, from inside.", flavor: "Peer review is going to be difficult." }
+  ],
+  lore: [
+    "The Chimerists began as Scholars who asked the forbidden follow-up question: if a curse can rewrite a body, can a method? They study lycanthropy the way a surgeon studies a knot — not to condemn it, but to tie it deliberately. Their laboratories smell of formaldehyde, silver polish and wet fur.",
+    "A Chimerist's body is a manuscript under revision. Grafts are footnotes; mutagens, marginalia; the Masterwork, a published edition. The Order requires each Chimerist to keep a mirror covered in their lab. Not for vanity — because eventually the reflection starts taking notes of its own."
+  ],
+  quote: { text: "The wolf is not a curse. The wolf is a citation.", by: "Chimerist Vasily Enq, lab journal, final page" }
+},
+{
+  id: "gravebound", name: "Gravebound", kind: "hybrid", triad: "veil", parent: "medium", partner: "land",
+  epithet: "Medium × Landsworn", role: "Necro-terrainist · anchor",
+  primary: "mana", attributes: ["Charisma", "Fortitude"],
+  skills: ["Sense Motive", "Binding", "Perception"],
+  armor: "Cloth or Light",
+  weapons: [
+    { name: "Grave Spade", cat: "Two-handed", dmg: "2d3 + Strength", tags: "Cold iron" },
+    { name: "Barrow Silver Dagger", cat: "One-handed", dmg: "1d4 + Strength", tags: "Silver" },
+    { name: "Coffin-Nail Censer", cat: "One-handed", dmg: "1d4 + Strength", tags: "Ritual focus" }
+  ],
+  stats: { hp: 10, mana: 10, stamina: 0, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "The Listening Ground", text: "Gain the Landsworn trait Terrain Bond (home terrain: Ruins & Graves recommended). In any burial ground you automatically know how many dead lie within 30 tiles, and whether any are restless." },
+  abilities: [
+    { rank: "Initiate", name: "Barrow Choir", type: "Action", cost: "1 AP · 6 Mana", cd: 3, range: "5-tile radius",
+      effect: "Wake the buried voice of the ground: enemies inside gain +10 Fear and −1 Accuracy (whispers) for 2 turns. You learn one true fact about whoever lies beneath.",
+      horror: null, flavor: "The dead do not rise. They merely clear their throats." },
+    { rank: "Adept", name: "Grave-Anchor", type: "Action", cost: "1 AP · 5 Mana · 3 Stamina", cd: 3, range: "10 tiles",
+      effect: "Bind a spirit or undead to its ground for 2 turns (it cannot move; contest vs Spell Defense) — or anchor a dying ally: an ally at 0 HP within range is automatically stabilized.",
+      horror: null, flavor: "Everything belongs somewhere. You enforce it." },
+    { rank: "Master", name: "The Open Barrow", type: "Special", cost: "1 SP · 12 Mana", cd: 4, range: "5 tiles",
+      effect: "Raise one barrow-dead servant for 3 turns (20 HP, 1d6 strike, acts on your turn for 1 AP). It must be raised from actual burial ground.",
+      horror: "−5 Sanity, +2 Corruption. The servant remembers being someone.", flavor: "You ask permission first. That is the difference. That has to be the difference." }
+  ],
+  lore: [
+    "Every domain is a graveyard with weather. The Gravebound are Mediums who stopped calling the dead and started tending them — binding the murdered to their plots so they cannot be raised against the living, and waking the ancient dead only when the newer horrors come knocking.",
+    "They keep the barrows of Barovia like parish priests keep churches: swept, named, and armed. A Gravebound's greatest fear is an empty grave — not because something rose, but because something was taken. The Dark Powers collect the dead like coins, and the Gravebound are the only ones auditing the purse."
+  ],
+  quote: { text: "Sleep. I have the watch. I have had the watch for two hundred years.", by: "Gravebound Ostrov, Keeper of the Drowned Rows" }
+},
+/* ============================ THE BLOOD ============================ */
+{
+  id: "skinwalker", name: "Skinwalker", kind: "base", triad: "blood",
+  epithet: "Kin of the Red Moon", role: "Shapeshifter · skirmisher",
+  primary: "stamina", attributes: ["Agility", "Body"],
+  skills: ["Athletics", "Stealth", "Escape Artist"],
+  armor: "Light (hide scraps)",
+  weapons: [
+    { name: "Claws & Fangs", cat: "Natural", dmg: "1d4 + Strength", tags: "Cannot be disarmed" },
+    { name: "Stone Handaxe", cat: "One-handed", dmg: "1d4 + Strength", tags: "—" },
+    { name: "Hunting Spear", cat: "One-handed", dmg: "1d4 + Strength", tags: "Throwable" }
+  ],
+  stats: { hp: 20, mana: -20, stamina: 25, ac: 0, dr: 1, acc: 0, dodge: 0 },
+  trait: { name: "The Beast Within", text: "Shift as 1 AP + 5 Stamina: natural weapons (1d4 + Strength) and +1 DR for 3 turns. Each Shift adds +1 Corruption. You always know the direction of the nearest lycanthrope." },
+  abilities: [
+    { rank: "Initiate", name: "Feral Rush", type: "Action", cost: "1 AP · 4 Stamina", cd: 2, range: "5 tiles + melee",
+      effect: "Lope up to 5 tiles and strike: 1d4 + Strength. If you are shifted, the strike deals +2 damage.",
+      horror: null, flavor: "The distance closes like a wound." },
+    { rank: "Adept", name: "Blood Scent", type: "Action", cost: "1 AP · 2 Stamina", cd: 0, range: "10 tiles",
+      effect: "Mark one prey: you gain +2 Accuracy against it and always know its direction for the rest of the scene.",
+      horror: null, flavor: "Fear has a smell. So does lying." },
+    { rank: "Master", name: "The Turning", type: "Special", cost: "1 SP · 10 Stamina", cd: 4, range: "Self",
+      effect: "Full beast form for 3 turns: +2 DR, natural attacks deal 2d3 + Strength, +10 temporary HP. Enemy witnesses gain +15 Fear. When it ends: −1 to all rolls for 1 turn.",
+      horror: "+3 Corruption. The Beast drives for a while.", flavor: "You do not become the wolf. You admit it." }
+  ],
+  lore: [
+    "The Red Kin do not call it a curse. A curse is something done to you; the Blood is something you are. In the Domains of Dread, where the moon hangs like a verdict, the cursed bloodlines survive by kinship: wolf packs in the Balinok forests, murder-flights above the gallows fields, and the unbound ones who belong to no shape at all.",
+    "Skinwalkers are the Kin's walkers — the ones who can still pass for human at the tavern door. They hunt the things that give their kind a bad name, because no one else will do it fairly. Every Shift is a withdrawal from an account they cannot see the balance of. The Red Moon keeps the ledger."
+  ],
+  quote: { text: "I am not two people. I am one person, with teeth.", by: "Unnamed Kin, scratched into a gallows post" }
+},
+{
+  id: "wolfbound", name: "Wolfbound", kind: "path", triad: "blood", parent: "skinwalker",
+  epithet: "The Pack-Cursed", role: "Pack fighter · terror striker",
+  primary: "stamina", attributes: ["Body", "Agility"],
+  skills: ["Athletics", "Grapple", "Stealth"],
+  armor: "Light",
+  weapons: [
+    { name: "Wolf Claws", cat: "Natural", dmg: "1d4 + Strength", tags: "Cannot be disarmed" },
+    { name: "Hunting Spear", cat: "One-handed", dmg: "1d4 + Strength", tags: "Throwable" },
+    { name: "Paired Handaxes", cat: "One-handed", dmg: "1d4 + Strength", tags: "Throwable" }
+  ],
+  stats: { hp: 15, mana: 0, stamina: 10, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "Pack Blood", text: "While an ally stands within 1.5 tiles of you, you gain +1 Accuracy. Lycanthrope packs recognize you as kin unless you draw first." },
+  abilities: [
+    { rank: "Initiate", name: "Howl", type: "Action", cost: "1 AP · 4 Stamina", cd: 3, range: "10-tile radius",
+      effect: "Enemies within range gain +10 Fear (Willpower DC 13 halves). Allies within range reduce Fear by 5.",
+      horror: null, flavor: "It is not a threat. It is a weather report." },
+    { rank: "Adept", name: "Rending Claws", type: "Action", cost: "1 AP · 3 Stamina", cd: 0, range: "Melee",
+      effect: "A tearing strike: 1d4 + Strength. On a hit, the wound bleeds for 2 damage at the start of the target's next 2 turns.",
+      horror: null, flavor: "Wolves do not fence. Wolves conclude." },
+    { rank: "Master", name: "Moon-Fury", type: "Special", cost: "1 SP · 12 Stamina", cd: 4, range: "Self",
+      effect: "For 3 turns: +2 Strength (effective) and +1 Movement Point. You must attack the nearest creature each turn (Willpower DC 13 to choose otherwise).",
+      horror: "+2 Corruption. The moon does not ask what you meant to do.", flavor: "The rage is borrowed. The consequences are yours." }
+  ],
+  lore: [
+    "The wolf bloodlines are the oldest of the Red Kin — older, some say, than the Mists themselves. Barovia's forests remember a time before the Count, when the packs ran under a moon that was only a moon. The Wolfbound carry that memory in their marrow, and it makes them both prouder and sadder than the other Kin.",
+    "A Wolfbound's loyalty is literal: the pack is a single animal with several bodies. Betrayal is not a moral failure but an amputation. When a Wolfbound walks alone — and many do, exiled or self-exiled after a night they cannot account for — they are not solitary. They are wounded."
+  ],
+  quote: { text: "Run with us or run from us. Both are honest.", by: "Pack-Speaker Dragan, of the Balinok Ridge" }
+},
+{
+  id: "ravenkin", name: "Ravenkin", kind: "path", triad: "blood", parent: "skinwalker",
+  epithet: "The Feather-Cursed", role: "Scout · aerial skirmisher",
+  primary: "stamina", attributes: ["Agility", "Charisma"],
+  skills: ["Stealth", "Sleight of Hand", "Perception"],
+  armor: "Light",
+  weapons: [
+    { name: "Talons", cat: "Natural", dmg: "1d4 + Strength", tags: "Cannot be disarmed" },
+    { name: "Throwing Knives", cat: "Thrown", dmg: "1d4 + Strength", tags: "Concealable" },
+    { name: "Gallows Short Bow", cat: "Bow", dmg: "1d4 + Body", tags: "—" }
+  ],
+  stats: { hp: 5, mana: 0, stamina: 15, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "Featherfall", text: "You take no falling damage and gain +2 Stealth at night. You may glide up to 5 tiles as your movement (3 Stamina) instead of walking." },
+  abilities: [
+    { rank: "Initiate", name: "Murder of One", type: "Action", cost: "1 AP · 5 Stamina", cd: 3, range: "Self",
+      effect: "Split into a swarm of three ravens for 1 turn: +3 Dodge Defense, and your next attack deals +1d4 damage as the swarm converges. Witnesses gain +5 Fear.",
+      horror: null, flavor: "One bird is an omen. Three are a verdict." },
+    { rank: "Adept", name: "Carrion Eye", type: "Action", cost: "1 AP · 2 Stamina", cd: 0, range: "30 tiles",
+      effect: "Borrow the eyes of any raven within range: perceive any location you have seen this scene as if standing there, with +2 Perception.",
+      horror: null, flavor: "The gallows birds see everything. They are not impressed." },
+    { rank: "Master", name: "Wings of the Gallows", type: "Special", cost: "1 SP · 10 Stamina", cd: 4, range: "Self",
+      effect: "True flight for 3 turns: movement distance doubled, ignore terrain. One dive attack during the flight deals 2d3 + Strength.",
+      horror: "+2 Corruption. The sky is not part of the domain. That is why it is dangerous.", flavor: "For three turns, the Mists cannot hold you. They notice." }
+  ],
+  lore: [
+    "The feather-cursed were born, the Kin's stories say, from the ravens that fed on the gallows fields during the Gallows Winter — birds that ate so much of the unjustly dead that they began to dream in human voices. The Ravenkin are their descendants: slight, watchful people who startle at loud noises and never eat poultry.",
+    "They are the Kin's eyes and couriers, roosting in belfries and watching roads no Landsworn can patrol. A Ravenkin's cruelty is precise and their kindness is sudden. They collect small bright objects and small true secrets, and they trade both at the same unfair rate: one for one."
+  ],
+  quote: { text: "I have seen your roof. We should talk about what is in your attic.", by: "Ravenkin Kestrel, perched on a tavern sign" }
+},
+{
+  id: "wanderer", name: "Wanderer", kind: "path", triad: "blood", parent: "skinwalker",
+  epithet: "The Unbound Afflicted", role: "Unstable shifter · survivor",
+  primary: "stamina", attributes: ["Agility", "Fortitude"],
+  skills: ["Escape Artist", "Willpower", "Athletics"],
+  armor: "Cloth or Light",
+  weapons: [
+    { name: "Road-Staff", cat: "Two-handed", dmg: "2d3 + Strength", tags: "Walking stick" },
+    { name: "Sickle", cat: "One-handed", dmg: "1d4 + Strength", tags: "—" },
+    { name: "Scavenged Blade", cat: "One-handed", dmg: "1d4 + Strength", tags: "Whatever the road gave" }
+  ],
+  stats: { hp: 10, mana: 5, stamina: 10, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "The Burden", text: "Track Burden 0–10: +1 per Shift or borrowed form. At 3, 5 and 7 Burden you surge — a random minor form erupts (GM picks), granting +1d4 damage for 1 turn and +5 Fear to you. A safe night's rest resets Burden to 0." },
+  abilities: [
+    { rank: "Initiate", name: "Borrowed Shape", type: "Action", cost: "1 AP · 6 Stamina", cd: 2, range: "Self",
+      effect: "Take the minor aspect of any beast you have seen: claws (1d4 + Strength), glide, gills, or night-eyes, for 3 turns.",
+      horror: "+1 Burden. The shape wants to stay.", flavor: "Other Kin wear one skin. You try them all on." },
+    { rank: "Adept", name: "Shed the Pain", type: "Action", cost: "1 AP · 4 Stamina", cd: 3, range: "Self",
+      effect: "Warp the flesh to escape it: remove one condition from yourself (Bound, bleeding, poison, grappled).",
+      horror: "+1 Burden, +1 Corruption. What you shed grows back wrong, briefly.", flavor: "The rope holds a shape. You are no longer that shape." },
+    { rank: "Master", name: "The Unraveling", type: "Special", cost: "1 SP · 12 Stamina", cd: 4, range: "Self",
+      effect: "Chimera surge for 2 turns: your attacks deal +2d3 damage and you gain +2 DR. Afterward: −1 to all rolls for 1 turn.",
+      horror: "+2 Burden, +3 Corruption. For two turns, nothing in the Mists knows what you are — including you.", flavor: "Every form at once is not power. It is panic, wearing power." }
+  ],
+  lore: [
+    "Not every cursed bloodline has a shape. The Wanderers — the Errant Kin — carry a Blood that never settled: bitten by too many things, blessed by too few, born in the Mists to parents from two domains. Their flesh is a question the world keeps re-asking.",
+    "They walk because stopping is dangerous: a Wanderer who stays in one place too long begins to take the shape of that place's worst memory. The Red Kin shelters them and fears them, because a Wanderer's surge has been known to wear the face of a Darklord for one terrible heartbeat. The road is their leash and their mercy."
+  ],
+  quote: { text: "Do not ask what I am. Ask what I am today, and be grateful for the answer.", by: "The Wanderer called Milepost" }
+},
+/* hybrids born of the Blood */
+{
+  id: "moonbinder", name: "Moonbinder", kind: "hybrid", triad: "blood", parent: "wolfbound", partner: "veil",
+  epithet: "Wolfbound × Occultist", role: "Curse-ritualist · controlled fury",
+  primary: "stamina", attributes: ["Body", "Fortitude"],
+  skills: ["Willpower", "Athletics", "Binding"],
+  armor: "Light",
+  weapons: [
+    { name: "Moon-Silver Spear", cat: "One-handed", dmg: "1d4 + Strength", tags: "Silver · throwable" },
+    { name: "Sigil Claws", cat: "Natural", dmg: "1d4 + Strength", tags: "Ritual focus" },
+    { name: "Lunar Athame", cat: "One-handed", dmg: "1d4 + Strength", tags: "Silver · ritual focus" }
+  ],
+  stats: { hp: 5, mana: 15, stamina: 0, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "The Leashed Moon", text: "Gain the Occultist trait Veil-Sight. Your lunar sigils let you Shift without the +1 Corruption cost once per scene — the moon accepts paperwork." },
+  abilities: [
+    { rank: "Initiate", name: "Lunar Sigil", type: "Action", cost: "1 AP · 5 Mana · 3 Stamina", cd: 3, range: "Melee touch",
+      effect: "Brand yourself or an ally with a moon-sigil for 3 turns: their next Shift costs no Corruption and grants +1 DR while shifted.",
+      horror: null, flavor: "The curse, notarized." },
+    { rank: "Adept", name: "Phase Lock", type: "Action", cost: "1 AP · 6 Mana", cd: 3, range: "10 tiles",
+      effect: "Roll vs Spell Defense: lock a shapeshifter in its current form for 2 turns (it cannot shift). Against non-shifters: −1 Dodge Defense for 2 turns.",
+      horror: null, flavor: "The moon holds still. So do you." },
+    { rank: "Master", name: "Rite of the Red Moon", type: "Special", cost: "1 SP · 10 Mana · 8 Stamina", cd: 4, range: "5-tile radius",
+      effect: "Blessed shifting for you and allies within range for 3 turns: natural attacks deal +1d4 damage and these Shifts cost no Corruption. Enemy witnesses gain +10 Fear.",
+      horror: "−3 Sanity. Under the red moon, you see the leash's other end.", flavor: "The Kin howl at the moon. You negotiate with it." }
+  ],
+  lore: [
+    "The Moonbinders are the treaty between the Blood and the Veil — Wolfbound who learned that a curse is a contract, and contracts have clauses. They carve lunar sigils into spear-hafts and shoulder blades, and the Red Moon, which has never once been reasoned with, finds itself reasoned with.",
+    "The Pallid Lantern considers them heretics; the Red Kin considers them lawyers; the Moonbinders consider themselves the only adults in the room. Their secret dread is the fine print: every sigil is witnessed, and somewhere behind the moon, something is countersigning."
+  ],
+  quote: { text: "The beast is not my enemy. It is my co-signatory.", by: "Moonbinder Ilya Varn, sigil-scars on both palms" }
+},
+{
+  id: "doomwing", name: "Doomwing", kind: "hybrid", triad: "blood", parent: "ravenkin", partner: "veil",
+  epithet: "Ravenkin × Occultist", role: "Omen-caster · psychic skirmisher",
+  primary: "stamina", attributes: ["Agility", "Fortitude"],
+  skills: ["Perception", "Deciphering", "Stealth"],
+  armor: "Light",
+  weapons: [
+    { name: "Omen Talons", cat: "Natural", dmg: "1d4 + Strength", tags: "Cannot be disarmed" },
+    { name: "Omen Knives", cat: "Thrown", dmg: "1d4 + Strength", tags: "Etched with names" },
+    { name: "Black-Feather Bow", cat: "Bow", dmg: "1d4 + Body", tags: "—" }
+  ],
+  stats: { hp: 0, mana: 10, stamina: 5, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "The Crooked Omen", text: "Gain the Occultist trait Veil-Sight. Once per scene, when you witness a death, you may declare it 'read' — the next scene, you and your allies gain +1 to rolls against whatever killed them." },
+  abilities: [
+    { rank: "Initiate", name: "Omen of Ill", type: "Action", cost: "1 AP · 5 Mana", cd: 2, range: "10 tiles",
+      effect: "Roll vs Spell Defense: speak the target's near future. It suffers −2 to its next roll and gains +5 Fear (the certainty of it).",
+      horror: null, flavor: "You do not curse them. You spoil the ending." },
+    { rank: "Adept", name: "Death-Song", type: "Action", cost: "1 AP · 7 Mana · 3 Stamina", cd: 3, range: "10 tiles",
+      effect: "A keening verse for 3 turns: one enemy takes 1d4 psychic damage at the start of each of its turns and gains +5 Fear (once).",
+      horror: null, flavor: "Ravens sing only once. It is always the same song." },
+    { rank: "Master", name: "The Prophecy Fulfilled", type: "Special", cost: "1 SP · 12 Mana", cd: 4, range: "10 tiles",
+      effect: "Declare a death: mark one target. The first time it drops below a quarter of its HP this scene, it takes +2d6 psychic damage. If it dies, allies within 10 tiles reduce Fear by 15.",
+      horror: "−5 Sanity. You saw the thread, and the thread saw you.", flavor: "Prophecy is just memory, pointed the wrong way." }
+  ],
+  lore: [
+    "The Doomwings are Ravenkin who listened too long at the Veil and heard the gallows birds' original song: the one that names the dead before they die. They are the Kin's augurs, perched above battles, croaking verdicts that armies have been known to obey.",
+    "A Doomwing's gift is cruel arithmetic — they know which deaths are coming and must choose which to announce. Announce one, and it becomes certain; withhold one, and it becomes yours to carry. The eldest Doomwings stop speaking entirely and write their omens on black feathers, released over the rooftops of the doomed. The Pallid Lantern collects the feathers. The Red Kin burns them."
+  ],
+  quote: { text: "I did not kill him. I merely read the last page first.", by: "Doomwing Corvina, at her own trial" }
+},
+{
+  id: "landwight", name: "Landwight", kind: "hybrid", triad: "blood", parent: "wanderer", partner: "land",
+  epithet: "Wanderer × Landsworn", role: "Terrain-responsive shifter",
+  primary: "stamina", attributes: ["Agility", "Body"],
+  skills: ["Stealth", "Athletics", "Perception"],
+  armor: "Light",
+  weapons: [
+    { name: "Terrain Claws", cat: "Natural", dmg: "1d4 + Strength", tags: "Changes with the ground" },
+    { name: "Root-Woven Maul", cat: "Two-handed", dmg: "2d3 + Strength", tags: "Living wood" },
+    { name: "Standing-Stone Shard", cat: "Thrown", dmg: "1d4 + Strength", tags: "Cold stone" }
+  ],
+  stats: { hp: 15, mana: 0, stamina: 0, ac: 0, dr: 1, acc: 0, dodge: 0 },
+  trait: { name: "The Answered Blood", text: "Gain the Landsworn trait Terrain Bond. Your Burden surges no longer roll random forms — the land chooses for you, and the land is never random. Surges in your home terrain grant +2d4 damage instead of +1d4." },
+  abilities: [
+    { rank: "Initiate", name: "Terrain Skin", type: "Action", cost: "1 AP · 6 Stamina", cd: 2, range: "Self",
+      effect: "Shift to match the ground for 3 turns: Forest — bark hide (+1 DR); Ruins & Graves — gaunt form (+2 Stealth); Roads & Mists — vaporous form (+2 Dodge Defense).",
+      horror: "+1 Burden, but no Corruption. The land accepts what the Blood offers.", flavor: "Every place has a native. You apply for the position." },
+    { rank: "Adept", name: "Root & Ruin", type: "Action", cost: "1 AP · 5 Stamina · 3 Mana", cd: 3, range: "Melee",
+      effect: "A strike that the ground joins: 1d6 + Strength, or 2d6 + Strength if you stand in your home terrain.",
+      horror: null, flavor: "The soil lends a hand. It has so many." },
+    { rank: "Master", name: "The Land Walks", type: "Special", cost: "1 SP · 12 Stamina", cd: 4, range: "Self",
+      effect: "Become the terrain's avatar for 2 turns: +3 DR, +2 Body, movement ignores terrain. Witnesses gain +15 Fear. Afterward: −1 to all rolls for 1 turn.",
+      horror: "+2 Burden. For two turns you are a place, and places do not forgive.", flavor: "The Wanderer finally stops walking. The land walks instead." }
+  ],
+  lore: [
+    "The Landwights are the answer to the Wanderers' oldest prayer: a Blood that never settled, given a home that never moves. The first was an Errant Kin who collapsed at a crossroads standing-stone and woke wearing its shape — moss in the seams, gravel in the knuckles, and for the first time in her life, still.",
+    "The Black Soil Wardens treat Landwights as sacred and handle them like loaded traps. A Landwight's forms are the land's own vocabulary: bark in the forest, gauntness in the graves, vapor on the roads. The danger is ownership — the land that shelters a Landwight begins to consider them property, and the Domains' landlords are jealous. A Landwight who stays too long in one domain starts appearing in its folktales, then in its weather."
+  ],
+  quote: { text: "I was born nowhere. The stone offered me a somewhere. I said yes.", by: "The Landwight of the Crossroads Stone" }
+},
+/* ============================ THE LAND ============================ */
+{
+  id: "landsworn", name: "Landsworn", kind: "base", triad: "land",
+  epithet: "Warden of the Black Soil", role: "Terrain master · survivor",
+  primary: "stamina", attributes: ["Body", "Agility"],
+  skills: ["Perception", "Stealth", "Willpower"],
+  armor: "Medium",
+  weapons: [
+    { name: "Woodsman's Axe", cat: "One-handed", dmg: "1d4 + Strength", tags: "—" },
+    { name: "Yew Bow", cat: "Bow", dmg: "1d4 + Body", tags: "—" },
+    { name: "Iron-Shod Spear", cat: "One-handed", dmg: "1d4 + Strength", tags: "Throwable" }
+  ],
+  stats: { hp: 10, mana: -10, stamina: 10, ac: 1, dr: 1, acc: 0, dodge: 0 },
+  trait: { name: "Terrain Bond", text: "Choose a home terrain: Forest, Ruins & Graves, or Roads & Mists. Inside it you gain +1 Accuracy and +1 Dodge Defense, and you always know the direction of your bound waystone." },
+  abilities: [
+    { rank: "Initiate", name: "Waystone Ward", type: "Action", cost: "1 AP · 4 Stamina", cd: 3, range: "5-tile radius",
+      effect: "Set a ward for 3 turns: allies entering reduce Fear by 5 and gain +1 Spell Defense while inside; enemies entering gain +5 Fear.",
+      horror: null, flavor: "A stone, a knot of rowan, a promise. The ground keeps promises." },
+    { rank: "Adept", name: "Hunter's Ground", type: "Action", cost: "1 AP · 3 Stamina", cd: 0, range: "5 tiles",
+      effect: "Tangle a patch of ground for 2 turns: enemies inside pay double movement cost. You ignore it.",
+      horror: null, flavor: "Every root is a tripwire if you ask it politely." },
+    { rank: "Master", name: "The Land Remembers", type: "Special", cost: "1 SP · 8 Stamina · 4 Mana", cd: 4, range: "10 tiles",
+      effect: "The terrain grasps: up to 3 enemies are restrained for 1 turn (Athletics DC 13 to break free) and take 1d4 crushing damage. They gain +10 Fear.",
+      horror: null, flavor: "The soil has held worse things than you. It remembers how." }
+  ],
+  lore: [
+    "The Domains of Dread are owned. Every acre answers to a Darklord; every road is a leash. The Black Soil Wardens refuse this. They are hunters, hearth-keepers, road-walkers and grave-tenders who swear an older oath — to the land itself, beneath its masters' claim. The land, they insist, is a prisoner too.",
+    "A Landsworn binds a waystone: a hearthstone, a gravestone, a milestone. It is their anchor and their parish. They fight the way the land fights — slowly, patiently, with roots and frost and the memory of every body buried in it. The Darklords own the map. The Wardens keep the ground."
+  ],
+  quote: { text: "The Count owns the castle. The soil owns the Count.", by: "Warden Petru, at the binding of the Ninth Waystone" }
+},
+{
+  id: "hunter", name: "Hunter", kind: "path", triad: "land", parent: "landsworn",
+  epithet: "The Preparation", role: "Tracker · trapmaster",
+  primary: "stamina", attributes: ["Agility", "Fortitude"],
+  skills: ["Stealth", "Perception", "Alchemy"],
+  armor: "Light or Medium",
+  weapons: [
+    { name: "Yew Hunting Bow", cat: "Bow", dmg: "1d4 + Body", tags: "—" },
+    { name: "Silvered Shortsword", cat: "One-handed", dmg: "1d4 + Strength", tags: "Silver" },
+    { name: "Snare Kit & Javelins", cat: "Thrown", dmg: "1d4 + Strength", tags: "Traps" }
+  ],
+  stats: { hp: 10, mana: 0, stamina: 10, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "Preparations", text: "You carry 2 prepared tricks per scene (traps, oils, snares — Alchemy or Perception to craft). Choose one favored prey type (undead, lycanthrope, spirit): +2 to track and identify it." },
+  abilities: [
+    { rank: "Initiate", name: "Snare & Stake", type: "Action", cost: "1 AP · 3 Stamina", cd: 2, range: "1.5 tiles",
+      effect: "Set a trap: the first enemy to enter the tile takes 1d6 damage and is restrained for 1 turn (Escape Artist DC 13 to slip free).",
+      horror: null, flavor: "The forest is a weapon. You are merely its aim." },
+    { rank: "Adept", name: "Silvered Shot", type: "Action", cost: "1 AP · 1 Stamina", cd: 0, range: "10 tiles (bow)",
+      effect: "A prepared arrow: +1 damage, or +1d4 damage against undead and lycanthropes (silver).",
+      horror: null, flavor: "Silver is expensive. Knowing where to put it is free." },
+    { rank: "Master", name: "The Long Hunt", type: "Special", cost: "1 SP · 8 Stamina", cd: 4, range: "10 tiles",
+      effect: "Designate one quarry: +2 Accuracy and +1d4 damage against it, and you always know its direction, for the scene. If it dies by your hand, reduce your Fear by 20.",
+      horror: null, flavor: "Some hunts end in a kill. The good ones end in a quiet village." }
+  ],
+  lore: [
+    "The Hunters are the Wardens' forward edge — the ones who go out past the waystones with a bow, a bag of salt, and a list. Their lists are famous: not of trophies, but of names. Every Hunter keeps the names of what they have killed and what they have failed to kill, and the second column is always longer.",
+    "They hunt the way their grandparents hunted deer: patiently, respectfully, and with the understanding that the forest is watching. In Barovia the forest watches back. A Hunter's craft is preparation — the right oil, the right snare, the right silver — because the things they hunt cannot be outfought, only out-thought, and only once each."
+  ],
+  quote: { text: "I do not hate the wolf. I hate what the wolf ate. The distinction keeps me honest.", by: "Hunter Sanda Voss, list-carrier" }
+},
+{
+  id: "guardian", name: "Guardian", kind: "path", triad: "land", parent: "landsworn",
+  epithet: "The Anchor", role: "Protector · hearth-warden",
+  primary: "stamina", attributes: ["Body", "Charisma"],
+  skills: ["Grapple", "First Aid", "Willpower"],
+  armor: "Heavy",
+  weapons: [
+    { name: "Tower Shield & War Mace", cat: "One-handed", dmg: "1d4 + Strength", tags: "Shield +1 AC" },
+    { name: "Hearth Pike", cat: "Two-handed", dmg: "2d3 + Strength", tags: "Reach" },
+    { name: "Hearth Hammer", cat: "Two-handed", dmg: "2d3 + Strength", tags: "—" }
+  ],
+  stats: { hp: 15, mana: 0, stamina: 0, ac: 1, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "The Anchor", text: "Allies within 1.5 tiles gain 5 less Fear from any source. Once per turn, when an adjacent ally is hit, you may take the damage instead (your DR applies; costs 2 Stamina)." },
+  abilities: [
+    { rank: "Initiate", name: "Bulwark Stance", type: "Action", cost: "1 AP · 3 Stamina", cd: 2, range: "Self",
+      effect: "Plant yourself for 2 turns: +2 AC and +1 DR, but you cannot use Movement Points while the stance holds.",
+      horror: null, flavor: "The doorway is not a place. It is a person." },
+    { rank: "Adept", name: "Consecrate Hearth", type: "Action", cost: "1 AP · 5 Stamina · 3 Mana", cd: 3, range: "5-tile radius",
+      effect: "Kindle the hearth-ward for 3 turns: allies inside reduce Fear by 10 (once) and gain +1 Spell Defense; undead entering take 1d4 holy damage.",
+      horror: null, flavor: "A fire that remembers every family that ever warmed at it." },
+    { rank: "Master", name: "Unbroken Vigil", type: "Special", cost: "1 SP · 10 Stamina", cd: 4, range: "5-tile radius",
+      effect: "For 3 turns you cannot fall below 1 HP, and allies within range gain no Fear. Afterward: −1 to all rolls for 1 turn.",
+      horror: null, flavor: "Sleep is a promise you make to the dead. Not tonight." }
+  ],
+  lore: [
+    "The Guardians are the Wardens who stayed. Where Hunters go out and Mistwalkers go between, Guardians stand in doorways — of taverns, of chapels, of the last house on the lane. They bind their waystone into the hearth itself, and the hearth binds them back: a Guardian cannot abandon their parish, and the parish cannot survive without them.",
+    "Their armor is patched with pieces of the things they have stopped: a claw here, a fang there, a shard of a Darklord's carriage door. A Guardian's greatest battle is usually invisible — the night nothing happened, the morning the children still had a village. They keep no lists. The village keeps it for them, in the form of being alive."
+  ],
+  quote: { text: "Behind me: everything. In front of me: the only thing that matters.", by: "Guardian Brannoc, the Doorway of Krezk" }
+},
+{
+  id: "mistwalker", name: "Mistwalker", kind: "path", triad: "land", parent: "landsworn",
+  epithet: "The Grey Road", role: "Mist-strider · border scout",
+  primary: "stamina", attributes: ["Agility", "Fortitude"],
+  skills: ["Stealth", "Escape Artist", "Perception"],
+  armor: "Light",
+  weapons: [
+    { name: "Fog-Cutter Falchion", cat: "One-handed", dmg: "1d4 + Strength", tags: "Cold iron" },
+    { name: "Way-Lantern", cat: "One-handed", dmg: "1d4 + Strength", tags: "Light · ward" },
+    { name: "Grey-Road Knives", cat: "Thrown", dmg: "1d4 + Strength", tags: "Concealable" }
+  ],
+  stats: { hp: 0, mana: 5, stamina: 10, ac: 0, dr: 0, acc: 0, dodge: 1 },
+  trait: { name: "Mist-Stride", text: "In fog, mist or darkness you gain +2 Stealth. Once per turn you may mist-step 5 tiles between patches of mist or shadow (3 Stamina) instead of walking." },
+  abilities: [
+    { rank: "Initiate", name: "Fog Bank", type: "Action", cost: "1 AP · 5 Stamina · 3 Mana", cd: 3, range: "5-tile radius",
+      effect: "Conjure a fog bank for 3 turns: sight beyond 1.5 tiles inside is blocked. You see through it normally.",
+      horror: null, flavor: "The Mists are a wall. You have a door." },
+    { rank: "Adept", name: "Border Step", type: "Action", cost: "1 AP · 6 Stamina", cd: 3, range: "5 tiles",
+      effect: "Step through the grey between two points you can see (or two mist patches): teleport 5 tiles. Cannot pass solid walls.",
+      horror: null, flavor: "Every border is a seam. You walk the seams." },
+    { rank: "Master", name: "The Grey Road", type: "Special", cost: "1 SP · 10 Stamina · 5 Mana", cd: 4, range: "10 tiles",
+      effect: "Lead yourself and up to 2 allies through the mist to a point within 10 tiles. Enemies along the path gain +10 Fear (they see what walks beside you).",
+      horror: "−3 Sanity. The road between domains is not empty.", flavor: "The Mists take everyone. You are the first to ask for directions." }
+  ],
+  lore: [
+    "The Mists are the Domains' true terrain — not weather but architecture, the walls of the world's prison. The Mistwalkers are the Wardens who learned to read the walls. They patrol the borders no one else can find, mark the safe seams with rowan knots, and guide the lost out of the fog before the fog decides to keep them.",
+    "Every Mistwalker has a story about the thing that walked beside them in the grey, matching their pace, wearing their shape but wrong. They do not tell these stories to outsiders. They tell them to each other, quietly, at the waystones, because the Grey Road is the only road in Ravenloft that the Darklords do not fully own — and something else owns the rest of it."
+  ],
+  quote: { text: "Stay on the road. If the road moves, stay on the road anyway.", by: "Mistwalker Eleri, Border-Runner of the Western Seam" }
+},
+/* hybrids born of the Land */
+{
+  id: "hexhunter", name: "Hexhunter", kind: "hybrid", triad: "land", parent: "hunter", partner: "veil",
+  epithet: "Hunter × Occultist", role: "Monster scholar · precision killer",
+  primary: "stamina", attributes: ["Agility", "Fortitude"],
+  skills: ["Deciphering", "Perception", "Alchemy"],
+  armor: "Light or Medium",
+  weapons: [
+    { name: "Silvered Hunting Bow", cat: "Bow", dmg: "1d4 + Body", tags: "Silver" },
+    { name: "Hex-Nails", cat: "Thrown", dmg: "1d4 + Strength", tags: "Cold iron · etched" },
+    { name: "Monster-Bane Shortsword", cat: "One-handed", dmg: "1d4 + Strength", tags: "Silver · named" }
+  ],
+  stats: { hp: 0, mana: 10, stamina: 5, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "The Annotated Prey", text: "Gain the Occultist trait Veil-Sight. Your Hunter list gains a third column: weaknesses. Once you identify a creature type, your Preparations against it cost no resources." },
+  abilities: [
+    { rank: "Initiate", name: "Read the Monster", type: "Action", cost: "1 AP · 3 Mana", cd: 2, range: "10 tiles",
+      effect: "Deciphering or Perception DC 13: learn a creature's type, one weakness and one resistance. You gain +1 Accuracy against it for the scene.",
+      horror: null, flavor: "Every monster is a book. Most people only read the teeth." },
+    { rank: "Adept", name: "Sigil Trap", type: "Action", cost: "1 AP · 5 Mana · 3 Stamina", cd: 3, range: "1.5 tiles",
+      effect: "Inscribe a trap: the first supernatural creature (undead, spirit, lycanthrope, shifter) to enter takes 1d6 force damage and cannot shift or teleport for 2 turns.",
+      horror: null, flavor: "The snare is salt. The stake is a syllable." },
+    { rank: "Master", name: "The Named Bullet", type: "Special", cost: "1 SP · 8 Mana · 4 Stamina", cd: 4, range: "10 tiles",
+      effect: "Carve a true name or type into an arrow or blade: your next ranged attack against that creature type deals +2d6 damage and ignores its DR. Once per scene per type.",
+      horror: "−3 Sanity. Names have weight, and you just carried one.", flavor: "The old hunters carved tally-marks. You carve obituaries." }
+  ],
+  lore: [
+    "The Hexhunters are the heirs of the great monster-hunters of Ravenloft lore — the Van Richtens who proved that a library card is deadlier than a stake. They are Hunters who took the Pallid Lantern's oath without leaving the forest: one foot in the blind, one in the archive.",
+    "A Hexhunter's bow is a bibliography. Each arrow is annotated, each nail etched with a syllable of something's true name. The Veil gives them knowledge; the Land gives them patience; the combination gives the monsters of Barovia something they have rarely felt — the experience of being studied by a predator."
+  ],
+  quote: { text: "Silver for the blood, salt for the spirit, and the correct pronunciation for the rest.", by: "Hexhunter Ludmilla Vex, annotating a quiver" }
+},
+{
+  id: "bearwarden", name: "Bearwarden", kind: "hybrid", triad: "land", parent: "guardian", partner: "blood",
+  epithet: "Guardian × Skinwalker", role: "Beast-tank · hearth protector",
+  primary: "stamina", attributes: ["Body", "Charisma"],
+  skills: ["Grapple", "First Aid", "Athletics"],
+  armor: "Heavy or hide",
+  weapons: [
+    { name: "Bear Claws", cat: "Natural", dmg: "1d4 + Strength", tags: "Cannot be disarmed" },
+    { name: "Guardian's Maul", cat: "Two-handed", dmg: "2d3 + Strength", tags: "Hearth-bound" },
+    { name: "Hide & Shield", cat: "One-handed", dmg: "1d4 + Strength", tags: "Shield +1 AC" }
+  ],
+  stats: { hp: 15, mana: 0, stamina: 0, ac: 0, dr: 1, acc: 0, dodge: 0 },
+  trait: { name: "The Hearth-Beast", text: "Gain the Skinwalker trait The Beast Within. Your Shifts while defending your bound waystone or parish cost no Corruption — the hearth vouches for the bear." },
+  abilities: [
+    { rank: "Initiate", name: "Ursine Vigil", type: "Action", cost: "1 AP · 6 Stamina", cd: 3, range: "Self",
+      effect: "Bear-shift as a guardian for 3 turns: +2 DR, and your Anchor interception reaches allies within 5 tiles instead of 1.5.",
+      horror: "+1 Corruption (waived in your parish). The bear keeps the door.", flavor: "The doorway grows fur. The promise does not change." },
+    { rank: "Adept", name: "Mauling Guard", type: "Action", cost: "1 AP · 4 Stamina", cd: 0, range: "Melee",
+      effect: "After you intercept a hit this turn, immediately counter the attacker: 1d6 + Strength. Once per turn.",
+      horror: null, flavor: "Touch the hearth. Meet what warms it." },
+    { rank: "Master", name: "The Great Bear", type: "Special", cost: "1 SP · 12 Stamina", cd: 4, range: "5-tile radius",
+      effect: "For 3 turns: +20 temporary HP, +3 DR, and allies within range gain no Fear. You cannot use Mana abilities while the Great Bear holds. Afterward: −1 to all rolls for 1 turn.",
+      horror: "+3 Corruption. Somewhere under the bear, the person sleeps.", flavor: "The village sleeps. The mountain keeps watch." }
+  ],
+  lore: [
+    "The Bearwardens are the Red Kin's oldest apology: cursed bloodlines that chose, generations ago, to stand in doorways instead of breaking them down. The bear blood is the gentlest of the Kin's curses and the most terrible when provoked — a Bearwarden's fury is not the wolf's red haze but a slow, geological certainty.",
+    "Villages that keep a Bearwarden do not lock their doors. They leave them open, because the bear prefers to see who comes. The Kin tells the story of the Bearwarden who held a bridge for a night and a day while the village fled, and was found afterward still standing, still breathing, still refusing to fall — and the things that had come for the village had learned to go around."
+  ],
+  quote: { text: "I am the wall. The wall is warm. The wall has teeth.", by: "Bearwarden Ursa of the Open Doors" }
+},
+{
+  id: "mistshroud", name: "Mistshroud", kind: "hybrid", triad: "land", parent: "mistwalker", partner: "blood",
+  epithet: "Mistwalker × Skinwalker", role: "Vapor-shifter · infiltrator",
+  primary: "stamina", attributes: ["Agility", "Fortitude"],
+  skills: ["Stealth", "Escape Artist", "Sleight of Hand"],
+  armor: "Light",
+  weapons: [
+    { name: "Fog-Cutter", cat: "One-handed", dmg: "1d4 + Strength", tags: "Cold iron" },
+    { name: "Vapor Claws", cat: "Natural", dmg: "1d4 + Strength", tags: "Condense from mist" },
+    { name: "Mist Knives", cat: "Thrown", dmg: "1d4 + Strength", tags: "Concealable" }
+  ],
+  stats: { hp: 5, mana: 0, stamina: 10, ac: 0, dr: 0, acc: 0, dodge: 1 },
+  trait: { name: "The Worn Mist", text: "Gain the Skinwalker trait The Beast Within — but your Shift is into vapor, not beast: while shifted you cannot be grappled or bound, and your natural weapons condense from the fog. +1 Corruption per Shift as usual." },
+  abilities: [
+    { rank: "Initiate", name: "Vapor Skin", type: "Action", cost: "1 AP · 6 Stamina", cd: 2, range: "Self",
+      effect: "Half-dissolve for 2 turns: +3 Dodge Defense and immunity to grapple and Binding. You may still attack (the fog condenses a blade).",
+      horror: "+1 Corruption. The mist learns your shape a little better each time.", flavor: "You cannot bind what has already left." },
+    { rank: "Adept", name: "Creeping Dread", type: "Action", cost: "1 AP · 5 Stamina · 3 Mana", cd: 3, range: "5-tile radius",
+      effect: "A fog that whispers for 3 turns: enemies inside gain +10 Fear and −1 Accuracy; you gain +2 Stealth inside it.",
+      horror: null, flavor: "The fog does not hide you. It introduces you." },
+    { rank: "Master", name: "The White Silence", type: "Special", cost: "1 SP · 10 Stamina · 6 Mana", cd: 4, range: "5-tile radius",
+      effect: "Become mist for 2 turns: physical damage against you is halved (after DR), you pass through gaps and cannot be targeted by melee. Enemies within range gain +15 Fear.",
+      horror: "+3 Corruption, −3 Sanity. Silence this white has a heartbeat. It is not yours.", flavor: "For two turns, the Mists are not the prison. They are the prisoner — and you are the shape it takes." }
+  ],
+  lore: [
+    "The Mistshrouds are the strangest of the Turning: Mistwalkers whose Blood answered the Grey Road's oldest question — what walks beside you in the fog? — with 'you do.' They do not shift into beasts. They shift into the Mists themselves, wearing the prison's walls as a skin.",
+    "The Red Kin finds them uncanny; the Wardens find them useful; the Pallid Lantern finds them alarming, because the Mists are the Dark Powers' architecture, and a Mistshroud is a person-shaped door in it. Every Mistshroud eventually reports the same dream: standing in the fog, feeling something try them on. They stop reporting it when they realize the dream is a memory."
+  ],
+  quote: { text: "The Mists take everyone. I simply agreed to be taken, professionally.", by: "Mistshroud Vey, of the Western Seam" }
+}
+];
+
+/* ---- derived helpers ---- */
+const CLASS_BY_ID = Object.fromEntries(CLASSES.map(c => [c.id, c]));
+const BASES = CLASSES.filter(c => c.kind === "base");
+const PATHS = CLASSES.filter(c => c.kind === "path");
+const HYBRIDS = CLASSES.filter(c => c.kind === "hybrid");
+const RANKS = ["Initiate", "Adept", "Master"];
+
+/* Unlock ladder (levels 1–10, milestone-based per project plan) */
+const LEVEL_LADDER = [
+  { level: 1, grant: "Base class: trait + Initiate ability + weapon & armor proficiencies." },
+  { level: 2, grant: "Choose a Progression (path): path trait + Initiate ability." },
+  { level: 3, grant: "Base Adept ability. +5 HP, +5 primary resource." },
+  { level: 4, grant: "Path Adept ability. +1 Accuracy. Rite of Crossing becomes available (optional hybrid)." },
+  { level: 5, grant: "Base Master ability. +5 HP, +5 primary resource." },
+  { level: 6, grant: "Path Master ability." },
+  { level: 7, grant: "Hybrid Adept ability (if crossed). +5 HP, +5 primary resource." },
+  { level: 8, grant: "+1 Accuracy. Veteran techniques (roleplay tier)." },
+  { level: 9, grant: "Hybrid Master ability (if crossed). +5 HP, +5 primary resource." },
+  { level: 10, grant: "Capstone: +10 HP, +10 primary resource. Title of the Order." }
+];
+
+/* Rite of Crossing costs — crossing INTO a triad member */
+const CROSSING_COSTS = {
+  veil:  { track: "Sanity",     delta: "−10 Sanity",     text: "You read what the partner knows. The Veil reads you back." },
+  blood: { track: "Corruption", delta: "+10 Corruption", text: "You take the partner's blood into your own. It takes interest." },
+  land:  { track: "Fear",       delta: "+10 Fear",       text: "You swear the terrain oath and witness what the land remembers. The Fear does not fully leave." }
+};
+</script>
+<script>/* ============================================================
+   RAVENLOFT — THE TRIAD SYSTEM · RULES & SETTING CONTENT
+   Source-of-truth alignment: Sistema_de_Combate_Regras.md,
+   Ravenloft RPR Project Plan.md, Plano de Orquestração.
+   Values flagged ⚖ are playtest-calibratable.
+   ============================================================ */
+
+const SKILL_TREE = [
+  { attr: "Body", color: "#c0392f", desc: "Raw physical power and presence. Feeds force, menace and the body's brutal arts.",
+    skills: ["Strength", "Intimidation", "Forgery", "Breach", "Grapple"] },
+  { attr: "Agility", color: "#d9a441", desc: "Precision, speed and evasion. Feeds movement, finesse and escape.",
+    skills: ["Athletics", "Sleight of Hand", "Stealth", "Lockpicking", "Escape Artist"] },
+  { attr: "Fortitude", color: "#8b7bd8", desc: "Endurance of body and mind — the old 'Mind' attribute, renamed. Feeds resolve, lore and craft.",
+    skills: ["Deciphering", "Willpower", "Alchemy", "Eavesdropping", "Binding"] },
+  { attr: "Charisma", color: "#5ba88a", desc: "Force of personality. Feeds interaction, care and awareness of others.",
+    skills: ["Negotiation", "Sense Motive", "Healing", "First Aid", "Disguise", "Perception"] }
+];
+const INDEPENDENT = ["Accuracy", "Initiative"];
+
+const COST_LADDER = [
+  { rank: "+1", cost: 1, total: 1 }, { rank: "+2", cost: 1, total: 2 },
+  { rank: "+3", cost: 2, total: 4 }, { rank: "+4", cost: 2, total: 6 },
+  { rank: "+5", cost: 3, total: 9 }, { rank: "+6", cost: 3, total: 12 },
+  { rank: "+7", cost: 4, total: 16 }, { rank: "+8", cost: 4, total: 20 }
+];
+
+const HORROR_TRACKS = [
+  {
+    id: "fear", name: "Fear", axis: "Acute · the moment", dir: "rises", start: 0, max: 100, color: "#d9a441",
+    triad: "The Land's horror — what the moment does to you.",
+    thresholds: [
+      { at: "≥ 30", name: "Shaken", effect: "−1 Accuracy." },
+      { at: "≥ 60", name: "Frightened", effect: "−2 Accuracy, −2 Dodge Defense. Approaching the source of your fear requires Willpower DC 13." },
+      { at: "≥ 90", name: "Broken", effect: "You must flee the source or cower (turn lost) unless you pass Willpower DC 15 at turn start. At 100, you collapse if neither is possible." }
+    ],
+    gains: "Witnessing a horror +10 · facing a Darklord-touched creature +20 · class abilities as listed. Willpower DC 13 halves any witnessed gain.",
+    recovery: "Rest in combat −10 · Steady Yourself (1 SP, Willpower DC 13) −10 · safe scene −20 · safe night's rest −40 · Medium & Guardian support."
+  },
+  {
+    id: "sanity", name: "Sanity", axis: "Psychic · the knowledge", dir: "falls", start: 100, max: 100, color: "#8b7bd8",
+    triad: "The Veil's horror — what knowing does to you.",
+    thresholds: [
+      { at: "≤ 70", name: "Frayed", effect: "−1 to Deciphering, Willpower and ritual rolls." },
+      { at: "≤ 40", name: "Haunted", effect: "−2 to those rolls. On a natural 1, a hallucination intrudes (roleplay with the GM)." },
+      { at: "≤ 10", name: "Shattered", effect: "Madness episodes at GM discretion. At 0, the character is lost — they become an NPC horror." }
+    ],
+    gains: "Forbidden lore −5 · minor ritual −3 · major ritual −5 · witnessing the impossible −10 · Rite of Crossing into the Veil −10 · class abilities as listed.",
+    recovery: "+5 per story arc spent in safety · Rite of Clarity +10 (rare, costly, requires a true anchor — a person, a place, a vow). Never above 100."
+  },
+  {
+    id: "corruption", name: "Corruption", axis: "Moral · the choice", dir: "rises", start: 0, max: 100, color: "#c0392f",
+    triad: "The Blood's horror — what choosing does to you.",
+    thresholds: [
+      { at: "≥ 30", name: "Marked", effect: "A visible stigma (eyes, shadow, scent). −2 to Charisma skills except Intimidation." },
+      { at: "≥ 60", name: "Tainted", effect: "Healing you receive is halved. Animals flee you. First meetings gain +5 Fear in the other party." },
+      { at: "≥ 90", name: "Forsaken", effect: "The Mists take notice — Darklord attention. Dark Gifts whisper. At 100, you are claimed: become a horror (retire, or a GM Dark Gift scene)." }
+    ],
+    gains: "Shifting +1 · blood magic +1/+2 · atrocities +5–15 · a Dark Gift +10 · Rite of Crossing into the Blood +10 · class abilities as listed.",
+    recovery: "Rite of Absolution −10 (rare, costly, requires genuine atonement — a deed, not a prayer). Never below 0."
+  }
+];
+
+const DARK_GIFTS = [
+  { name: "The Second Heart", triad: "blood", gift: "+20 maximum HP.", price: "+10 Corruption. Your heartbeat is audible to predators within 10 tiles — and to things that collect hearts." },
+  { name: "The Unblinking Eye", triad: "veil", gift: "See through darkness, fog and illusions.", price: "−10 maximum Sanity. Something sees back, and it is patient." },
+  { name: "The Grave's Patience", triad: "land", gift: "You no longer need sleep, and natural sources of Fear cannot touch you.", price: "+10 Corruption. The land claims your shadow; it is sometimes seen elsewhere, doing things." }
+];
+
+const BACKGROUNDS = [
+  { name: "Village Laborer", grants: "+1 Strength, +1 Grapple", note: "A contact among the working folk of one village." },
+  { name: "Hunter", grants: "+1 Stealth, +1 Perception", note: "A contact among trappers; a worn map of one forest." },
+  { name: "Soldier", grants: "+1 Intimidation, +1 First Aid", note: "A contact in a watch or garrison; an old service token." },
+  { name: "Scholar", grants: "+1 Deciphering, +1 Alchemy", note: "A contact in a library or scriptorium; one forbidden footnote." },
+  { name: "Investigator", grants: "+1 Sense Motive, +1 Lockpicking", note: "A contact among constables or informants; a case you never closed." }
+];
+
+const WEAPON_RULES = [
+  { attack: "Unarmed", gross: "1d3 + Strength", cost: "1 AP · 1 Stamina", range: "1.5 tiles" },
+  { attack: "Melee, one-handed", gross: "1d4 + Strength", cost: "1 AP · 1 Stamina", range: "1.5 tiles" },
+  { attack: "Melee, two-handed", gross: "2d3 + Strength", cost: "1 AP · 1 Stamina", range: "1.5 tiles" },
+  { attack: "Bow", gross: "1d4 + Body", cost: "1 AP · 1 Stamina", range: "10 tiles" },
+  { attack: "Thrown weapon", gross: "1d4 + Strength", cost: "1 AP · 1 Stamina", range: "10 tiles" },
+  { attack: "Slap", gross: "1 (fixed)", cost: "1 AP", range: "1.5 tiles" },
+  { attack: "Magic Bolt", gross: "1d8 (no bonus)", cost: "1 AP · 4 Mana (Occultist & Veil-crossed: 3)", range: "10 tiles" }
+];
+
+const WEAPON_TAGS = [
+  { tag: "Silver", effect: "+1d4 damage vs lycanthropes. ⚖" },
+  { tag: "Blessed", effect: "+1d4 damage vs undead and spirits. ⚖" },
+  { tag: "Cold Iron", effect: "+1d4 damage vs spirits and fey. ⚖" },
+  { tag: "Natural", effect: "Counts as one-handed; cannot be disarmed." },
+  { tag: "Ritual Focus", effect: "Required for some rites; channels Mana abilities." },
+  { tag: "Throwable", effect: "May be thrown using the thrown profile (1d4 + Strength)." },
+  { tag: "Reach", effect: "+0.5 tile melee reach. ⚖" },
+  { tag: "Shield", effect: "+1 AC while wielded. ⚖" }
+];
+
+const ARMOR_RULES = [
+  { armor: "Cloth", ac: "+0", dr: "+0", penalty: "—" },
+  { armor: "Light", ac: "+1", dr: "+0", penalty: "—" },
+  { armor: "Medium", ac: "+2", dr: "+1", penalty: "−1 Stealth" },
+  { armor: "Heavy", ac: "+3", dr: "+2", penalty: "−2 Stealth" }
+];
+
+const DEFENSE_RULES = [
+  { cat: "Melee", def: "Higher of Dodge Defense and Armor Class" },
+  { cat: "Ranged (physical)", def: "Higher of Spell Defense and Armor Class" },
+  { cat: "Offensive magic", def: "Higher of Spell Defense and Dodge Defense" }
+];
+
+const COMBAT_PIPELINE = [
+  "Confirm it is the attacker's active turn.",
+  "Check Action Points, resources, range and cooldown.",
+  "Select another character as the target.",
+  "Pay the execution costs.",
+  "Roll to hit: 1d20 + Accuracy vs the category defense.",
+  "On a miss, no damage is applied (costs are still spent).",
+  "On a hit, roll the damage: die + damage bonus.",
+  "Apply the critical multiplier if the hit was a natural 20.",
+  "Subtract Damage Reduction once.",
+  "Clamp final damage to a minimum of 0 and reduce HP.",
+  "Check whether the target reached 0 HP (Unconscious).",
+  "Report attacker, target, Accuracy, both defenses considered, the check, hit/crit/miss, die + bonus + multiplier + DR, effective damage, and HP before/after."
+];
+
+const GLOSSARY = [
+  ["AP — Action Point", "2 per turn. Common actions (attacks, most abilities) cost 1 AP."],
+  ["SP — Special Action", "1 per turn, separate pool. Master-tier and heavy abilities cost 1 SP."],
+  ["Mov — Movement Point", "1 per turn. One movement opportunity (5 tiles ⚖) costs 1 Mov + 1 Stamina."],
+  ["AC — Armor Class", "Fixed defense. Base 10 + class + armor. Does not scale with attributes in this system."],
+  ["DR — Damage Reduction", "Subtracted once from gross damage after a hit. Base 1 + class + armor."],
+  ["Dodge Defense", "Agility + ⌊Fortitude/2⌋ + ⌊Body/3⌋ + class bonuses. Attribute-driven."],
+  ["Spell Defense", "Fortitude + ⌊Body/2⌋ + ⌊Agility/3⌋ + class bonuses. Attribute-driven."],
+  ["Accuracy", "Independent attack bonus. Base +1; +1 at levels 4 and 8. No attribute parent."],
+  ["Initiative", "Independent. 1d20 + Initiative; order is fixed for the whole combat."],
+  ["Round vs Turn", "A turn is one combatant's activation. A round completes when everyone in the initiative list has taken a turn."],
+  ["Cooldown (personal turns)", "Counted in the owner's turns, not minutes. CD 2 used on turn 1 → available turn 3."],
+  ["Shift", "A Skinwalker's transformation. 1 AP + 5 Stamina; +1 Corruption unless waived."],
+  ["Burden", "The Wanderer's instability counter, 0–10. Surges at 3/5/7. Resets on a safe night's rest."],
+  ["Waystone", "A Landsworn's bound anchor: hearthstone, gravestone or milestone."],
+  ["The Turning", "The sanctioned crossing between triad members that produces hybrids."],
+  ["Dark Gift", "A bargain with the Dark Powers: real power, +10 Corruption, a narrative debt."],
+  ["The Mists", "The architecture of the Domains of Dread. Walls, roads, and sometimes a predator."],
+  ["⚖ (scales)", "Marks a playtest-calibratable value, per the project's calibration doctrine."]
+];
+
+/* ============================ PAGE CONTENT ============================ */
+
+const PAGES = {};
+
+PAGES["lore-cosmology"] = {
+  title: "The Veil, the Blood & the Land", section: "The Setting",
+  body: `
+<p class="lede">Every horror in the Domains of Dread is a wound in one of three things: <em>what is known</em>, <em>what is lived</em>, or <em>what is owned</em>. The Triad doctrine names them the Veil, the Blood and the Land — and every class, every curse, and every Dark Gift belongs to one of the three.</p>
+<h2>The Domains of Dread</h2>
+<p>Ravenloft is not a place but a prison of places. Domains drift in the Mists like moored ships — Barovia with its castle and its Count, and a hundred other parishes of grief. Each domain is shaped by its Darklord: a soul whose crime was great enough that the Dark Powers built a world around it, a world that repeats the crime forever. The Mists are the walls. They take the lost, they move the borders, and they do not answer to anyone who merely lives here.</p>
+<p>Player characters begin as ordinary people — laborers, hunters, scholars, investigators — who have noticed the pattern. The Triad is what they noticed.</p>
+<h2>The Three Wounds</h2>
+<div class="triad-cards">
+  <div class="triad-card" style="--tc:#8b7bd8"><h3>The Veil</h3><p class="axis">Occultism · what is known</p><p>The membrane between the living world and what waits behind it. Rites, pacts, forbidden books. The Veil's workers pay in <strong>Sanity</strong>: knowledge is a debt, and the Dark Powers hold the note.</p></div>
+  <div class="triad-card" style="--tc:#c0392f"><h3>The Blood</h3><p class="axis">Shapeshifters · what is lived</p><p>The cursed bloodlines and borrowed shapes. The Blood remembers every form it takes, and every form takes a piece of the taker. Its workers pay in <strong>Corruption</strong>: the Beast keeps the ledger.</p></div>
+  <div class="triad-card" style="--tc:#8a9a5b"><h3>The Land</h3><p class="axis">Terrain · what is owned</p><p>Soil, stone, road and mist. The domains belong to the Darklords — the Landsworn dispute that claim, one hearth, one grave, one border at a time. They master <strong>Fear</strong>, because someone must stand in the doorway.</p></div>
+</div>
+<h2>The Three Horrors</h2>
+<p>The Triad's price is paid on three tracks, each 0–100: <strong>Fear</strong> (acute — what the moment does to you), <strong>Sanity</strong> (psychic — what knowing does to you), and <strong>Corruption</strong> (moral — what choosing does to you). A Landsworn stares down Fear; an Occultist spends Sanity; a Skinwalker accrues Corruption. Hybrids pay on two tracks at once. See <a href="#/rules-horror">The Three Horrors</a> for thresholds and recovery.</p>
+<h2>The Turning</h2>
+<p>No triad member is pure. The orders have known for centuries that the three wounds touch — and that a person can stand in the seam between two. The sanctioned crossing is called <strong>the Turning</strong>, and it produces the nine hybrid classes.</p>
+<p>The <em>Greater Turning</em> runs one way around the triad, twice each: <strong>the Veil claims the Land</strong> (Sanctifier, Gravebound — consecration and burial), <strong>the Land claims the Blood</strong> (Bearwarden, Mistshroud — the hearth-beast and the worn mist), <strong>the Blood claims the Veil</strong> (Moonbinder, Doomwing — the leashed moon and the crooked omen). The <em>Lesser Turning</em> runs the other way, once each: Chimerist (Veil→Blood), Landwight (Blood→Land), Hexhunter (Land→Veil).</p>
+<p>Every crossing costs. Every crossing is witnessed. The orders disagree about who is doing the witnessing — which is why the Rite of Crossing requires a story, a price, and an administrator's seal. See <a href="#/rules-progression">Progression & the Rite of Crossing</a>.</p>
+<blockquote class="lore-quote">"The Count owns the castle. The soil owns the Count. And behind the soil, patient as interest, something owns the soil."<cite>— Warden Petru, at the binding of the Ninth Waystone</cite></blockquote>
+`};
+
+PAGES["lore-orders"] = {
+  title: "The Three Orders", section: "The Setting",
+  body: `
+<p class="lede">Three fellowships keep the Triad doctrine alive in the Domains of Dread. They are not armies. They are networks of the desperate, the learned, and the cursed — and they disagree about almost everything except the price.</p>
+<h2 style="color:#8b7bd8">The Pallid Lantern — keepers of the Veil</h2>
+<p>An occult society of hedge-mages, defrocked priests and disgraced scholars. Each initiate carries a lantern lit from a deathbed candle; its pale flame reveals what pretends to be ordinary. The Lantern's Inquisitors prosecute the wearing-skins, its Scholars copy what the Inquisitors would burn, and its Mediums listen at the Veil so the dead can finish their sentences.</p>
+<p><strong>Seat:</strong> a shuttered scriptorium above a Vallaki chandler's shop. <strong>Sign:</strong> a lantern with no flame drawn in chalk. <strong>Dread:</strong> the correspondence — the second handwriting that appears in the eldest Scholars' margins.</p>
+<h2 style="color:#c0392f">The Red Kin — keepers of the Blood</h2>
+<p>The cursed bloodlines: wolf packs of the Balinok forests, murder-flights above the gallows fields, and the unbound Errant Kin who belong to no shape at all. They do not call it a curse — a curse is done to you; the Blood is what you are. The Kin hunts the monsters that give monstrosity a bad name, because no one else will do it fairly.</p>
+<p><strong>Seat:</strong> wherever the pack den is; the Kin's parliament is a howl answered. <strong>Sign:</strong> three parallel scratches, healed silver-white. <strong>Dread:</strong> the Red Moon's ledger — every Shift is a withdrawal, and no one has seen the balance.</p>
+<h2 style="color:#8a9a5b">The Black Soil Wardens — keepers of the Land</h2>
+<p>Hunters, hearth-keepers, road-walkers and grave-tenders sworn to the land beneath the Darklords' claim. Each binds a waystone — hearthstone, gravestone, milestone — and the binding is mutual: the Warden keeps the parish, and the parish keeps the Warden. They fight the way the land fights: slowly, patiently, with roots and frost and the memory of every body buried in it.</p>
+<p><strong>Seat:</strong> the Ninth Waystone, a crossroads milestone no map agrees on. <strong>Sign:</strong> a knot of rowan tied around a stone. <strong>Dread:</strong> the Grey Road — the only road the Darklords do not fully own, and the thing that owns the rest of it.</p>
+<h2>Relations</h2>
+<p>The Lantern fears the Kin and needs them; the Kin resents the Lantern and saves them; the Wardens bury both, respectfully, and keep the lists. The Turning — the sanctioned crossing between orders — is the only treaty all three sign, and each order believes the other two are the ones being infiltrated.</p>
+<blockquote class="lore-quote">"Three orders, one price. The Lantern pays in mind, the Kin in soul, the Wardens in sleep. None of us has ever paid in coin."<cite>— overheard at the Ninth Waystone</cite></blockquote>
+`};
+
+PAGES["rules-attributes"] = {
+  title: "Attributes & Skills", section: "The Rules",
+  body: `
+<p class="lede">Four attributes, nineteen skills, two independent combat stats. Attributes feed skills and rolls — <strong>not</strong> resources. HP, Mana, Stamina, AC and DR are fixed bases modified only by class, progression and equipment.</p>
+<h2>The Four Attributes</h2>
+${SKILL_TREE.map(a => `
+<div class="attr-block" style="--ac:${a.color}">
+  <h3>${a.attr}</h3><p>${a.desc}</p>
+  <div class="skill-chips">${a.skills.map(s => `<span class="chip">${s}</span>`).join("")}</div>
+</div>`).join("")}
+<div class="attr-block" style="--ac:#9aa5b1">
+  <h3>Independent</h3><p>No attribute parent. Trained within the skill budget.</p>
+  <div class="skill-chips">${INDEPENDENT.map(s => `<span class="chip">${s}</span>`).join("")}</div>
+</div>
+<h2>How rolls work</h2>
+<ul>
+<li><strong>Skill check:</strong> 1d20 + effective skill, where <em>effective skill = purchased rank + parent attribute</em>. Accuracy and Initiative use their purchased value alone.</li>
+<li><strong>Difficulty Classes:</strong> 8 (easy) · 10 (routine) · 13 (hard) · 15 (very hard) · 18 (extreme) · 20 (near-impossible). ⚖</li>
+<li><strong>Situational modifiers:</strong> ±1, exceptionally ±2. Stacked bonuses cap at +2. Advantage/disadvantage = 2d20 keep high/low; they do not stack.</li>
+<li><strong>Natural 20:</strong> critical success (a minor extra benefit). <strong>Natural 1:</strong> critical failure (a complication, if risk exists).</li>
+<li><strong>Opposed checks:</strong> higher total wins; ties favor the defender/reactor.</li>
+</ul>
+<h2>Point budgets at creation</h2>
+<table class="rules-table"><tr><th>Budget</th><th>Points</th><th>Notes</th></tr>
+<tr><td>Attributes</td><td>15</td><td>Minimum 0 per attribute; cap 10 points spent per attribute.</td></tr>
+<tr><td>Skills</td><td>35</td><td>Minimum 0; cap 10 points spent per skill (includes Accuracy & Initiative).</td></tr>
+<tr><td>Class / ancestry / background grants</td><td>—</td><td>Added separately; never consume the discretionary budgets.</td></tr></table>
+<h2>Cost ladder (per attribute or skill)</h2>
+<table class="rules-table"><tr><th>Rank bought</th><th>Cost of that point</th><th>Total spent</th></tr>
+${COST_LADDER.map(r => `<tr><td>${r.rank}</td><td>${r.cost}</td><td>${r.total}</td></tr>`).join("")}</table>
+<p class="note">The cap counts <em>points spent</em>, not ranks: with 10 points the highest purchasable rank is <strong>+5</strong> (9 points); the 10th point cannot buy +6 (cost 3). The +8 row exists only for earned progression beyond the creation cap. ⚖</p>
+<h2>Design note — why attributes don't scale resources</h2>
+<p>This system deliberately departs from the Combat Core draft formulas (<code>HP = 50 + 5·Body…</code>). The approved chassis is flat — HP 100, Mana 50, Stamina 75, AC 10, DR 1 — and class identity, not attribute arithmetic, decides survivability. The two evasion defenses (<strong>Dodge Defense</strong>, <strong>Spell Defense</strong>) remain attribute-driven, exactly as in the Combat Core document, because they are roll targets, not resources.</p>
+`};
+
+PAGES["rules-creation"] = {
+  title: "Character Creation", section: "The Rules",
+  body: `
+<p class="lede">Creation is sequential and dependency-ordered: identity → ancestry → class → background → optional choices → budgets → allocation → review → save. Fixed grants apply automatically; the player only spends what is genuinely discretionary.</p>
+<h2>The Sequence</h2>
+<ol class="steps">
+<li><strong>Identity.</strong> Name and concept. No mechanics yet.</li>
+<li><strong>Ancestry.</strong> Human is the prototype baseline (no modifiers). Other ancestries are GM-gated. A "Touched" bloodline (narrative only) is the usual doorway into Skinwalker lore.</li>
+<li><strong>Base class.</strong> Occultist, Skinwalker or Landsworn. Apply the trait, Initiate ability, proficiencies and stat deltas automatically.</li>
+<li><strong>Background.</strong> One of the five below. Fixed grants; overlap with class grants follows the stacking rule (highest wins, no double-dip).</li>
+<li><strong>Optional choices.</strong> Only genuine decisions: home terrain (Landsworn & Land-crossed), favored prey (Hunter), one permitted piece of equipment.</li>
+<li><strong>Budgets.</strong> 15 attribute points, 35 skill points — calculated <em>after</em> all fixed grants.</li>
+<li><strong>Allocation.</strong> Cost ladder enforced; caps enforced; overspend rejected.</li>
+<li><strong>Review & save.</strong> Summary of every grant's origin (ancestry / class / background / optional / discretionary). Changing an earlier choice rebuilds the sheet — no residual bonuses.</li>
+</ol>
+<h2>Backgrounds (provisional ⚖)</h2>
+<table class="rules-table"><tr><th>Background</th><th>Fixed grants</th><th>Narrative benefit</th></tr>
+${BACKGROUNDS.map(b => `<tr><td>${b.name}</td><td>${b.grants}</td><td>${b.note}</td></tr>`).join("")}</table>
+<h2>The Universal Chassis</h2>
+<table class="rules-table"><tr><th>Stat</th><th>Base</th><th>Modified by</th></tr>
+<tr><td>HP</td><td>100</td><td>Class + progression + hybrid + level + Dark Gifts</td></tr>
+<tr><td>Mana</td><td>50</td><td>Class + progression + hybrid + level</td></tr>
+<tr><td>Stamina</td><td>75</td><td>Class + progression + hybrid + level</td></tr>
+<tr><td>Armor Class</td><td>10</td><td>Class + armor</td></tr>
+<tr><td>Damage Reduction</td><td>1</td><td>Class + armor</td></tr>
+<tr><td>Accuracy</td><td>+1</td><td>Levels 4 & 8 (+1 each)</td></tr>
+<tr><td>Action Points</td><td>2 / turn</td><td>—</td></tr>
+<tr><td>Movement Points</td><td>1 / turn</td><td>Class abilities (e.g., Moon-Fury)</td></tr>
+<tr><td>Special Actions</td><td>1 / turn</td><td>—</td></tr>
+<tr><td>Fear</td><td>0 / 100</td><td>Events, abilities, recovery</td></tr>
+<tr><td>Sanity</td><td>100 / 100</td><td>Rites, knowledge, recovery</td></tr>
+<tr><td>Corruption</td><td>0 / 100</td><td>Shifts, gifts, choices, atonement</td></tr></table>
+<p class="note">Resources display as current/max (e.g. <code>80/80</code>). Players may edit visible values; turn counters, cooldowns and internal ledgers are protected. There is no automatic regeneration of HP, Mana or Stamina at turn start.</p>
+<h2>Worked example — Inquisitor of the Lantern</h2>
+<p>Human (no mods) → <strong>Occultist</strong> (HP 100, Mana 80, Stamina 60, AC 10, DR 1) → background <strong>Scholar</strong> (+1 Deciphering, +1 Alchemy) → <strong>15 attribute points:</strong> Body 2 (cost 2), Agility 2 (2), Fortitude 5 (9), Charisma 2 (2) = 15 exactly. → <strong>35 skill points:</strong> Willpower +4 (6), Intimidation +3 (4), Binding +3 (4), Deciphering +3 (4), Perception +3 (4), Accuracy +3 (4), Initiative +2 (2), First Aid +2 (2), Stealth +2 (2), Alchemy +1 (1), Sense Motive +1 (1), Eavesdropping +1 (1) = 35 exactly.</p>
+<p>Final sheet: effective Willpower 9, Binding 8, Deciphering 9 (8 + background), Accuracy +4 (base +1, bought +3), Dodge Defense 4, Spell Defense 6. At level 2 the Inquisitor path adds +10 HP and +10 Mana automatically — no points spent.</p>
+<p class="note">The <a href="#/tools-forge">Character Forge</a> enforces all of this automatically — budgets, ladder, caps and class deltas — so no player ever does this arithmetic by hand.</p>
+`};
+
+PAGES["rules-combat"] = {
+  title: "Combat", section: "The Rules",
+  body: `
+<p class="lede">Player-resolved combat: one d20 attack roll against fixed defenses, damage rolled only after a hit, DR subtracted once, cooldowns counted in personal turns. No GM is required to adjudicate hits, damage or costs.</p>
+<h2>The Turn</h2>
+<table class="rules-table"><tr><th>Pool</th><th>Per turn</th><th>Spent on</th></tr>
+<tr><td>Action Points</td><td>2</td><td>Common actions: attacks, most abilities (1 AP each)</td></tr>
+<tr><td>Movement Points</td><td>1</td><td>One movement opportunity: 5 tiles ⚖ + 1 Stamina</td></tr>
+<tr><td>Special Actions</td><td>1</td><td>Master-tier / heavy abilities (1 SP + resources)</td></tr></table>
+<p>Common and special pools are separate: a turn can hold two common actions, one special and one movement, resources permitting. The first personal turn is 1. Re-opening an already-active turn never refreshes pools.</p>
+<h2>Rounds & Initiative</h2>
+<p>Initiative: 1d20 + Initiative, rolled once; the order is fixed for the whole combat. A <strong>round</strong> completes when the last combatant in the list ends their turn and the first begins again. Joining mid-round adds you to the list; you are counted from the next round. Cooldowns count <em>personal turns</em>, never rounds or minutes.</p>
+<h2>The Three Defenses</h2>
+<table class="rules-table"><tr><th>Defense</th><th>Formula</th></tr>
+<tr><td>Armor Class</td><td>10 + class bonuses + armor (fixed; no attribute scaling)</td></tr>
+<tr><td>Dodge Defense</td><td>Agility + ⌊Fortitude/2⌋ + ⌊Body/3⌋ + class bonuses</td></tr>
+<tr><td>Spell Defense</td><td>Fortitude + ⌊Body/2⌋ + ⌊Agility/3⌋ + class bonuses</td></tr></table>
+<p>Each fractional contribution floors separately — only complete blocks grant points. The defender never rolls a second die.</p>
+<h2>What the attack compares against</h2>
+<p><code>Attack = 1d20 + Accuracy</code>. The attacker never chooses the lower defense; ties favor the defender; outside critical exceptions the attack must <em>exceed</em> the defense.</p>
+<table class="rules-table"><tr><th>Category</th><th>Defense used</th></tr>
+${DEFENSE_RULES.map(d => `<tr><td>${d.cat}</td><td>${d.def}</td></tr>`).join("")}</table>
+<h2>Damage</h2>
+<table class="rules-table"><tr><th>Attack</th><th>Gross damage</th><th>Cost</th><th>Range</th></tr>
+${WEAPON_RULES.map(w => `<tr><td>${w.attack}</td><td><code>${w.gross}</code></td><td>${w.cost}</td><td>${w.range}</td></tr>`).join("")}</table>
+<ul>
+<li><strong>Normal hit:</strong> <code>final = max(0, gross − DR)</code>.</li>
+<li><strong>Critical (natural 20):</strong> <code>final = max(0, 2 × gross − DR)</code> — the whole damage package doubles, including its bonus; DR is subtracted once, after.</li>
+<li><strong>Natural 1:</strong> automatic miss. Critical-failure punishments are deferred to the buff/debuff phase.</li>
+<li>DR above damage never heals. The report distinguishes gross damage from effective HP loss. One damage roll feeds both the HP deduction and the chat text.</li>
+</ul>
+<h2>The Offensive Sequence</h2>
+<ol class="steps">${COMBAT_PIPELINE.map(s => `<li>${s}</li>`).join("")}</ol>
+<p class="note">A blocked attempt (insufficient resources, out of range, on cooldown) consumes nothing. An executed attack that misses consumes its costs normally. No ammunition is tracked. There is no line-of-sight check — participant common sense governs.</p>
+<h2>Rest (during combat)</h2>
+<p>Rest replaces the entire turn. Requirements: your turn, conscious, no common/special/movement action used yet. Effects: <strong>+16 Mana, +16 Stamina</strong> (⌊50/3⌋), capped at effective maxima; no HP recovery; all pools exhausted; no second Rest that turn; end the turn manually. <strong>Triad addition:</strong> Rest also reduces Fear by 10. ⚖</p>
+<h2>Cooldowns</h2>
+<table class="rules-table"><tr><th>Cooldown</th><th>Used on turn 1</th><th>Next use</th></tr>
+<tr><td>2</td><td>Turn 1</td><td>Turn 3</td></tr><tr><td>3</td><td>Turn 1</td><td>Turn 4</td></tr><tr><td>4</td><td>Turn 1</td><td>Turn 5</td></tr></table>
+<p class="note">RPR limitation (documented): the <code>SpellDef</code> cooldown field is real-time, not turns. Personal-turn cooldowns require a script-side counter. Basic attacks have no cooldown; Magic Bolt costs Mana only.</p>
+<h2>Defeat</h2>
+<p>0 HP grants <strong>Unconscious</strong>: no attacks, movement or Rest. 0 HP is not automatic permanent death — the Resolution phase (injuries of the defeated, progression of the victor) is a later module. Fear 100 can also end a fight without a single wound.</p>
+`};
+
+PAGES["rules-horror"] = {
+  title: "The Three Horrors", section: "The Rules",
+  body: `
+<p class="lede">Fear, Sanity and Corruption — three tracks, each 0–100, each with three thresholds. Fear is the moment; Sanity is the knowledge; Corruption is the choice. Horror changes decisions, not just numbers.</p>
+${HORROR_TRACKS.map(t => `
+<div class="track-block" style="--tc:${t.color}">
+  <h2>${t.name} <span class="track-axis">${t.axis}</span></h2>
+  <p class="track-triad">${t.triad} Starts at <strong>${t.start}</strong>, ${t.dir} toward ${t.dir === "rises" ? "100" : "0"}.</p>
+  <table class="rules-table"><tr><th>Threshold</th><th>State</th><th>Effect</th></tr>
+  ${t.thresholds.map(th => `<tr><td>${th.at}</td><td><strong>${th.name}</strong></td><td>${th.effect}</td></tr>`).join("")}</table>
+  <p><strong>Gains:</strong> ${t.gains}</p>
+  <p><strong>Recovery:</strong> ${t.recovery}</p>
+</div>`).join("")}
+<h2>Steady Yourself</h2>
+<p>Any character may spend their Special Action to steady: Willpower DC 13, success reduces Fear by 10. Allies can help — a Medium's Séance Whisper, a Guardian's Anchor, a Hunter's completed Long Hunt.</p>
+<h2>Dark Gifts</h2>
+<p>The Dark Powers bargain. A Dark Gift is real power with a real price: always <strong>+10 Corruption</strong>, always a narrative debt, always GM-approved. Three canonical examples: ⚖</p>
+<table class="rules-table"><tr><th>Gift</th><th>Triad</th><th>Power</th><th>Price</th></tr>
+${DARK_GIFTS.map(g => `<tr><td><strong>${g.name}</strong></td><td>${TRIAD[g.triad].name}</td><td>${g.gift}</td><td>${g.price}</td></tr>`).join("")}</table>
+<h2>Design principles</h2>
+<ul>
+<li><strong>Agency first:</strong> thresholds penalize and complicate; they rarely remove control outright, and never without a roll or a choice.</li>
+<li><strong>Triad symmetry:</strong> each base class masters one track and risks another; hybrids live on two tracks at once.</li>
+<li><strong>Recovery is narrative:</strong> safety, anchors, atonement and completed hunts — not waiting out a timer.</li>
+<li><strong>The Mists are watching:</strong> Corruption ≥ 90 and Sanity ≤ 10 draw Darklord attention (a later-module hook, per the orchestration plan).</li>
+</ul>
+`};
+
+PAGES["rules-progression"] = {
+  title: "Progression & the Rite of Crossing", section: "The Rules",
+  body: `
+<p class="lede">Levels 1–10, earned by milestones — never by grinding. Each class track (base, progression, hybrid) has three ranks: <strong>Initiate → Adept → Master</strong>. The Turning is optional, costly, and witnessed.</p>
+<h2>The Ladder</h2>
+<table class="rules-table"><tr><th>Level</th><th>Grant</th></tr>
+${LEVEL_LADDER.map(l => `<tr><td>${l.level}</td><td>${l.grant}</td></tr>`).join("")}</table>
+<p class="note">"Primary resource" = Mana for the Veil, Stamina for the Blood and the Land. Hybrids keep their base class's primary. Earned discretionary points: +2 skill points per level, +1 attribute point every even level. ⚖ Milestone awards are idempotent — one grant per source per scene/day, ledgered.</p>
+<h2>Choosing a Progression (level 2)</h2>
+<p>Each base class offers three paths. The choice is narrative as well as mechanical: an Occultist becomes Inquisitor, Scholar or Medium; a Skinwalker becomes Wolfbound, Ravenkin or Wanderer; a Landsworn becomes Hunter, Guardian or Mistwalker. Path traits and abilities stack on top of the base class — nothing is replaced.</p>
+<h2>The Rite of Crossing (level 4+)</h2>
+<p>A hybrid is a progression fused with a <em>different</em> triad member. Requirements:</p>
+<ul>
+<li>Level 4+ and your path's <strong>Adept</strong> ability unlocked.</li>
+<li>Partner's key skill at <strong>+3 or better</strong> — Veil: Deciphering or Willpower · Blood: Athletics or Stealth · Land: Perception or Willpower.</li>
+<li>A <strong>narrative crossing event</strong> (a vigil, a bite, a burial, a séance — played out, not declared).</li>
+<li><strong>GM/administrator approval</strong> and a ledger entry. One crossing per character, ever.</li>
+</ul>
+<p>The crossing grants the partner base's <strong>trait</strong> plus the hybrid track (Initiate at the crossing, Adept at 7, Master at 9). The price is paid immediately:</p>
+<table class="rules-table"><tr><th>Crossing into…</th><th>Price</th><th>Why</th></tr>
+${Object.entries(CROSSING_COSTS).map(([k, v]) => `<tr><td>${TRIAD[k].name}</td><td><strong>${v.delta}</strong></td><td>${v.text}</td></tr>`).join("")}</table>
+<h2>The Nine Crossings</h2>
+<table class="rules-table"><tr><th>Progression</th><th>×</th><th>Partner</th><th>Hybrid</th><th>Turning</th></tr>
+${HYBRIDS.map(h => {
+  const p = CLASS_BY_ID[h.parent];
+  const greater = (p.triad === "veil" && h.partner === "land") || (p.triad === "land" && h.partner === "blood") || (p.triad === "blood" && h.partner === "veil");
+  return `<tr><td><a href="#/class-${p.id}">${p.name}</a></td><td>×</td><td>${TRIAD[h.partner].name}</td><td><a href="#/class-${h.id}">${h.name}</a></td><td>${greater ? "Greater" : "Lesser"}</td></tr>`;
+}).join("")}</table>
+<h2>Anti-abuse rails (per project plan)</h2>
+<ul>
+<li>No farm/grind: points come from milestones, once per source per scene/day.</li>
+<li>Stacked situational bonuses cap at +2; conditions do not stack by default (refresh or escalate).</li>
+<li>Every grant has one origin; changing a choice rebuilds the sheet (idempotency guard).</li>
+<li>Retrain: once per major milestone, GM-approved, ledgered.</li>
+</ul>
+`};
+
+PAGES["appendix-weapons"] = {
+  title: "Weapons & Armor", section: "Appendix",
+  body: `
+<p class="lede">Damage profiles follow the Combat Core document exactly. Gothic tags (silver, blessed, cold iron) add small, capped bonuses against the right horror — preparation beats power.</p>
+<h2>Attack profiles</h2>
+<table class="rules-table"><tr><th>Attack</th><th>Gross damage</th><th>Cost</th><th>Range</th></tr>
+${WEAPON_RULES.map(w => `<tr><td>${w.attack}</td><td><code>${w.gross}</code></td><td>${w.cost}</td><td>${w.range}</td></tr>`).join("")}</table>
+<h2>Weapon tags ⚖</h2>
+<table class="rules-table"><tr><th>Tag</th><th>Effect</th></tr>
+${WEAPON_TAGS.map(t => `<tr><td><strong>${t.tag}</strong></td><td>${t.effect}</td></tr>`).join("")}</table>
+<h2>Armor ⚖</h2>
+<table class="rules-table"><tr><th>Armor</th><th>AC</th><th>DR</th><th>Penalty</th></tr>
+${ARMOR_RULES.map(a => `<tr><td>${a.armor}</td><td>${a.ac}</td><td>${a.dr}</td><td>${a.penalty}</td></tr>`).join("")}</table>
+<p class="note">Armor proficiency is granted by class (see each class page). Wearing armor you lack proficiency in: its AC bonus is halved and its Stealth penalty doubles. Equipment bonuses to defenses were left open in the Combat Core; the values above are the Triad proposal, marked calibratable.</p>
+<h2>Signature weapons by class</h2>
+<table class="rules-table"><tr><th>Class</th><th>Triad</th><th>Signature weapons</th></tr>
+${CLASSES.map(c => `<tr><td><a href="#/class-${c.id}">${c.name}</a></td><td>${TRIAD[c.triad].name}</td><td>${c.weapons.map(w => w.name).join(" · ")}</td></tr>`).join("")}</table>
+`};
+
+PAGES["appendix-glossary"] = {
+  title: "Glossary", section: "Appendix",
+  body: `
+<p class="lede">Every term of art in the Triad system, alphabetized for the table.</p>
+<table class="rules-table glossary"><tr><th>Term</th><th>Meaning</th></tr>
+${[...GLOSSARY].sort((a, b) => a[0].localeCompare(b[0])).map(g => `<tr><td><strong>${g[0]}</strong></td><td>${g[1]}</td></tr>`).join("")}</table>
+`};
+
+PAGES["appendix-design"] = {
+  title: "Design Notes & Sources", section: "Appendix",
+  body: `
+<p class="lede">What was decided, what was inherited, and what remains calibratable — the audit trail behind the Triad system.</p>
+<h2>Approved decisions (this consolidation)</h2>
+<table class="rules-table"><tr><th>Question</th><th>Decision</th></tr>
+<tr><td>Structure</td><td>Literal triads: 3 base classes × 3 progressions = 9 paths; each path has its own hybrid → 9 hybrids. <strong>21 class entries.</strong></td></tr>
+<tr><td>Stats</td><td>Fixed chassis (HP 100 / Mana 50 / Stamina 75 / AC 10 / DR 1). Only class, progression, hybrid, level and equipment modify them. Attributes feed skills and rolls, not resources.</td></tr>
+<tr><td>Horror</td><td>Triad of tracks: Fear 0–100 (acute), Sanity 100→0 (psychic), Corruption 0–100 (moral), three thresholds each.</td></tr>
+<tr><td>Legacy classes</td><td>All six names from the orchestration plan reused as progressions (mapping below).</td></tr>
+<tr><td>Deliverable</td><td>Full rulebook wiki in English + interactive tools (Character Forge, Compare, Dice).</td></tr></table>
+<h2>Legacy class mapping</h2>
+<table class="rules-table"><tr><th>Plan name (pt-BR)</th><th>Triad name (en)</th><th>Position</th></tr>
+<tr><td>Caçador</td><td><a href="#/class-hunter">Hunter</a></td><td>Landsworn progression</td></tr>
+<tr><td>Inquisidor</td><td><a href="#/class-inquisitor">Inquisitor</a></td><td>Occultist progression</td></tr>
+<tr><td>Erudito</td><td><a href="#/class-scholar">Scholar</a></td><td>Occultist progression</td></tr>
+<tr><td>Médium</td><td><a href="#/class-medium">Medium</a></td><td>Occultist progression</td></tr>
+<tr><td>Guardião</td><td><a href="#/class-guardian">Guardian</a></td><td>Landsworn progression</td></tr>
+<tr><td>Errante</td><td><a href="#/class-wanderer">Wanderer</a></td><td>Skinwalker progression (Burden/surge identity preserved)</td></tr></table>
+<p class="note">Implementation hook: <code>PROG_Class_*</code> FlowChart GUIDs from the orchestration plan map 1:1 to progression IDs; bases and hybrids extend the same namespace (e.g. <code>PROG_Class_Occultist</code>, <code>PROG_Class_Sanctifier</code>).</p>
+<h2>Inherited from the source documents</h2>
+<ul>
+<li><strong>Sistema_de_Combate_Regras.md:</strong> attribute/skill tree (verbatim), d20 + Accuracy vs fixed defenses, defense categories, damage profiles, crit ×2 then DR once, AP 2 / Mov 1 / SP 1, Rest +16/+16, personal-turn cooldowns, ranges 1.5 / 10 tiles, Unconscious at 0 HP, 15/35 budgets and the cost ladder, RPR cooldown-field limitation.</li>
+<li><strong>Ravenloft RPR Project Plan.md:</strong> sequential creation workflow, grant-origin accounting, no duplicate benefits, rebuild-on-change, low starting power, magic with a price.</li>
+<li><strong>Plano de Orquestração:</strong> DC ladder 8–20, +2 bonus cap, milestone/idempotent progression, levels 1–10, calibration doctrine (⚖), the six legacy class identities, horror-as-decisions.</li>
+<li><strong>FlowChart Composition Blueprint:</strong> data-driven catalog structure — this wiki's class data is exported as JSON for direct reuse in <code>SYS_TableLookup</code> defs.</li>
+</ul>
+<h2>Deliberate departures</h2>
+<ul>
+<li>Resource formulas rebased to the flat chassis (approved). Dodge/Spell Defense remain attribute-driven (they are roll targets, not resources).</li>
+<li>Fear/Sanity/Corruption rescaled to 0–100 with three thresholds each (approved), replacing Stress 0–6 / Medo 0–2 / Sanidade 0–10 / Corrupção 0–3.</li>
+<li>Rest additionally reduces Fear by 10 (Triad addition, ⚖).</li>
+<li>Magic Bolt priced at 4 Mana (3 for Veil workers) — the Combat Core left the cost open. ⚖</li>
+</ul>
+<h2>Still open (later modules, per plan)</h2>
+<p>Buffs/debuffs and class mutators · vampirism & full lycanthropy as ancestries · equipment bonus catalog · Resolution phase (injuries, victory progression) · social combat comparisons · Darklord attention & domain profiles · RPR runtime validation gates (F0: persistence, events, dice capture, sheet writes, concurrency). Nothing in this wiki claims runtime validation; all automation claims remain provisional until DevKit evidence exists.</p>
+`};
+</script>
+<script>/* ============================================================
+   RAVENLOFT — THE TRIAD SYSTEM · WIKI APPLICATION
+   Single-file, no network dependencies. Hash router + search
+   + Character Forge + Compare + Dice.
+   ============================================================ */
+
+/* ---------- navigation ---------- */
+const NAV = [
+  { section: "Welcome", items: [["home", "The Triad System"]] },
+  { section: "The Setting", items: [["lore-cosmology", "The Veil, the Blood & the Land"], ["lore-orders", "The Three Orders"]] },
+  { section: "The Rules", items: [["rules-attributes", "Attributes & Skills"], ["rules-creation", "Character Creation"], ["rules-combat", "Combat"], ["rules-horror", "The Three Horrors"], ["rules-progression", "Progression & Crossing"]] },
+  { section: "The Classes", items: [["classes-index", "All 21 Classes"]] },
+  { section: "Tools", items: [["tools-forge", "Character Forge"], ["tools-compare", "Compare Classes"], ["tools-dice", "Dice Roller"]] },
+  { section: "Appendix", items: [["appendix-weapons", "Weapons & Armor"], ["appendix-abilities", "Ability Index"], ["appendix-glossary", "Glossary"], ["appendix-design", "Design Notes & Sources"]] }
+];
+/* class groups injected into nav after "All 21 Classes" */
+function buildNav() {
+  const groups = [
+    { triad: "veil", label: "The Veil · Occultism" },
+    { triad: "blood", label: "The Blood · Shapeshifters" },
+    { triad: "land", label: "The Land · Terrain" }
+  ];
+  const classSections = groups.map(g => {
+    const base = CLASSES.find(c => c.kind === "base" && c.triad === g.triad);
+    const items = [["class-" + base.id, base.name + " (base)"]];
+    PATHS.filter(p => p.parent === base.id).forEach(p => {
+      items.push(["class-" + p.id, "→ " + p.name]);
+      const h = HYBRIDS.find(h => h.parent === p.id);
+      if (h) items.push(["class-" + h.id, "⇢ " + h.name + " (hybrid)"]);
+    });
+    return { section: g.label, color: TRIAD[g.triad].color, items };
+  });
+  const idx = NAV.findIndex(n => n.section === "The Classes");
+  NAV.splice(idx + 1, 0, ...classSections);
+}
+buildNav();
+
+/* ---------- helpers ---------- */
+const $ = sel => document.querySelector(sel);
+const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const strip = html => String(html).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+function chip(txt, cls) { return `<span class="chip ${cls || ""}">${txt}</span>`; }
+function statDelta(v) { return v === 0 ? "" : (v > 0 ? "+" + v : String(v)); }
+function lineage(c) {
+  if (c.kind === "base") return [c];
+  if (c.kind === "path") return [CLASS_BY_ID[c.parent], c];
+  return [CLASS_BY_ID[CLASS_BY_ID[c.parent].parent], CLASS_BY_ID[c.parent], c];
+}
+function lineageTotals(c) {
+  const t = { ...CHASSIS };
+  lineage(c).forEach(k => { Object.keys(k.stats).forEach(s => t[s] += k.stats[s]); });
+  return t;
+}
+function levelBonuses(c, level) {
+  const primary = CLASS_BY_ID[lineage(c)[0].id].primary;
+  const b = { hp: 0, mana: 0, stamina: 0, acc: 0 };
+  [3, 5, 7, 9].forEach(l => { if (level >= l) { b.hp += 5; b[primary] += 5; } });
+  [4, 8].forEach(l => { if (level >= l) b.acc += 1; });
+  if (level >= 10) { b.hp += 10; b[primary] += 10; }
+  return b;
+}
+function fullTotals(c, level) {
+  const t = lineageTotals(c);
+  const b = levelBonuses(c, level);
+  t.hp += b.hp; t.mana += b.mana; t.stamina += b.stamina; t.acc += b.acc;
+  return t;
+}
+const KIND_LABEL = { base: "Base Class", path: "Progression", hybrid: "Hybrid Class" };
+
+/* ---------- sigil SVG ---------- */
+const SIGIL = `<svg viewBox="0 0 120 120" class="sigil" aria-hidden="true">
+  <defs><radialGradient id="sg" cx="50%" cy="45%" r="60%">
+    <stop offset="0%" stop-color="#2a2438"/><stop offset="100%" stop-color="#0b0a10"/>
+  </radialGradient></defs>
+  <circle cx="60" cy="60" r="56" fill="url(#sg)" stroke="#4a4258" stroke-width="1.5"/>
+  <path d="M60 18 L98 86 L22 86 Z" fill="none" stroke="#6f6486" stroke-width="1.5"/>
+  <circle cx="60" cy="18" r="7" fill="none" stroke="#8b7bd8" stroke-width="1.5"/>
+  <circle cx="60" cy="18" r="2.4" fill="#8b7bd8"/>
+  <path d="M94 82 a7 7 0 1 0 8 8 a5.4 5.4 0 1 1 -8 -8" fill="#c0392f"/>
+  <rect x="17" y="80" width="10" height="13" rx="2" fill="none" stroke="#8a9a5b" stroke-width="1.5"/>
+  <line x1="22" y1="83" x2="22" y2="90" stroke="#8a9a5b" stroke-width="1.2"/>
+  <circle cx="60" cy="63" r="3" fill="#d8cfc0" opacity="0.85"/>
+  <path d="M60 40 L60 60 M48 74 L57 65 M72 74 L63 65" stroke="#4a4258" stroke-width="1"/>
+</svg>`;
+
+/* ---------- page renderers ---------- */
+function renderHome() {
+  const counts = { base: BASES.length, path: PATHS.length, hybrid: HYBRIDS.length, abilities: CLASSES.length * 3 };
+  return `
+<div class="hero">
+  ${SIGIL}
+  <p class="kicker">A Ravenloft-inspired d20 system · Conan Exiles · Tot! Roleplay Redux</p>
+  <h1>The Triad System</h1>
+  <p class="hero-sub">Three wounds. Three orders. Three prices.<br>
+  <strong>The Veil</strong> of occultism · <strong>The Blood</strong> of shapeshifters · <strong>The Land</strong> of terrain.</p>
+  <div class="hero-stats">
+    <div><b>${counts.base}</b><span>base classes</span></div>
+    <div><b>${counts.path}</b><span>progressions</span></div>
+    <div><b>${counts.hybrid}</b><span>hybrid classes</span></div>
+    <div><b>${counts.abilities}</b><span>abilities</span></div>
+    <div><b>3</b><span>horror tracks</span></div>
+  </div>
+</div>
+<div class="triad-cards">
+  ${Object.values(TRIAD).map(t => {
+    const base = CLASS_BY_ID[t.base];
+    const paths = PATHS.filter(p => p.parent === base.id);
+    return `<a class="triad-card link" href="#/class-${base.id}" style="--tc:${t.color}">
+      <h3>${t.name}</h3><p class="axis">${t.axis} · pays in ${t.horror}</p>
+      <p>${t.blurb}</p>
+      <p class="triad-line"><strong>${base.name}</strong> → ${paths.map(p => p.name).join(" · ")}</p>
+      <p class="triad-motto">“${t.motto}”</p>
+    </a>`;
+  }).join("")}
+</div>
+<h2>How the system fits together</h2>
+<p>Every character begins as one of three <strong>base classes</strong>. At level 2 they choose one of three <strong>progressions</strong> — nine paths in total, preserving the six legacy archetypes (Hunter, Inquisitor, Scholar, Medium, Guardian, Wanderer). From level 4, a costly and witnessed <strong>Rite of Crossing</strong> can fuse a progression with a different triad member, producing one of nine <strong>hybrid classes</strong>. 3 × 3 × 3: the triad all the way down.</p>
+<p>Combat is the project's player-resolved d20 engine: fixed defenses, damage after the hit, DR once, personal-turn cooldowns. Horror is three 0–100 tracks — <strong>Fear</strong>, <strong>Sanity</strong>, <strong>Corruption</strong> — each with three thresholds. Magic is rare, costly, and watched.</p>
+<div class="quick-links">
+  <a href="#/rules-creation">Create a character →</a>
+  <a href="#/classes-index">Browse all 21 classes →</a>
+  <a href="#/tools-forge">Open the Character Forge →</a>
+  <a href="#/rules-horror">Read the Three Horrors →</a>
+</div>
+<blockquote class="lore-quote">"I do not open doors. I only read what is written on them."<cite>— Mother Ilvane, Lantern-Keeper of Vallaki</cite></blockquote>`;
+}
+
+function renderClassesIndex() {
+  const fam = triad => {
+    const base = CLASS_BY_ID[TRIAD[triad].base];
+    const rows = PATHS.filter(p => p.parent === base.id).map(p => {
+      const h = HYBRIDS.find(h => h.parent === p.id);
+      return `<tr>
+        <td><a href="#/class-${p.id}"><strong>${p.name}</strong></a><br><span class="dim">${p.epithet}</span></td>
+        <td>${p.role}</td>
+        <td><a href="#/class-${h.id}"><strong>${h.name}</strong></a><br><span class="dim">× ${TRIAD[h.partner].name}</span></td>
+        <td>${h.role}</td></tr>`;
+    }).join("");
+    return `<div class="family" style="--tc:${TRIAD[triad].color}">
+      <h2><a href="#/class-${base.id}">${base.name}</a> <span class="dim">— ${TRIAD[triad].name} · ${TRIAD[triad].axis}</span></h2>
+      <p>${base.role} · primary resource: <strong>${base.primary === "mana" ? "Mana" : "Stamina"}</strong> · key attributes: ${base.attributes.join(", ")}</p>
+      <table class="rules-table"><tr><th>Progression</th><th>Role</th><th>Its hybrid</th><th>Role</th></tr>${rows}</table>
+    </div>`;
+  };
+  return `<p class="lede">Twenty-one entries in strict triads: 3 base classes, each with 3 progressions, each progression with its own hybrid. Every hybrid keeps its full lineage and adds the partner's trait plus three fusion abilities.</p>
+  ${fam("veil")}${fam("blood")}${fam("land")}
+  <h2>The Turning at a glance</h2>
+  <p><strong>Greater Turning</strong> (twice each): Veil→Land (Sanctifier, Gravebound) · Land→Blood (Bearwarden, Mistshroud) · Blood→Veil (Moonbinder, Doomwing).<br>
+  <strong>Lesser Turning</strong> (once each): Veil→Blood (Chimerist) · Blood→Land (Landwight) · Land→Veil (Hexhunter).</p>
+  <p>Each base is the source of three hybrids and the partner of three hybrids — perfect triadic balance. See <a href="#/rules-progression">the Rite of Crossing</a> for requirements and prices.</p>`;
+}
+
+function statTable(c) {
+  const keys = [["hp", "HP"], ["mana", "Mana"], ["stamina", "Stamina"], ["ac", "AC"], ["dr", "DR"], ["dodge", "Dodge Def"], ["acc", "Accuracy"]];
+  const lin = lineage(c);
+  const totals = lineageTotals(c);
+  if (c.kind === "base") {
+    return `<table class="rules-table stat-table"><tr><th>HP</th><th>Mana</th><th>Stamina</th><th>AC</th><th>DR</th><th>Accuracy</th></tr>
+      <tr class="totals">${["hp", "mana", "stamina", "ac", "dr"].map(k => `<td>${totals[k]}</td>`).join("")}<td>+${CHASSIS.acc}</td></tr></table>
+      <p class="note">Universal chassis 100 / 50 / 75 / 10 / 1, modified by this class. Dodge & Spell Defense are attribute-driven (see <a href="#/rules-combat">Combat</a>). Accuracy starts at +1.</p>`;
+  }
+  const deltas = keys.filter(([k]) => c.stats[k] !== 0).map(([k, label]) => chip(label + " " + statDelta(c.stats[k]), "delta")).join(" ");
+  return `<p><strong>Adds to the lineage:</strong> ${deltas || "no stat changes"}</p>
+    <table class="rules-table stat-table"><tr><th>HP</th><th>Mana</th><th>Stamina</th><th>AC</th><th>DR</th><th>Dodge</th></tr>
+    <tr class="totals">${["hp", "mana", "stamina", "ac", "dr", "dodge"].map(k => `<td>${totals[k]}</td>`).join("")}</tr></table>
+    <p class="note">Totals shown for the full lineage (${lin.map(k => k.name).join(" + ")}) at level 1, before armor. Use the <a href="#/tools-forge">Character Forge</a> for any level.</p>`;
+}
+
+function abilityCard(a) {
+  return `<div class="ability ${a.type === "Special" ? "special" : ""}">
+    <div class="ability-head"><span class="rank">${a.rank}</span><h3>${a.name}</h3><span class="atype">${a.type}</span></div>
+    <div class="ability-meta">${chip(a.cost, "cost")}${a.cd ? chip("CD " + a.cd + " turns", "cd") : chip("No cooldown", "cd")}${chip(a.range, "range")}</div>
+    <p>${a.effect}</p>
+    ${a.horror ? `<p class="horror-line">☩ ${a.horror}</p>` : ""}
+    <p class="flavor">“${a.flavor}”</p>
+  </div>`;
+}
+
+function renderClass(c) {
+  const t = TRIAD[c.triad];
+  const lin = lineage(c);
+  const crumb = lin.map(k => `<a href="#/class-${k.id}">${k.name}</a>`).join(" <span class='dim'>→</span> ");
+  const partner = c.kind === "hybrid" ? TRIAD[c.partner] : null;
+  const crossing = c.kind === "hybrid" ? CROSSING_COSTS[c.partner] : null;
+  const siblings = c.kind === "base"
+    ? PATHS.filter(p => p.parent === c.id)
+    : c.kind === "path" ? PATHS.filter(p => p.parent === c.parent && p.id !== c.id) : [];
+  const ownHybrid = c.kind === "path" ? HYBRIDS.find(h => h.parent === c.id) : null;
+  const bornHybrids = c.kind === "base" ? HYBRIDS.filter(h => CLASS_BY_ID[h.parent].parent === c.id) : [];
+  const received = c.kind === "base" ? HYBRIDS.filter(h => h.partner === c.triad) : [];
+
+  return `
+<div class="class-hero" style="--tc:${t.color}">
+  <div class="class-badges">${chip(t.name + " · " + t.axis, "triad-badge")}${chip(KIND_LABEL[c.kind], "kind-badge")}</div>
+  <h1>${c.name}</h1>
+  <p class="epithet">${c.epithet}${c.kind === "hybrid" ? ` · ${CLASS_BY_ID[c.parent].name} × ${CLASS_BY_ID[partner.base].name}` : ""}</p>
+  <p class="role-line">${c.role} · primary resource: <strong>${c.primary === "mana" ? "Mana" : "Stamina"}</strong> · lineage: ${crumb}</p>
+</div>
+${c.kind === "hybrid" ? `<div class="crossing-box" style="--tc:${partner.color}">
+  <strong>The Turning:</strong> crossed into <strong>${partner.name}</strong> — price paid: <strong>${crossing.delta}</strong>. ${crossing.text}
+  Requires path Adept, partner key skill +3, a played crossing event and GM approval. <a href="#/rules-progression">Full rite →</a>
+</div>` : ""}
+<h2>Stats</h2>
+${statTable(c)}
+<h2>Trait — ${c.trait.name}</h2>
+<div class="trait-card" style="--tc:${t.color}"><p>${c.trait.text}</p></div>
+<h2>Abilities</h2>
+<p class="note">Unlocked by rank: ${c.kind === "base" ? "Initiate L1 · Adept L3 · Master L5" : c.kind === "path" ? "Initiate L2 · Adept L4 · Master L6" : "Initiate at the Crossing (L4+) · Adept L7 · Master L9"}. Costs draw from the turn pools: 2 AP · 1 SP · 1 Mov.</p>
+${c.abilities.map(abilityCard).join("")}
+<h2>Weapons & Armor</h2>
+<table class="rules-table"><tr><th>Signature weapon</th><th>Category</th><th>Damage</th><th>Tags</th></tr>
+${c.weapons.map(w => `<tr><td>${w.name}</td><td>${w.cat}</td><td><code>${w.dmg}</code></td><td>${w.tags}</td></tr>`).join("")}</table>
+<p><strong>Armor proficiency:</strong> ${c.armor}. <a href="#/appendix-weapons">Weapon tags & armor rules →</a></p>
+<h2>Attributes & Key Skills</h2>
+<p>Recommended attributes: ${c.attributes.map(a => chip(a, "attr")).join(" ")}</p>
+<p>Key skills: ${c.skills.map(s => chip(s)).join(" ")}</p>
+<h2>Lore</h2>
+<div class="lore">${c.lore.map((p, i) => `<p${i === 0 ? ' class="dropcap"' : ""}>${p}</p>`).join("")}</div>
+<blockquote class="lore-quote">"${c.quote.text}"<cite>— ${c.quote.by}</cite></blockquote>
+${c.kind === "base" ? `
+<h2>Progressions of the ${c.name}</h2>
+<div class="mini-cards">${siblings.map(p => `<a class="mini-card" href="#/class-${p.id}" style="--tc:${t.color}"><h3>${p.name}</h3><p>${p.epithet}</p><p class="dim">${p.role}</p></a>`).join("")}</div>
+<h2>Hybrids born of this class</h2>
+<div class="mini-cards">${bornHybrids.map(h => `<a class="mini-card" href="#/class-${h.id}" style="--tc:${TRIAD[h.partner].color}"><h3>${h.name}</h3><p>${h.epithet}</p><p class="dim">${h.role}</p></a>`).join("")}</div>
+<h2>Hybrids that cross into ${t.name}</h2>
+<p>${received.map(h => `<a href="#/class-${h.id}">${h.name}</a>`).join(" · ")} — each pays ${CROSSING_COSTS[c.triad].delta} at the crossing.</p>` : ""}
+${c.kind === "path" ? `
+<h2>This path's hybrid</h2>
+<div class="mini-cards"><a class="mini-card" href="#/class-${ownHybrid.id}" style="--tc:${TRIAD[ownHybrid.partner].color}"><h3>${ownHybrid.name}</h3><p>${ownHybrid.epithet}</p><p class="dim">${ownHybrid.role} · price: ${CROSSING_COSTS[ownHybrid.partner].delta}</p></a></div>
+<h2>Sibling progressions</h2>
+<p>${siblings.map(p => `<a href="#/class-${p.id}">${p.name}</a>`).join(" · ")}</p>` : ""}
+${c.kind === "hybrid" ? `
+<h2>Lineage</h2>
+<p>Keeps everything from <a href="#/class-${lin[0].id}">${lin[0].name}</a> and <a href="#/class-${lin[1].id}">${lin[1].name}</a>, adds the <a href="#/class-${partner.base}">${CLASS_BY_ID[partner.base].name}</a> trait and the three fusion abilities above.</p>` : ""}`;
+}
+
+function renderAbilityIndex() {
+  const rows = CLASSES.map(c => c.abilities.map(a =>
+    `<tr><td><a href="#/class-${c.id}">${c.name}</a></td><td>${TRIAD[c.triad].name}</td><td>${a.rank}</td><td><strong>${a.name}</strong></td><td>${a.type}</td><td>${a.cost}</td><td>${a.cd ? "CD " + a.cd : "—"}</td></tr>`
+  ).join("")).join("");
+  return `<p class="lede">All ${CLASSES.length * 3} class abilities (plus the universal basic attacks). Costs: AP = Action Point, SP = Special Action, CD = cooldown in personal turns.</p>
+  <table class="rules-table ability-index"><tr><th>Class</th><th>Triad</th><th>Rank</th><th>Ability</th><th>Type</th><th>Cost</th><th>CD</th></tr>${rows}</table>
+  <h2>Universal basic attacks</h2>
+  <table class="rules-table"><tr><th>Attack</th><th>Gross</th><th>Cost</th><th>Range</th></tr>
+  ${WEAPON_RULES.map(w => `<tr><td>${w.attack}</td><td><code>${w.gross}</code></td><td>${w.cost}</td><td>${w.range}</td></tr>`).join("")}</table>`;
+}
+
+/* ---------- TOOLS: Character Forge ---------- */
+const FORGE = {
+  base: "occultist", path: "", hybrid: "", level: 1, armor: "Cloth", background: "",
+  attrs: { Body: 0, Agility: 0, Fortitude: 0, Charisma: 0 },
+  skills: {}
+};
+SKILL_TREE.forEach(a => a.skills.forEach(s => FORGE.skills[s] = 0));
+INDEPENDENT.forEach(s => FORGE.skills[s] = 0);
+const ATTR_BUDGET = 15, SKILL_BUDGET = 35, PT_CAP = 10;
+function rankCost(rank) { let c = 0; for (let i = 1; i <= rank; i++) c += COST_LADDER[i - 1].cost; return c; }
+function spentAttrs() { return Object.values(FORGE.attrs).reduce((s, r) => s + rankCost(r), 0); }
+function spentSkills() { return Object.values(FORGE.skills).reduce((s, r) => s + rankCost(r), 0); }
+function bgGrants() {
+  const b = BACKGROUNDS.find(x => x.name === FORGE.background);
+  if (!b) return {};
+  const m = {};
+  b.grants.split(",").forEach(g => { const mm = g.trim().match(/\+1 (\w[\w ]*)/); if (mm) m[mm[1]] = 1; });
+  return m;
+}
+function forgeClass() {
+  if (FORGE.hybrid) return CLASS_BY_ID[FORGE.hybrid];
+  if (FORGE.path) return CLASS_BY_ID[FORGE.path];
+  return CLASS_BY_ID[FORGE.base];
+}
+function forgeTotals() {
+  const c = forgeClass();
+  const t = fullTotals(c, FORGE.level);
+  const armor = ARMOR_RULES.find(a => a.armor === FORGE.armor) || ARMOR_RULES[0];
+  t.ac += parseInt(armor.ac) || 0; t.dr += parseInt(armor.dr) || 0;
+  const A = FORGE.attrs;
+  t.dodge += A.Agility + Math.floor(A.Fortitude / 2) + Math.floor(A.Body / 3);
+  t.spelldef = A.Fortitude + Math.floor(A.Body / 2) + Math.floor(A.Agility / 3);
+  t.acc += FORGE.skills.Accuracy;
+  return t;
+}
+function effSkill(name) {
+  const parent = SKILL_TREE.find(a => a.skills.includes(name));
+  const bg = bgGrants()[name] || 0;
+  const rank = FORGE.skills[name] + bg;
+  if (name === "Accuracy") return CHASSIS.acc + levelBonuses(forgeClass(), FORGE.level).acc + rank;
+  return parent ? rank + FORGE.attrs[parent.attr] : rank;
+}
+function unlocksUpTo(level) {
+  return LEVEL_LADDER.filter(l => l.level <= level).map(l => `<li><strong>L${l.level}</strong> — ${l.grant}</li>`).join("");
+}
+
+function renderForge() {
+  const paths = PATHS.filter(p => p.parent === FORGE.base);
+  const hybrids = FORGE.path ? HYBRIDS.filter(h => h.parent === FORGE.path) : [];
+  const c = forgeClass();
+  const t = forgeTotals();
+  const sa = spentAttrs(), ss = spentSkills();
+  const attrRows = Object.keys(FORGE.attrs).map(k => {
+    const r = FORGE.attrs[k], cost = rankCost(r);
+    return `<div class="stepper-row"><label>${k}</label>
+      <button class="step" data-forge="attr" data-key="${k}" data-d="-1">−</button>
+      <span class="step-val">+${r}</span>
+      <button class="step" data-forge="attr" data-key="${k}" data-d="1">+</button>
+      <span class="step-cost">${cost} pts</span></div>`;
+  }).join("");
+  const skillRows = [...SKILL_TREE.flatMap(a => a.skills), ...INDEPENDENT].map(k => {
+    const r = FORGE.skills[k], cost = rankCost(r), bg = bgGrants()[k] || 0;
+    return `<div class="stepper-row"><label>${k}${bg ? ' <span class="bg-tag">+' + bg + ' bg</span>' : ""}</label>
+      <button class="step" data-forge="skill" data-key="${k}" data-d="-1">−</button>
+      <span class="step-val">+${r}</span>
+      <button class="step" data-forge="skill" data-key="${k}" data-d="1">+</button>
+      <span class="step-cost">${cost} pts</span>
+      <span class="step-eff">= ${effSkill(k)}</span></div>`;
+  }).join("");
+  const overA = sa > ATTR_BUDGET, overS = ss > SKILL_BUDGET;
+  return `
+<p class="lede">Build a legal character: the Forge enforces the 15/35 budgets, the cost ladder, the 10-point caps, level gating and every class delta. Attributes feed skills and defenses — resources come from the class lineage.</p>
+<div class="forge-grid">
+  <div class="forge-col">
+    <h2>1 · Lineage</h2>
+    <div class="field"><label>Base class</label><select data-forge="base">${BASES.map(b => `<option value="${b.id}" ${b.id === FORGE.base ? "selected" : ""}>${b.name} — ${TRIAD[b.triad].name}</option>`).join("")}</select></div>
+    <div class="field"><label>Progression ${FORGE.level < 2 ? '<span class="dim">(unlocks L2)</span>' : ""}</label>
+      <select data-forge="path" ${FORGE.level < 2 ? "disabled" : ""}><option value="">— none —</option>${paths.map(p => `<option value="${p.id}" ${p.id === FORGE.path ? "selected" : ""}>${p.name}</option>`).join("")}</select></div>
+    <div class="field"><label>Hybrid (Rite of Crossing) ${FORGE.level < 4 ? '<span class="dim">(unlocks L4)</span>' : ""}</label>
+      <select data-forge="hybrid" ${FORGE.level < 4 || !FORGE.path ? "disabled" : ""}><option value="">— none —</option>${hybrids.map(h => `<option value="${h.id}" ${h.id === FORGE.hybrid ? "selected" : ""}>${h.name} × ${TRIAD[h.partner].name}</option>`).join("")}</select></div>
+    <div class="field"><label>Level: <strong id="forge-level-label">${FORGE.level}</strong></label>
+      <input type="range" min="1" max="10" value="${FORGE.level}" data-forge="level"></div>
+    <div class="field"><label>Background</label><select data-forge="background"><option value="">— none —</option>${BACKGROUNDS.map(b => `<option ${b.name === FORGE.background ? "selected" : ""}>${b.name}</option>`).join("")}</select></div>
+    <div class="field"><label>Armor</label><select data-forge="armor">${ARMOR_RULES.map(a => `<option ${a.armor === FORGE.armor ? "selected" : ""}>${a.armor}</option>`).join("")}</select>
+      <p class="dim small">Class proficiency: ${c.armor}. Non-proficient: AC bonus halved, Stealth penalty doubled (apply manually).</p></div>
+    <h2>2 · Attributes <span class="budget ${overA ? "over" : ""}">${sa}/${ATTR_BUDGET}</span></h2>
+    ${attrRows}
+    ${overA ? '<p class="warn">Over budget — allocation rejected at save.</p>' : ""}
+    <h2>3 · Skills <span class="budget ${overS ? "over" : ""}">${ss}/${SKILL_BUDGET}</span></h2>
+    <div class="skill-steppers">${skillRows}</div>
+    ${overS ? '<p class="warn">Over budget — allocation rejected at save.</p>' : ""}
+    <p class="dim small">Cap: 10 points spent per attribute/skill (max rank +5 at creation). Background grants are fixed and free. Accuracy & Initiative have no attribute parent.</p>
+  </div>
+  <div class="forge-col">
+    <h2>Sheet — ${c.name} <span class="dim">L${FORGE.level}</span></h2>
+    <div class="sheet-stats">
+      ${[["HP", t.hp, "#c0392f"], ["Mana", t.mana, "#8b7bd8"], ["Stamina", t.stamina, "#d9a441"], ["AC", t.ac, "#9aa5b1"], ["DR", t.dr, "#9aa5b1"], ["Accuracy", "+" + t.acc, "#5ba88a"], ["Dodge Def", t.dodge, "#5ba88a"], ["Spell Def", t.spelldef, "#5ba88a"]].map(s =>
+        `<div class="sheet-stat" style="--sc:${s[2]}"><b>${s[1]}</b><span>${s[0]}</span></div>`).join("")}
+    </div>
+    <div class="sheet-pools">${chip("2 AP / turn")}${chip("1 Mov / turn")}${chip("1 SP / turn")}${chip("Fear 0/100")}${chip("Sanity 100/100")}${chip("Corruption 0/100")}</div>
+    <h3>Trait — ${c.trait.name}</h3><p class="small">${c.trait.text}</p>
+    ${FORGE.hybrid ? `<p class="small crossing-note">Crossing price paid: <strong>${CROSSING_COSTS[CLASS_BY_ID[FORGE.hybrid].partner].delta}</strong>.</p>` : ""}
+    <h3>Unlocked so far</h3><ul class="small unlocks">${unlocksUpTo(FORGE.level)}</ul>
+    <h3>Effective skills</h3>
+    <div class="eff-grid">${[...SKILL_TREE.flatMap(a => a.skills), ...INDEPENDENT].map(k => `<div><span>${k}</span><b>${effSkill(k)}</b></div>`).join("")}</div>
+    <button class="btn" id="forge-copy">Copy build as JSON</button>
+    <span id="forge-copy-msg" class="dim small"></span>
+  </div>
+</div>`;
+}
+
+/* ---------- TOOLS: Compare ---------- */
+const COMPARE = { a: "occultist", b: "skinwalker", c: "landsworn", level: 10 };
+function renderCompare() {
+  const opts = sel => CLASSES.map(c => `<option value="${c.id}" ${c.id === sel ? "selected" : ""}>${c.name} (${KIND_LABEL[c.kind]})</option>`).join("");
+  const cols = ["a", "b", "c"].map(k => CLASS_BY_ID[COMPARE[k]]);
+  const totals = cols.map(c => fullTotals(c, COMPARE.level));
+  const maxes = { hp: Math.max(...totals.map(t => t.hp)), mana: Math.max(...totals.map(t => t.mana)), stamina: Math.max(...totals.map(t => t.stamina)) };
+  const bar = (v, max, color) => `<div class="bar"><div class="bar-fill" style="width:${Math.round(100 * v / max)}%;background:${color}"></div><span>${v}</span></div>`;
+  return `
+<p class="lede">Three classes side by side — a triad, naturally. Totals include the full lineage (base + progression + hybrid) at the chosen level, before armor and attributes.</p>
+<div class="compare-controls">
+  ${["a", "b", "c"].map(k => `<select data-compare="${k}">${opts(COMPARE[k])}</select>`).join("")}
+  <label>Level <input type="range" min="1" max="10" value="${COMPARE.level}" data-compare="level"> <strong>${COMPARE.level}</strong></label>
+</div>
+<div class="compare-grid">
+${cols.map((c, i) => {
+  const t = totals[i], tr = TRIAD[c.triad];
+  return `<div class="compare-col" style="--tc:${tr.color}">
+    <h2><a href="#/class-${c.id}">${c.name}</a></h2>
+    <p class="dim">${c.epithet}<br>${KIND_LABEL[c.kind]} · ${tr.name} · ${c.role}</p>
+    <p class="small">Lineage: ${lineage(c).map(k => k.name).join(" + ")}</p>
+    <h3>HP</h3>${bar(t.hp, maxes.hp, "#c0392f")}
+    <h3>Mana</h3>${bar(t.mana, maxes.mana, "#8b7bd8")}
+    <h3>Stamina</h3>${bar(t.stamina, maxes.stamina, "#d9a441")}
+    <div class="compare-minis">${chip("AC " + t.ac)}${chip("DR " + t.dr)}${chip("Acc +" + t.acc)}${chip("Dodge +" + t.dodge)}</div>
+    <h3>Trait — ${c.trait.name}</h3><p class="small">${c.trait.text}</p>
+    <h3>Abilities</h3>
+    <ul class="small">${c.abilities.map(a => `<li><strong>${a.name}</strong> <span class="dim">(${a.rank}, ${a.type}, ${a.cost}${a.cd ? ", CD " + a.cd : ""})</span></li>`).join("")}</ul>
+    <h3>Weapons</h3><p class="small">${c.weapons.map(w => w.name).join(" · ")}</p>
+    <p class="small"><strong>Armor:</strong> ${c.armor} · <strong>Attributes:</strong> ${c.attributes.join(", ")}</p>
+  </div>`;
+}).join("")}
+</div>`;
+}
+
+/* ---------- TOOLS: Dice ---------- */
+const DICE = { mod: 0, mode: "normal", log: [] };
+function rollDie(n) { return 1 + Math.floor(Math.random() * n); }
+function rollD20() {
+  const r1 = rollDie(20), r2 = rollDie(20);
+  let nat = r1, kept = [r1];
+  if (DICE.mode === "adv") { nat = Math.max(r1, r2); kept = [r1, r2]; }
+  if (DICE.mode === "dis") { nat = Math.min(r1, r2); kept = [r1, r2]; }
+  const total = nat + DICE.mod;
+  const crit = nat === 20 ? "CRITICAL HIT" : nat === 1 ? "CRITICAL MISS" : "";
+  DICE.log.unshift({ expr: `d20${DICE.mod >= 0 ? "+" : ""}${DICE.mod}${DICE.mode !== "normal" ? " (" + DICE.mode + ")" : ""}`, kept, nat, total, crit });
+  DICE.log = DICE.log.slice(0, 12);
+  paintDiceResult();
+}
+function rollExpr(expr) {
+  const m = expr.trim().match(/^(\d*)d(\d+)\s*([+-]\s*\d+)?$/i);
+  if (!m) { DICE.log.unshift({ expr, error: "Use XdY+Z (e.g. 2d3+4)" }); paintDiceResult(); return; }
+  const n = parseInt(m[1] || "1"), faces = parseInt(m[2]), bonus = m[3] ? parseInt(m[3].replace(/\s/g, "")) : 0;
+  if (n < 1 || n > 20 || faces < 2 || faces > 100) { DICE.log.unshift({ expr, error: "1–20 dice, d2–d100" }); paintDiceResult(); return; }
+  const rolls = Array.from({ length: n }, () => rollDie(faces));
+  const total = rolls.reduce((a, b) => a + b, 0) + bonus;
+  DICE.log.unshift({ expr, kept: rolls, total, bonus });
+  DICE.log = DICE.log.slice(0, 12);
+  paintDiceResult();
+}
+function paintDiceResult() {
+  const el = $("#dice-log");
+  if (!el) return;
+  el.innerHTML = DICE.log.map((r, i) => r.error
+    ? `<div class="dice-row err"><span class="dice-expr">${esc(r.expr)}</span><span>${r.error}</span></div>`
+    : `<div class="dice-row ${i === 0 ? "latest" : ""} ${r.crit === "CRITICAL HIT" ? "crit" : r.crit === "CRITICAL MISS" ? "fumble" : ""}">
+      <span class="dice-expr">${esc(r.expr)}</span>
+      <span class="dice-kept">[${r.kept.join(", ")}]${r.bonus ? (r.bonus > 0 ? " +" + r.bonus : " " + r.bonus) : ""}</span>
+      <span class="dice-total">${r.total}</span>
+      ${r.crit ? `<span class="dice-crit">${r.crit}</span>` : ""}
+    </div>`).join("") || '<p class="dim">No rolls yet. The Mists are listening.</p>';
+}
+function renderDice() {
+  return `
+<p class="lede">The system's dice: 1d20 + modifier for attacks and checks (advantage/disadvantage = 2d20 keep high/low), XdY+Z for damage. Natural 20 doubles the gross damage package; natural 1 always misses.</p>
+<div class="dice-panel">
+  <div class="dice-controls">
+    <label>Modifier <input type="number" id="dice-mod" value="${DICE.mod}" min="-20" max="30"></label>
+    <div class="dice-modes">
+      ${["normal", "adv", "dis"].map(m => `<button class="btn mode ${DICE.mode === m ? "active" : ""}" data-dice-mode="${m}">${m === "normal" ? "Normal" : m === "adv" ? "Advantage" : "Disadvantage"}</button>`).join("")}
+    </div>
+    <button class="btn big" id="dice-roll">Roll d20</button>
+  </div>
+  <div class="dice-expr-row">
+    <input type="text" id="dice-expr" placeholder="Damage expression, e.g. 2d3+4" value="1d4+3">
+    <button class="btn" id="dice-expr-roll">Roll</button>
+    ${["1d3", "1d4", "2d3", "1d6", "1d8", "2d6", "1d4+3", "2d3+4"].map(e => `<button class="btn tiny" data-dice-quick="${e}">${e}</button>`).join("")}
+  </div>
+  <div id="dice-log" class="dice-log"></div>
+</div>
+<p class="note">Damage quick-reference: unarmed 1d3+Str · one-handed 1d4+Str · two-handed 2d3+Str · bow 1d4+Body · thrown 1d4+Str · Magic Bolt 1d8. Subtract DR once, after the crit multiplier.</p>`;
+}
+
+/* ---------- router ---------- */
+function pageContent(id) {
+  if (id === "home") return { title: "The Triad System", section: "Welcome", body: renderHome(), raw: true };
+  if (id === "classes-index") return { title: "All 21 Classes", section: "The Classes", body: renderClassesIndex(), raw: true };
+  if (id === "appendix-abilities") return { title: "Ability Index", section: "Appendix", body: renderAbilityIndex(), raw: true };
+  if (id === "tools-forge") return { title: "Character Forge", section: "Tools", body: renderForge(), raw: true };
+  if (id === "tools-compare") return { title: "Compare Classes", section: "Tools", body: renderCompare(), raw: true };
+  if (id === "tools-dice") return { title: "Dice Roller", section: "Tools", body: renderDice(), raw: true };
+  if (id.startsWith("class-")) {
+    const c = CLASS_BY_ID[id.slice(6)];
+    if (c) return { title: c.name, section: TRIAD[c.triad].name + " · " + KIND_LABEL[c.kind], body: renderClass(c), raw: true, triad: c.triad };
+  }
+  if (PAGES[id]) return { ...PAGES[id], raw: true };
+  return { title: "Lost in the Mists", section: "404", body: `<p class="lede">This page drifted beyond the borders. <a href="#/home">Return to the waystone</a>.</p>`, raw: true };
+}
+
+let CURRENT = "home";
+function navigate() {
+  let id = (location.hash || "#/home").replace(/^#\//, "") || "home";
+  CURRENT = id;
+  const p = pageContent(id);
+  document.title = p.title + " · Ravenloft Triad Wiki";
+  $("#page").innerHTML = `<div class="page-head"><span class="page-section">${p.section}</span><h1 class="page-title">${p.title}</h1></div>${p.body}`;
+  $("#page").scrollTop = 0;
+  window.scrollTo(0, 0);
+  document.querySelectorAll("#sidebar a").forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#/" + id));
+  bindPageHandlers(id);
+  closeSidebar();
+}
+
+/* ---------- page event bindings ---------- */
+function bindPageHandlers(id) {
+  if (id === "tools-forge") {
+    document.querySelectorAll("[data-forge]").forEach(el => {
+      const kind = el.dataset.forge;
+      if (el.tagName === "SELECT" || el.type === "range") {
+        el.addEventListener("input", () => {
+          if (kind === "base") { FORGE.base = el.value; FORGE.path = ""; FORGE.hybrid = ""; }
+          if (kind === "path") { FORGE.path = el.value; FORGE.hybrid = ""; }
+          if (kind === "hybrid") FORGE.hybrid = el.value;
+          if (kind === "level") {
+            FORGE.level = parseInt(el.value);
+            if (FORGE.level < 2) FORGE.path = "";
+            if (FORGE.level < 4) FORGE.hybrid = "";
+          }
+          if (kind === "background") FORGE.background = el.value;
+          if (kind === "armor") FORGE.armor = el.value;
+          navigate();
+        });
+      } else if (el.tagName === "BUTTON" && el.classList.contains("step")) {
+        el.addEventListener("click", () => {
+          const key = el.dataset.key, d = parseInt(el.dataset.d);
+          const store = kind === "attr" ? FORGE.attrs : FORGE.skills;
+          const next = store[key] + d;
+          if (next < 0 || next > 8) return;
+          if (rankCost(next) > PT_CAP) return;
+          store[key] = next;
+          navigate();
+        });
+      }
+    });
+    const copy = $("#forge-copy");
+    if (copy) copy.addEventListener("click", () => {
+      const c = forgeClass();
+      const build = { system: "ravenloft-triad", class: c.id, lineage: lineage(c).map(k => k.id), level: FORGE.level, background: FORGE.background || null, armor: FORGE.armor, attributes: FORGE.attrs, skills: FORGE.skills, budgets: { attributes: spentAttrs() + "/" + ATTR_BUDGET, skills: spentSkills() + "/" + SKILL_BUDGET }, totals: forgeTotals(), effectiveSkills: Object.fromEntries([...SKILL_TREE.flatMap(a => a.skills), ...INDEPENDENT].map(k => [k, effSkill(k)])) };
+      const txt = JSON.stringify(build, null, 2);
+      const done = () => { $("#forge-copy-msg").textContent = "Copied — paste into your RPR ledger or FlowChart defs."; };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, () => fallbackCopy(txt, done));
+      else fallbackCopy(txt, done);
+    });
+  }
+  if (id === "tools-compare") {
+    document.querySelectorAll("[data-compare]").forEach(el => el.addEventListener("input", () => {
+      const k = el.dataset.compare;
+      if (k === "level") COMPARE.level = parseInt(el.value); else COMPARE[k] = el.value;
+      navigate();
+    }));
+  }
+  if (id === "tools-dice") {
+    $("#dice-mod").addEventListener("input", e => DICE.mod = parseInt(e.target.value) || 0);
+    document.querySelectorAll("[data-dice-mode]").forEach(b => b.addEventListener("click", () => { DICE.mode = b.dataset.diceMode; navigate(); }));
+    $("#dice-roll").addEventListener("click", rollD20);
+    $("#dice-expr-roll").addEventListener("click", () => rollExpr($("#dice-expr").value));
+    $("#dice-expr").addEventListener("keydown", e => { if (e.key === "Enter") rollExpr(e.target.value); });
+    document.querySelectorAll("[data-dice-quick]").forEach(b => b.addEventListener("click", () => { $("#dice-expr").value = b.dataset.diceQuick; rollExpr(b.dataset.diceQuick); }));
+    paintDiceResult();
+  }
+}
+function fallbackCopy(txt, done) {
+  const ta = document.createElement("textarea");
+  ta.value = txt; document.body.appendChild(ta); ta.select();
+  try { document.execCommand("copy"); done(); } catch (e) { $("#forge-copy-msg").textContent = "Copy blocked by sandbox — select the JSON manually."; }
+  document.body.removeChild(ta);
+}
+
+/* ---------- sidebar & search ---------- */
+function renderSidebar() {
+  $("#sidebar-nav").innerHTML = NAV.map(g => `
+    <div class="nav-group">
+      <div class="nav-section" ${g.color ? `style="color:${g.color}"` : ""}>${g.section}</div>
+      ${g.items.map(([id, label]) => `<a href="#/${id}" class="${id.startsWith("class-") && CLASS_BY_ID[id.slice(6)]?.kind === "hybrid" ? "nav-hybrid" : ""}">${label}</a>`).join("")}
+    </div>`).join("");
+}
+let SEARCH_INDEX = [];
+function buildSearchIndex() {
+  SEARCH_INDEX = [];
+  const add = (id, title, section, text) => SEARCH_INDEX.push({ id, title, section, text: (title + " " + text).toLowerCase() });
+  add("home", "The Triad System", "Welcome", strip(renderHome()));
+  add("classes-index", "All 21 Classes", "The Classes", strip(renderClassesIndex()));
+  Object.entries(PAGES).forEach(([id, p]) => add(id, p.title, p.section, strip(p.body)));
+  CLASSES.forEach(c => add("class-" + c.id, c.name, TRIAD[c.triad].name + " · " + KIND_LABEL[c.kind],
+    strip(renderClass(c)) + " " + c.weapons.map(w => w.name).join(" ")));
+  add("appendix-abilities", "Ability Index", "Appendix", strip(renderAbilityIndex()));
+  add("tools-forge", "Character Forge", "Tools", "build calculator attributes skills budget stats");
+  add("tools-compare", "Compare Classes", "Tools", "compare side by side stats");
+  add("tools-dice", "Dice Roller", "Tools", "d20 roll advantage disadvantage damage");
+}
+function doSearch(q) {
+  const box = $("#search-results");
+  q = q.trim().toLowerCase();
+  if (q.length < 2) { box.innerHTML = ""; box.classList.remove("open"); return; }
+  const terms = q.split(/\s+/);
+  const hits = SEARCH_INDEX.map(e => {
+    let score = 0;
+    terms.forEach(t => {
+      if (e.title.toLowerCase().includes(t)) score += 10;
+      const idx = e.text.indexOf(t);
+      if (idx >= 0) score += 3;
+    });
+    return { ...e, score };
+  }).filter(e => e.score > 0).sort((a, b) => b.score - a.score).slice(0, 10);
+  box.innerHTML = hits.length
+    ? hits.map(h => {
+      const idx = h.text.indexOf(terms[0]);
+      const snip = idx >= 0 ? "…" + h.text.slice(Math.max(0, idx - 30), idx + 70) + "…" : h.text.slice(0, 90) + "…";
+      return `<a href="#/${h.id}" class="search-hit"><strong>${h.title}</strong><span class="dim">${h.section}</span><span class="snip">${esc(snip)}</span></a>`;
+    }).join("")
+    : '<div class="search-hit dim">Nothing found. The Mists keep their secrets.</div>';
+  box.classList.add("open");
+}
+function closeSidebar() { document.body.classList.remove("nav-open"); }
+
+/* ---------- boot ---------- */
+function boot() {
+  renderSidebar();
+  buildSearchIndex();
+  $("#search").addEventListener("input", e => doSearch(e.target.value));
+  $("#search").addEventListener("focus", e => { if (e.target.value) doSearch(e.target.value); });
+  document.addEventListener("click", e => {
+    if (!e.target.closest(".search-wrap")) $("#search-results").classList.remove("open");
+    if (e.target.closest("#sidebar a")) closeSidebar();
+  });
+  $("#nav-toggle").addEventListener("click", () => document.body.classList.toggle("nav-open"));
+  window.addEventListener("hashchange", navigate);
+  navigate();
+}
+document.addEventListener("DOMContentLoaded", boot);
+</script>
+</body>
+</html>

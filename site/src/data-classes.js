@@ -1,0 +1,695 @@
+/* ============================================================
+   RAVENLOFT — THE TRIAD SYSTEM · CLASS CATALOG
+   3 base classes × 3 progressions × 9 hybrids = 21 entries
+   All values marked "playtest" are calibratable per project plan.
+   ============================================================ */
+
+const TRIAD = {
+  veil: {
+    id: "veil", name: "The Veil", axis: "Occultism", color: "#8b7bd8",
+    base: "occultist", resource: "Mana", horror: "Sanity",
+    motto: "What is known can be unmade.",
+    blurb: "Rites, pacts and forbidden knowledge. The Veil is the thin membrane between the living world and what waits behind it. Those who work it pay in Sanity."
+  },
+  blood: {
+    id: "blood", name: "The Blood", axis: "Shapeshifters", color: "#c0392f",
+    base: "skinwalker", resource: "Stamina", horror: "Corruption",
+    motto: "What is lived can be worn.",
+    blurb: "Cursed bloodlines and borrowed shapes. The Blood remembers every form it has ever taken — and every form takes a piece of the taker. Its workers pay in Corruption."
+  },
+  land: {
+    id: "land", name: "The Land", axis: "Terrain", color: "#8a9a5b",
+    base: "landsworn", resource: "Stamina", horror: "Fear",
+    motto: "What is owned can be reclaimed.",
+    blurb: "Soil, stone, road and mist. The Land of the Domains belongs to the Darklords — the Landsworn dispute that claim, one hearth, one grave, one border at a time. They master Fear."
+  }
+};
+
+const CHASSIS = { hp: 100, mana: 50, stamina: 75, ac: 10, dr: 1, acc: 1, dodge: 0, spelldef: 0 };
+
+const CLASSES = [
+/* ============================ THE VEIL ============================ */
+{
+  id: "occultist", name: "Occultist", kind: "base", triad: "veil",
+  epithet: "Bearer of the Pallid Lantern", role: "Ritual caster · controller",
+  primary: "mana", attributes: ["Fortitude", "Charisma"],
+  skills: ["Deciphering", "Willpower", "Alchemy"],
+  armor: "Cloth",
+  weapons: [
+    { name: "Athame (ritual dagger)", cat: "One-handed", dmg: "1d4 + Strength", tags: "Ritual focus" },
+    { name: "Iron-shod Quarterstaff", cat: "Two-handed", dmg: "2d3 + Strength", tags: "—" },
+    { name: "Censer & Chain", cat: "One-handed", dmg: "1d4 + Strength", tags: "Ritual focus · smoke" }
+  ],
+  stats: { hp: 0, mana: 30, stamina: -15, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "Veil-Sight", text: "You sense active magic, spirits and undead within 10 tiles (Perception DC 13, 1 AP). Your Magic Bolt costs 3 Mana instead of 4." },
+  abilities: [
+    { rank: "Initiate", name: "Witchlight", type: "Action", cost: "1 AP · 3 Mana", cd: 2, range: "10 tiles",
+      effect: "Conjure a cold orb of light for 3 turns. It reveals hidden and stealthed creatures within 5 tiles of it. Allies who can see it reduce Fear by 5 (once per casting).",
+      horror: null, flavor: "The lantern burns without oil, and the dark leans away from it." },
+    { rank: "Adept", name: "Hex", type: "Action", cost: "1 AP · 6 Mana", cd: 2, range: "10 tiles",
+      effect: "Roll vs Spell Defense. On a hit, the target suffers −2 Accuracy for 3 turns as misfortune clings to it.",
+      horror: null, flavor: "A knot tied in the air; a thread pulled from someone's luck." },
+    { rank: "Master", name: "The Unveiling", type: "Special", cost: "1 SP · 12 Mana", cd: 4, range: "10 tiles",
+      effect: "Force every shapeshifted, disguised or invisible creature within range into its true form for 3 turns. Revealed enemies gain +10 Fear.",
+      horror: "You lose 5 Sanity — you glimpse what stands behind the forms.", flavor: "For one heartbeat, the world is seen without its skin." }
+  ],
+  lore: [
+    "In the Domains of Dread, knowledge is not power — it is debt. The Occultists of the Pallid Lantern learn this first: every page turned in a forbidden tome is a page turned in the reader. They are hedge-mages, defrocked priests, village wise-women and disgraced scholars who have accepted that the Mists hide a second world, and that someone must read it.",
+    "The Order takes its name from the lantern each initiate carries: a pale flame that burns nothing, lit from a candle held at a deathbed. It reveals what pretends to be ordinary. Occultists are feared by the very villagers they protect — in Barovia, a person who speaks comfortably with the dead is one accusation away from the pyre. They work anyway. The Veil is thinning, and no one else is watching."
+  ],
+  quote: { text: "I do not open doors. I only read what is written on them.", by: "Mother Ilvane, Lantern-Keeper of Vallaki" }
+},
+{
+  id: "inquisitor", name: "Inquisitor", kind: "path", triad: "veil", parent: "occultist",
+  epithet: "The Conviction", role: "Anti-monster striker · judge",
+  primary: "mana", attributes: ["Fortitude", "Body"],
+  skills: ["Willpower", "Intimidation", "Binding"],
+  armor: "Light or Medium",
+  weapons: [
+    { name: "Blessed Mace", cat: "One-handed", dmg: "1d4 + Strength", tags: "Blessed" },
+    { name: "Stake & Hammer", cat: "One-handed", dmg: "1d4 + Strength", tags: "Blessed · vs undead" },
+    { name: "Judgment Warhammer", cat: "Two-handed", dmg: "2d3 + Strength", tags: "Blessed" }
+  ],
+  stats: { hp: 10, mana: 10, stamina: 0, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "Conviction", text: "Whenever you would gain Fear, gain 5 less (minimum 0). You have +2 Willpower against possession and fear effects." },
+  abilities: [
+    { rank: "Initiate", name: "Denounce", type: "Action", cost: "1 AP · 4 Mana", cd: 2, range: "10 tiles",
+      effect: "Roll vs Spell Defense. Undead, lycanthropes and possessed targets: −2 to all rolls and cannot shapeshift for 2 turns. Other targets: −1 Accuracy for 2 turns.",
+      horror: null, flavor: "The word is older than the creature. It flinches." },
+    { rank: "Adept", name: "Brand of Judgment", type: "Action", cost: "1 AP · 6 Mana · 2 Stamina", cd: 3, range: "Melee",
+      effect: "Melee strike: 1d6 holy damage (1d4 vs the purely mundane). The branded target is marked for 3 turns: allies gain +1 Accuracy against it.",
+      horror: null, flavor: "The mark smoulders through cloth and hide alike." },
+    { rank: "Master", name: "Sentence", type: "Special", cost: "1 SP · 10 Mana", cd: 4, range: "10 tiles",
+      effect: "Pass judgment on a creature that harmed an ally this scene: 2d6 holy damage vs Spell Defense (+1d6 if undead or lycanthrope).",
+      horror: "You gain +5 Fear — unless the target is a true horror, in which case your conviction holds. Sentencing an innocent: +5 Corruption.", flavor: "No court, no scaffold. Only the weight of the word." }
+  ],
+  lore: [
+    "The Inquisitors began as the Lantern's prosecutors — the ones sent to decide whether the thing in the barn was a cursed child or a wearing-skin. They carry no holy symbol of any forgiving god; the gods do not answer in the Mists. What answers is Conviction: a discipline of will so absolute that monsters feel it as heat.",
+    "An Inquisitor's tragedy is arithmetic. Every denunciation saves a village and condemns someone, and the ledger is never clean. The Order keeps a Black Register of every sentence passed, and each Inquisitor must read their own entries aloud once a year. Those who stop reading are the ones the Order hunts first."
+  ],
+  quote: { text: "Mercy is a door. I have seen what uses doors.", by: "Inquisitor Radu Vex, Black Register, entry 112" }
+},
+{
+  id: "scholar", name: "Scholar", kind: "path", triad: "veil", parent: "occultist",
+  epithet: "The Forbidden Method", role: "Ritualist · knowledge engine",
+  primary: "mana", attributes: ["Fortitude", "Agility"],
+  skills: ["Deciphering", "Alchemy", "Eavesdropping"],
+  armor: "Cloth",
+  weapons: [
+    { name: "Athame", cat: "One-handed", dmg: "1d4 + Strength", tags: "Ritual focus" },
+    { name: "Tome-Chain", cat: "One-handed", dmg: "1d4 + Strength", tags: "Improvised · binding" },
+    { name: "Walking Staff", cat: "Two-handed", dmg: "2d3 + Strength", tags: "—" }
+  ],
+  stats: { hp: 0, mana: 20, stamina: -5, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "Forbidden Method", text: "+2 Deciphering and +2 Alchemy. You can read and cast rituals from tomes that are gibberish — or lethal — to other readers." },
+  abilities: [
+    { rank: "Initiate", name: "Ritual Preparation", type: "Action", cost: "1 AP · 5 Mana", cd: 3, range: "Self",
+      effect: "Chalk, salt and a whispered paradigm. Your next spell this scene gains +2 to its attack roll or +2 to its effect DC (choose when cast).",
+      horror: null, flavor: "Magic is a language. Scholars decline it correctly." },
+    { rank: "Adept", name: "Athame Cut", type: "Action", cost: "1 AP · 2 Stamina", cd: 0, range: "Melee",
+      effect: "A precise dagger strike: 1d4 + Strength. On a hit, the opened vein feeds the working — you regain 4 Mana.",
+      horror: "+1 Corruption per use. Blood is a currency the Dark Powers accept.", flavor: "The cut is always shallow. The price is always deeper." },
+    { rank: "Master", name: "Forbidden Working", type: "Special", cost: "1 SP · 15 Mana", cd: 4, range: "10 tiles",
+      effect: "Speak a word from the back of the book: 2d8 force damage vs Spell Defense, or banish one lesser spirit outright.",
+      horror: "You lose 5 Sanity. The word speaks you back.", flavor: "Some sentences read the reader." }
+  ],
+  lore: [
+    "Where the Inquisitor burns the book, the Scholar copies it. The Scholars of the Pallid Lantern are the Order's memory: cataloguers of curses, genealogists of monsters, chemists of silver and salt. They believe every horror has a grammar, and that grammar can be conjugated backward — a curse read in reverse is a cure.",
+    "They are usually right, and it usually costs them. A Scholar's mind is a library with one door left open, and things drift in. The eldest Scholars annotate their own margins in a second handwriting they do not remember learning. The Order calls this 'the correspondence' and does not discuss it at dinner."
+  ],
+  quote: { text: "Footnote forty-one: if you are reading this aloud, stop.", by: "Marginalia in the Vallaki Codex" }
+},
+{
+  id: "medium", name: "Medium", kind: "path", triad: "veil", parent: "occultist",
+  epithet: "The Listening", role: "Spirit speaker · support",
+  primary: "mana", attributes: ["Charisma", "Fortitude"],
+  skills: ["Sense Motive", "Perception", "Willpower"],
+  armor: "Cloth",
+  weapons: [
+    { name: "Silver Dagger", cat: "One-handed", dmg: "1d4 + Strength", tags: "Silver" },
+    { name: "Spirit Bell & Censer", cat: "One-handed", dmg: "1d4 + Strength", tags: "Ritual focus" },
+    { name: "Rowan Staff", cat: "Two-handed", dmg: "2d3 + Strength", tags: "Ward" }
+  ],
+  stats: { hp: 0, mana: 15, stamina: 5, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "The Listening", text: "+2 Sense Motive and +2 Perception against spirits and the undead. Once per scene you may ask a corpse or spirit one yes/no question (the GM answers truthfully, as the dead understand truth)." },
+  abilities: [
+    { rank: "Initiate", name: "Séance Whisper", type: "Action", cost: "1 AP · 4 Mana", cd: 2, range: "10 tiles",
+      effect: "A borrowed voice comforts or guides one ally: they gain +2 to their next roll, or reduce Fear by 10 (choose).",
+      horror: null, flavor: "The dead are kinder than the living. They have less to lose." },
+    { rank: "Adept", name: "Spirit Veil", type: "Action", cost: "1 AP · 6 Mana", cd: 3, range: "Self",
+      effect: "Step half into the grey for 1 turn: +3 Dodge Defense and +3 Spell Defense, but you cannot attack while veiled.",
+      horror: null, flavor: "For a moment, the sword passes through a memory of you." },
+    { rank: "Master", name: "Call the Departed", type: "Special", cost: "1 SP · 12 Mana", cd: 4, range: "10 tiles",
+      effect: "Summon one bound spirit for 3 turns. It either scouts (invisible, reports what it sees) or harries one enemy (−1 Accuracy, +10 Fear once).",
+      horror: "You lose 3 Sanity. The departed linger after the working ends.", flavor: "Everyone in Barovia knows someone on the other side." }
+  ],
+  lore: [
+    "The Mediums do not study the Veil; they listen at it. In a land where every family has an empty chair, the gift of hearing the occupant is both mercy and curse. Mediums sit at deathbeds and séances, translate last words, and occasionally ask the murdered to point.",
+    "The Order prizes them and worries about them in equal measure. A Medium's own voice grows quieter year by year, as if the borrowed voices take up room. The eldest are called the Choir-Bound: they speak rarely, and when they do, several people answer."
+  ],
+  quote: { text: "He says he forgives you. He is lying. The dead cannot lie — so it is not him.", by: "Medium Ana Dragomir, at the séance of the Broken Mill" }
+},
+/* hybrids born of the Veil */
+{
+  id: "sanctifier", name: "Sanctifier", kind: "hybrid", triad: "veil", parent: "inquisitor", partner: "land",
+  epithet: "Inquisitor × Landsworn", role: "Zone controller · consecrator",
+  primary: "mana", attributes: ["Fortitude", "Body"],
+  skills: ["Willpower", "Binding", "Perception"],
+  armor: "Medium",
+  weapons: [
+    { name: "Blessed Warhammer", cat: "Two-handed", dmg: "2d3 + Strength", tags: "Blessed" },
+    { name: "Boundary Nails", cat: "Thrown", dmg: "1d4 + Strength", tags: "Cold iron · ward" },
+    { name: "Censer-Mace", cat: "One-handed", dmg: "1d4 + Strength", tags: "Blessed · ritual focus" }
+  ],
+  stats: { hp: 10, mana: 5, stamina: 0, ac: 1, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "Consecrated Step", text: "Gain the Landsworn trait Terrain Bond (choose a home terrain: Forest, Ruins & Graves, or Roads & Mists). Your wards and sentences function as terrain features." },
+  abilities: [
+    { rank: "Initiate", name: "Hallowed Ground", type: "Action", cost: "1 AP · 6 Mana · 3 Stamina", cd: 3, range: "5-tile radius",
+      effect: "Consecrate the ground for 3 turns: undead and lycanthropes inside suffer −2 to all rolls; allies inside reduce Fear by 10 (once).",
+      horror: null, flavor: "The soil remembers being a churchyard." },
+    { rank: "Adept", name: "Boundary Nails", type: "Action", cost: "1 AP · 5 Stamina · 4 Mana", cd: 3, range: "5 tiles",
+      effect: "Drive a perimeter of iron nails. Shapeshifters crossing it take 1d6 damage and revert to true form (cannot shift for 1 turn); spirits cannot cross for 2 turns.",
+      horror: null, flavor: "A border is an argument. Iron argues well." },
+    { rank: "Master", name: "The Field of Judgment", type: "Special", cost: "1 SP · 12 Mana", cd: 4, range: "10-tile radius",
+      effect: "For 3 turns the ground itself passes sentence: enemies inside gain +15 Fear; undead inside take 1d6 holy damage at the start of each of their turns.",
+      horror: "You gain +5 Fear. Judgment, at this scale, is heavy to hold.", flavor: "Every furrow a verdict; every stone a witness." }
+  ],
+  lore: [
+    "The first Sanctifier was an Inquisitor who ran out of pyres. During the Gallows Winter she found that a condemned field — soil where the unjust were buried — would hold a consecration longer than any church. She stopped burning monsters and started fencing them out.",
+    "Sanctifiers walk the boundaries of villages with a bag of iron nails and a censer that never cools. They are the reason some doors in Barovia have three thresholds. The Landsworn call them cousins; the Inquisitors call them necessary; the things outside the nails call them nothing, because they cannot enter to speak."
+  ],
+  quote: { text: "I cannot save the world. I can save this acre, and the acre is where the children are.", by: "Sanctifier Mirela of the Three Thresholds" }
+},
+{
+  id: "chimerist", name: "Chimerist", kind: "hybrid", triad: "veil", parent: "scholar", partner: "blood",
+  epithet: "Scholar × Skinwalker", role: "Self-transmuter · alchemist",
+  primary: "mana", attributes: ["Fortitude", "Agility"],
+  skills: ["Alchemy", "Deciphering", "Athletics"],
+  armor: "Cloth or Light",
+  weapons: [
+    { name: "Bone Athame", cat: "One-handed", dmg: "1d4 + Strength", tags: "Ritual focus" },
+    { name: "Grafting Claws", cat: "Natural", dmg: "1d4 + Strength", tags: "Cannot be disarmed" },
+    { name: "Mutagen Syringe", cat: "One-handed", dmg: "1d4 + Strength", tags: "Alchemical" }
+  ],
+  stats: { hp: 10, mana: 5, stamina: 10, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "The Examined Beast", text: "Gain the Skinwalker trait The Beast Within (Shift: 1 AP, 5 Stamina — natural weapons 1d4 + Strength, +1 DR for 3 turns; +1 Corruption per Shift). Your grafts and mutagens count as shifting for abilities that care." },
+  abilities: [
+    { rank: "Initiate", name: "Mutagen", type: "Action", cost: "1 AP · 5 Mana · 3 Stamina", cd: 3, range: "Self",
+      effect: "Brew and inject: +2 Body or +2 Agility (choose) for 3 turns. When it ends, −1 to that attribute for 1 turn.",
+      horror: "+1 Corruption. The formula improves you the way rust improves a hinge.", flavor: "The needle is glass. The patience is not." },
+    { rank: "Adept", name: "Grafted Aspect", type: "Action", cost: "1 AP · 6 Mana · 5 Stamina", cd: 3, range: "Self",
+      effect: "Attach a prepared beast-graft until your next safe rest: claws (1d4 + Strength), carapace (+1 DR), or predator eyes (+2 Perception). Maximum 2 grafts at once.",
+      horror: "+2 Corruption per graft. The parts dream of their original owners.", flavor: "Anatomy is a first draft." },
+    { rank: "Master", name: "The Masterwork", type: "Special", cost: "1 SP · 12 Mana · 8 Stamina", cd: 4, range: "Self",
+      effect: "Become your own thesis for 3 turns: +2 DR, natural attacks deal 2d3 + Strength, +2 Body. Witnesses gain +10 Fear.",
+      horror: "+4 Corruption and −3 Sanity. You understand the monster now, from inside.", flavor: "Peer review is going to be difficult." }
+  ],
+  lore: [
+    "The Chimerists began as Scholars who asked the forbidden follow-up question: if a curse can rewrite a body, can a method? They study lycanthropy the way a surgeon studies a knot — not to condemn it, but to tie it deliberately. Their laboratories smell of formaldehyde, silver polish and wet fur.",
+    "A Chimerist's body is a manuscript under revision. Grafts are footnotes; mutagens, marginalia; the Masterwork, a published edition. The Order requires each Chimerist to keep a mirror covered in their lab. Not for vanity — because eventually the reflection starts taking notes of its own."
+  ],
+  quote: { text: "The wolf is not a curse. The wolf is a citation.", by: "Chimerist Vasily Enq, lab journal, final page" }
+},
+{
+  id: "gravebound", name: "Gravebound", kind: "hybrid", triad: "veil", parent: "medium", partner: "land",
+  epithet: "Medium × Landsworn", role: "Necro-terrainist · anchor",
+  primary: "mana", attributes: ["Charisma", "Fortitude"],
+  skills: ["Sense Motive", "Binding", "Perception"],
+  armor: "Cloth or Light",
+  weapons: [
+    { name: "Grave Spade", cat: "Two-handed", dmg: "2d3 + Strength", tags: "Cold iron" },
+    { name: "Barrow Silver Dagger", cat: "One-handed", dmg: "1d4 + Strength", tags: "Silver" },
+    { name: "Coffin-Nail Censer", cat: "One-handed", dmg: "1d4 + Strength", tags: "Ritual focus" }
+  ],
+  stats: { hp: 10, mana: 10, stamina: 0, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "The Listening Ground", text: "Gain the Landsworn trait Terrain Bond (home terrain: Ruins & Graves recommended). In any burial ground you automatically know how many dead lie within 30 tiles, and whether any are restless." },
+  abilities: [
+    { rank: "Initiate", name: "Barrow Choir", type: "Action", cost: "1 AP · 6 Mana", cd: 3, range: "5-tile radius",
+      effect: "Wake the buried voice of the ground: enemies inside gain +10 Fear and −1 Accuracy (whispers) for 2 turns. You learn one true fact about whoever lies beneath.",
+      horror: null, flavor: "The dead do not rise. They merely clear their throats." },
+    { rank: "Adept", name: "Grave-Anchor", type: "Action", cost: "1 AP · 5 Mana · 3 Stamina", cd: 3, range: "10 tiles",
+      effect: "Bind a spirit or undead to its ground for 2 turns (it cannot move; contest vs Spell Defense) — or anchor a dying ally: an ally at 0 HP within range is automatically stabilized.",
+      horror: null, flavor: "Everything belongs somewhere. You enforce it." },
+    { rank: "Master", name: "The Open Barrow", type: "Special", cost: "1 SP · 12 Mana", cd: 4, range: "5 tiles",
+      effect: "Raise one barrow-dead servant for 3 turns (20 HP, 1d6 strike, acts on your turn for 1 AP). It must be raised from actual burial ground.",
+      horror: "−5 Sanity, +2 Corruption. The servant remembers being someone.", flavor: "You ask permission first. That is the difference. That has to be the difference." }
+  ],
+  lore: [
+    "Every domain is a graveyard with weather. The Gravebound are Mediums who stopped calling the dead and started tending them — binding the murdered to their plots so they cannot be raised against the living, and waking the ancient dead only when the newer horrors come knocking.",
+    "They keep the barrows of Barovia like parish priests keep churches: swept, named, and armed. A Gravebound's greatest fear is an empty grave — not because something rose, but because something was taken. The Dark Powers collect the dead like coins, and the Gravebound are the only ones auditing the purse."
+  ],
+  quote: { text: "Sleep. I have the watch. I have had the watch for two hundred years.", by: "Gravebound Ostrov, Keeper of the Drowned Rows" }
+},
+/* ============================ THE BLOOD ============================ */
+{
+  id: "skinwalker", name: "Skinwalker", kind: "base", triad: "blood",
+  epithet: "Kin of the Red Moon", role: "Shapeshifter · skirmisher",
+  primary: "stamina", attributes: ["Agility", "Body"],
+  skills: ["Athletics", "Stealth", "Escape Artist"],
+  armor: "Light (hide scraps)",
+  weapons: [
+    { name: "Claws & Fangs", cat: "Natural", dmg: "1d4 + Strength", tags: "Cannot be disarmed" },
+    { name: "Stone Handaxe", cat: "One-handed", dmg: "1d4 + Strength", tags: "—" },
+    { name: "Hunting Spear", cat: "One-handed", dmg: "1d4 + Strength", tags: "Throwable" }
+  ],
+  stats: { hp: 20, mana: -20, stamina: 25, ac: 0, dr: 1, acc: 0, dodge: 0 },
+  trait: { name: "The Beast Within", text: "Shift as 1 AP + 5 Stamina: natural weapons (1d4 + Strength) and +1 DR for 3 turns. Each Shift adds +1 Corruption. You always know the direction of the nearest lycanthrope." },
+  abilities: [
+    { rank: "Initiate", name: "Feral Rush", type: "Action", cost: "1 AP · 4 Stamina", cd: 2, range: "5 tiles + melee",
+      effect: "Lope up to 5 tiles and strike: 1d4 + Strength. If you are shifted, the strike deals +2 damage.",
+      horror: null, flavor: "The distance closes like a wound." },
+    { rank: "Adept", name: "Blood Scent", type: "Action", cost: "1 AP · 2 Stamina", cd: 0, range: "10 tiles",
+      effect: "Mark one prey: you gain +2 Accuracy against it and always know its direction for the rest of the scene.",
+      horror: null, flavor: "Fear has a smell. So does lying." },
+    { rank: "Master", name: "The Turning", type: "Special", cost: "1 SP · 10 Stamina", cd: 4, range: "Self",
+      effect: "Full beast form for 3 turns: +2 DR, natural attacks deal 2d3 + Strength, +10 temporary HP. Enemy witnesses gain +15 Fear. When it ends: −1 to all rolls for 1 turn.",
+      horror: "+3 Corruption. The Beast drives for a while.", flavor: "You do not become the wolf. You admit it." }
+  ],
+  lore: [
+    "The Red Kin do not call it a curse. A curse is something done to you; the Blood is something you are. In the Domains of Dread, where the moon hangs like a verdict, the cursed bloodlines survive by kinship: wolf packs in the Balinok forests, murder-flights above the gallows fields, and the unbound ones who belong to no shape at all.",
+    "Skinwalkers are the Kin's walkers — the ones who can still pass for human at the tavern door. They hunt the things that give their kind a bad name, because no one else will do it fairly. Every Shift is a withdrawal from an account they cannot see the balance of. The Red Moon keeps the ledger."
+  ],
+  quote: { text: "I am not two people. I am one person, with teeth.", by: "Unnamed Kin, scratched into a gallows post" }
+},
+{
+  id: "wolfbound", name: "Wolfbound", kind: "path", triad: "blood", parent: "skinwalker",
+  epithet: "The Pack-Cursed", role: "Pack fighter · terror striker",
+  primary: "stamina", attributes: ["Body", "Agility"],
+  skills: ["Athletics", "Grapple", "Stealth"],
+  armor: "Light",
+  weapons: [
+    { name: "Wolf Claws", cat: "Natural", dmg: "1d4 + Strength", tags: "Cannot be disarmed" },
+    { name: "Hunting Spear", cat: "One-handed", dmg: "1d4 + Strength", tags: "Throwable" },
+    { name: "Paired Handaxes", cat: "One-handed", dmg: "1d4 + Strength", tags: "Throwable" }
+  ],
+  stats: { hp: 15, mana: 0, stamina: 10, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "Pack Blood", text: "While an ally stands within 1.5 tiles of you, you gain +1 Accuracy. Lycanthrope packs recognize you as kin unless you draw first." },
+  abilities: [
+    { rank: "Initiate", name: "Howl", type: "Action", cost: "1 AP · 4 Stamina", cd: 3, range: "10-tile radius",
+      effect: "Enemies within range gain +10 Fear (Willpower DC 13 halves). Allies within range reduce Fear by 5.",
+      horror: null, flavor: "It is not a threat. It is a weather report." },
+    { rank: "Adept", name: "Rending Claws", type: "Action", cost: "1 AP · 3 Stamina", cd: 0, range: "Melee",
+      effect: "A tearing strike: 1d4 + Strength. On a hit, the wound bleeds for 2 damage at the start of the target's next 2 turns.",
+      horror: null, flavor: "Wolves do not fence. Wolves conclude." },
+    { rank: "Master", name: "Moon-Fury", type: "Special", cost: "1 SP · 12 Stamina", cd: 4, range: "Self",
+      effect: "For 3 turns: +2 Strength (effective) and +1 Movement Point. You must attack the nearest creature each turn (Willpower DC 13 to choose otherwise).",
+      horror: "+2 Corruption. The moon does not ask what you meant to do.", flavor: "The rage is borrowed. The consequences are yours." }
+  ],
+  lore: [
+    "The wolf bloodlines are the oldest of the Red Kin — older, some say, than the Mists themselves. Barovia's forests remember a time before the Count, when the packs ran under a moon that was only a moon. The Wolfbound carry that memory in their marrow, and it makes them both prouder and sadder than the other Kin.",
+    "A Wolfbound's loyalty is literal: the pack is a single animal with several bodies. Betrayal is not a moral failure but an amputation. When a Wolfbound walks alone — and many do, exiled or self-exiled after a night they cannot account for — they are not solitary. They are wounded."
+  ],
+  quote: { text: "Run with us or run from us. Both are honest.", by: "Pack-Speaker Dragan, of the Balinok Ridge" }
+},
+{
+  id: "ravenkin", name: "Ravenkin", kind: "path", triad: "blood", parent: "skinwalker",
+  epithet: "The Feather-Cursed", role: "Scout · aerial skirmisher",
+  primary: "stamina", attributes: ["Agility", "Charisma"],
+  skills: ["Stealth", "Sleight of Hand", "Perception"],
+  armor: "Light",
+  weapons: [
+    { name: "Talons", cat: "Natural", dmg: "1d4 + Strength", tags: "Cannot be disarmed" },
+    { name: "Throwing Knives", cat: "Thrown", dmg: "1d4 + Strength", tags: "Concealable" },
+    { name: "Gallows Short Bow", cat: "Bow", dmg: "1d4 + Body", tags: "—" }
+  ],
+  stats: { hp: 5, mana: 0, stamina: 15, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "Featherfall", text: "You take no falling damage and gain +2 Stealth at night. You may glide up to 5 tiles as your movement (3 Stamina) instead of walking." },
+  abilities: [
+    { rank: "Initiate", name: "Murder of One", type: "Action", cost: "1 AP · 5 Stamina", cd: 3, range: "Self",
+      effect: "Split into a swarm of three ravens for 1 turn: +3 Dodge Defense, and your next attack deals +1d4 damage as the swarm converges. Witnesses gain +5 Fear.",
+      horror: null, flavor: "One bird is an omen. Three are a verdict." },
+    { rank: "Adept", name: "Carrion Eye", type: "Action", cost: "1 AP · 2 Stamina", cd: 0, range: "30 tiles",
+      effect: "Borrow the eyes of any raven within range: perceive any location you have seen this scene as if standing there, with +2 Perception.",
+      horror: null, flavor: "The gallows birds see everything. They are not impressed." },
+    { rank: "Master", name: "Wings of the Gallows", type: "Special", cost: "1 SP · 10 Stamina", cd: 4, range: "Self",
+      effect: "True flight for 3 turns: movement distance doubled, ignore terrain. One dive attack during the flight deals 2d3 + Strength.",
+      horror: "+2 Corruption. The sky is not part of the domain. That is why it is dangerous.", flavor: "For three turns, the Mists cannot hold you. They notice." }
+  ],
+  lore: [
+    "The feather-cursed were born, the Kin's stories say, from the ravens that fed on the gallows fields during the Gallows Winter — birds that ate so much of the unjustly dead that they began to dream in human voices. The Ravenkin are their descendants: slight, watchful people who startle at loud noises and never eat poultry.",
+    "They are the Kin's eyes and couriers, roosting in belfries and watching roads no Landsworn can patrol. A Ravenkin's cruelty is precise and their kindness is sudden. They collect small bright objects and small true secrets, and they trade both at the same unfair rate: one for one."
+  ],
+  quote: { text: "I have seen your roof. We should talk about what is in your attic.", by: "Ravenkin Kestrel, perched on a tavern sign" }
+},
+{
+  id: "wanderer", name: "Wanderer", kind: "path", triad: "blood", parent: "skinwalker",
+  epithet: "The Unbound Afflicted", role: "Unstable shifter · survivor",
+  primary: "stamina", attributes: ["Agility", "Fortitude"],
+  skills: ["Escape Artist", "Willpower", "Athletics"],
+  armor: "Cloth or Light",
+  weapons: [
+    { name: "Road-Staff", cat: "Two-handed", dmg: "2d3 + Strength", tags: "Walking stick" },
+    { name: "Sickle", cat: "One-handed", dmg: "1d4 + Strength", tags: "—" },
+    { name: "Scavenged Blade", cat: "One-handed", dmg: "1d4 + Strength", tags: "Whatever the road gave" }
+  ],
+  stats: { hp: 10, mana: 5, stamina: 10, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "The Burden", text: "Track Burden 0–10: +1 per Shift or borrowed form. At 3, 5 and 7 Burden you surge — a random minor form erupts (GM picks), granting +1d4 damage for 1 turn and +5 Fear to you. A safe night's rest resets Burden to 0." },
+  abilities: [
+    { rank: "Initiate", name: "Borrowed Shape", type: "Action", cost: "1 AP · 6 Stamina", cd: 2, range: "Self",
+      effect: "Take the minor aspect of any beast you have seen: claws (1d4 + Strength), glide, gills, or night-eyes, for 3 turns.",
+      horror: "+1 Burden. The shape wants to stay.", flavor: "Other Kin wear one skin. You try them all on." },
+    { rank: "Adept", name: "Shed the Pain", type: "Action", cost: "1 AP · 4 Stamina", cd: 3, range: "Self",
+      effect: "Warp the flesh to escape it: remove one condition from yourself (Bound, bleeding, poison, grappled).",
+      horror: "+1 Burden, +1 Corruption. What you shed grows back wrong, briefly.", flavor: "The rope holds a shape. You are no longer that shape." },
+    { rank: "Master", name: "The Unraveling", type: "Special", cost: "1 SP · 12 Stamina", cd: 4, range: "Self",
+      effect: "Chimera surge for 2 turns: your attacks deal +2d3 damage and you gain +2 DR. Afterward: −1 to all rolls for 1 turn.",
+      horror: "+2 Burden, +3 Corruption. For two turns, nothing in the Mists knows what you are — including you.", flavor: "Every form at once is not power. It is panic, wearing power." }
+  ],
+  lore: [
+    "Not every cursed bloodline has a shape. The Wanderers — the Errant Kin — carry a Blood that never settled: bitten by too many things, blessed by too few, born in the Mists to parents from two domains. Their flesh is a question the world keeps re-asking.",
+    "They walk because stopping is dangerous: a Wanderer who stays in one place too long begins to take the shape of that place's worst memory. The Red Kin shelters them and fears them, because a Wanderer's surge has been known to wear the face of a Darklord for one terrible heartbeat. The road is their leash and their mercy."
+  ],
+  quote: { text: "Do not ask what I am. Ask what I am today, and be grateful for the answer.", by: "The Wanderer called Milepost" }
+},
+/* hybrids born of the Blood */
+{
+  id: "moonbinder", name: "Moonbinder", kind: "hybrid", triad: "blood", parent: "wolfbound", partner: "veil",
+  epithet: "Wolfbound × Occultist", role: "Curse-ritualist · controlled fury",
+  primary: "stamina", attributes: ["Body", "Fortitude"],
+  skills: ["Willpower", "Athletics", "Binding"],
+  armor: "Light",
+  weapons: [
+    { name: "Moon-Silver Spear", cat: "One-handed", dmg: "1d4 + Strength", tags: "Silver · throwable" },
+    { name: "Sigil Claws", cat: "Natural", dmg: "1d4 + Strength", tags: "Ritual focus" },
+    { name: "Lunar Athame", cat: "One-handed", dmg: "1d4 + Strength", tags: "Silver · ritual focus" }
+  ],
+  stats: { hp: 5, mana: 15, stamina: 0, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "The Leashed Moon", text: "Gain the Occultist trait Veil-Sight. Your lunar sigils let you Shift without the +1 Corruption cost once per scene — the moon accepts paperwork." },
+  abilities: [
+    { rank: "Initiate", name: "Lunar Sigil", type: "Action", cost: "1 AP · 5 Mana · 3 Stamina", cd: 3, range: "Melee touch",
+      effect: "Brand yourself or an ally with a moon-sigil for 3 turns: their next Shift costs no Corruption and grants +1 DR while shifted.",
+      horror: null, flavor: "The curse, notarized." },
+    { rank: "Adept", name: "Phase Lock", type: "Action", cost: "1 AP · 6 Mana", cd: 3, range: "10 tiles",
+      effect: "Roll vs Spell Defense: lock a shapeshifter in its current form for 2 turns (it cannot shift). Against non-shifters: −1 Dodge Defense for 2 turns.",
+      horror: null, flavor: "The moon holds still. So do you." },
+    { rank: "Master", name: "Rite of the Red Moon", type: "Special", cost: "1 SP · 10 Mana · 8 Stamina", cd: 4, range: "5-tile radius",
+      effect: "Blessed shifting for you and allies within range for 3 turns: natural attacks deal +1d4 damage and these Shifts cost no Corruption. Enemy witnesses gain +10 Fear.",
+      horror: "−3 Sanity. Under the red moon, you see the leash's other end.", flavor: "The Kin howl at the moon. You negotiate with it." }
+  ],
+  lore: [
+    "The Moonbinders are the treaty between the Blood and the Veil — Wolfbound who learned that a curse is a contract, and contracts have clauses. They carve lunar sigils into spear-hafts and shoulder blades, and the Red Moon, which has never once been reasoned with, finds itself reasoned with.",
+    "The Pallid Lantern considers them heretics; the Red Kin considers them lawyers; the Moonbinders consider themselves the only adults in the room. Their secret dread is the fine print: every sigil is witnessed, and somewhere behind the moon, something is countersigning."
+  ],
+  quote: { text: "The beast is not my enemy. It is my co-signatory.", by: "Moonbinder Ilya Varn, sigil-scars on both palms" }
+},
+{
+  id: "doomwing", name: "Doomwing", kind: "hybrid", triad: "blood", parent: "ravenkin", partner: "veil",
+  epithet: "Ravenkin × Occultist", role: "Omen-caster · psychic skirmisher",
+  primary: "stamina", attributes: ["Agility", "Fortitude"],
+  skills: ["Perception", "Deciphering", "Stealth"],
+  armor: "Light",
+  weapons: [
+    { name: "Omen Talons", cat: "Natural", dmg: "1d4 + Strength", tags: "Cannot be disarmed" },
+    { name: "Omen Knives", cat: "Thrown", dmg: "1d4 + Strength", tags: "Etched with names" },
+    { name: "Black-Feather Bow", cat: "Bow", dmg: "1d4 + Body", tags: "—" }
+  ],
+  stats: { hp: 0, mana: 10, stamina: 5, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "The Crooked Omen", text: "Gain the Occultist trait Veil-Sight. Once per scene, when you witness a death, you may declare it 'read' — the next scene, you and your allies gain +1 to rolls against whatever killed them." },
+  abilities: [
+    { rank: "Initiate", name: "Omen of Ill", type: "Action", cost: "1 AP · 5 Mana", cd: 2, range: "10 tiles",
+      effect: "Roll vs Spell Defense: speak the target's near future. It suffers −2 to its next roll and gains +5 Fear (the certainty of it).",
+      horror: null, flavor: "You do not curse them. You spoil the ending." },
+    { rank: "Adept", name: "Death-Song", type: "Action", cost: "1 AP · 7 Mana · 3 Stamina", cd: 3, range: "10 tiles",
+      effect: "A keening verse for 3 turns: one enemy takes 1d4 psychic damage at the start of each of its turns and gains +5 Fear (once).",
+      horror: null, flavor: "Ravens sing only once. It is always the same song." },
+    { rank: "Master", name: "The Prophecy Fulfilled", type: "Special", cost: "1 SP · 12 Mana", cd: 4, range: "10 tiles",
+      effect: "Declare a death: mark one target. The first time it drops below a quarter of its HP this scene, it takes +2d6 psychic damage. If it dies, allies within 10 tiles reduce Fear by 15.",
+      horror: "−5 Sanity. You saw the thread, and the thread saw you.", flavor: "Prophecy is just memory, pointed the wrong way." }
+  ],
+  lore: [
+    "The Doomwings are Ravenkin who listened too long at the Veil and heard the gallows birds' original song: the one that names the dead before they die. They are the Kin's augurs, perched above battles, croaking verdicts that armies have been known to obey.",
+    "A Doomwing's gift is cruel arithmetic — they know which deaths are coming and must choose which to announce. Announce one, and it becomes certain; withhold one, and it becomes yours to carry. The eldest Doomwings stop speaking entirely and write their omens on black feathers, released over the rooftops of the doomed. The Pallid Lantern collects the feathers. The Red Kin burns them."
+  ],
+  quote: { text: "I did not kill him. I merely read the last page first.", by: "Doomwing Corvina, at her own trial" }
+},
+{
+  id: "landwight", name: "Landwight", kind: "hybrid", triad: "blood", parent: "wanderer", partner: "land",
+  epithet: "Wanderer × Landsworn", role: "Terrain-responsive shifter",
+  primary: "stamina", attributes: ["Agility", "Body"],
+  skills: ["Stealth", "Athletics", "Perception"],
+  armor: "Light",
+  weapons: [
+    { name: "Terrain Claws", cat: "Natural", dmg: "1d4 + Strength", tags: "Changes with the ground" },
+    { name: "Root-Woven Maul", cat: "Two-handed", dmg: "2d3 + Strength", tags: "Living wood" },
+    { name: "Standing-Stone Shard", cat: "Thrown", dmg: "1d4 + Strength", tags: "Cold stone" }
+  ],
+  stats: { hp: 15, mana: 0, stamina: 0, ac: 0, dr: 1, acc: 0, dodge: 0 },
+  trait: { name: "The Answered Blood", text: "Gain the Landsworn trait Terrain Bond. Your Burden surges no longer roll random forms — the land chooses for you, and the land is never random. Surges in your home terrain grant +2d4 damage instead of +1d4." },
+  abilities: [
+    { rank: "Initiate", name: "Terrain Skin", type: "Action", cost: "1 AP · 6 Stamina", cd: 2, range: "Self",
+      effect: "Shift to match the ground for 3 turns: Forest — bark hide (+1 DR); Ruins & Graves — gaunt form (+2 Stealth); Roads & Mists — vaporous form (+2 Dodge Defense).",
+      horror: "+1 Burden, but no Corruption. The land accepts what the Blood offers.", flavor: "Every place has a native. You apply for the position." },
+    { rank: "Adept", name: "Root & Ruin", type: "Action", cost: "1 AP · 5 Stamina · 3 Mana", cd: 3, range: "Melee",
+      effect: "A strike that the ground joins: 1d6 + Strength, or 2d6 + Strength if you stand in your home terrain.",
+      horror: null, flavor: "The soil lends a hand. It has so many." },
+    { rank: "Master", name: "The Land Walks", type: "Special", cost: "1 SP · 12 Stamina", cd: 4, range: "Self",
+      effect: "Become the terrain's avatar for 2 turns: +3 DR, +2 Body, movement ignores terrain. Witnesses gain +15 Fear. Afterward: −1 to all rolls for 1 turn.",
+      horror: "+2 Burden. For two turns you are a place, and places do not forgive.", flavor: "The Wanderer finally stops walking. The land walks instead." }
+  ],
+  lore: [
+    "The Landwights are the answer to the Wanderers' oldest prayer: a Blood that never settled, given a home that never moves. The first was an Errant Kin who collapsed at a crossroads standing-stone and woke wearing its shape — moss in the seams, gravel in the knuckles, and for the first time in her life, still.",
+    "The Black Soil Wardens treat Landwights as sacred and handle them like loaded traps. A Landwight's forms are the land's own vocabulary: bark in the forest, gauntness in the graves, vapor on the roads. The danger is ownership — the land that shelters a Landwight begins to consider them property, and the Domains' landlords are jealous. A Landwight who stays too long in one domain starts appearing in its folktales, then in its weather."
+  ],
+  quote: { text: "I was born nowhere. The stone offered me a somewhere. I said yes.", by: "The Landwight of the Crossroads Stone" }
+},
+/* ============================ THE LAND ============================ */
+{
+  id: "landsworn", name: "Landsworn", kind: "base", triad: "land",
+  epithet: "Warden of the Black Soil", role: "Terrain master · survivor",
+  primary: "stamina", attributes: ["Body", "Agility"],
+  skills: ["Perception", "Stealth", "Willpower"],
+  armor: "Medium",
+  weapons: [
+    { name: "Woodsman's Axe", cat: "One-handed", dmg: "1d4 + Strength", tags: "—" },
+    { name: "Yew Bow", cat: "Bow", dmg: "1d4 + Body", tags: "—" },
+    { name: "Iron-Shod Spear", cat: "One-handed", dmg: "1d4 + Strength", tags: "Throwable" }
+  ],
+  stats: { hp: 10, mana: -10, stamina: 10, ac: 1, dr: 1, acc: 0, dodge: 0 },
+  trait: { name: "Terrain Bond", text: "Choose a home terrain: Forest, Ruins & Graves, or Roads & Mists. Inside it you gain +1 Accuracy and +1 Dodge Defense, and you always know the direction of your bound waystone." },
+  abilities: [
+    { rank: "Initiate", name: "Waystone Ward", type: "Action", cost: "1 AP · 4 Stamina", cd: 3, range: "5-tile radius",
+      effect: "Set a ward for 3 turns: allies entering reduce Fear by 5 and gain +1 Spell Defense while inside; enemies entering gain +5 Fear.",
+      horror: null, flavor: "A stone, a knot of rowan, a promise. The ground keeps promises." },
+    { rank: "Adept", name: "Hunter's Ground", type: "Action", cost: "1 AP · 3 Stamina", cd: 0, range: "5 tiles",
+      effect: "Tangle a patch of ground for 2 turns: enemies inside pay double movement cost. You ignore it.",
+      horror: null, flavor: "Every root is a tripwire if you ask it politely." },
+    { rank: "Master", name: "The Land Remembers", type: "Special", cost: "1 SP · 8 Stamina · 4 Mana", cd: 4, range: "10 tiles",
+      effect: "The terrain grasps: up to 3 enemies are restrained for 1 turn (Athletics DC 13 to break free) and take 1d4 crushing damage. They gain +10 Fear.",
+      horror: null, flavor: "The soil has held worse things than you. It remembers how." }
+  ],
+  lore: [
+    "The Domains of Dread are owned. Every acre answers to a Darklord; every road is a leash. The Black Soil Wardens refuse this. They are hunters, hearth-keepers, road-walkers and grave-tenders who swear an older oath — to the land itself, beneath its masters' claim. The land, they insist, is a prisoner too.",
+    "A Landsworn binds a waystone: a hearthstone, a gravestone, a milestone. It is their anchor and their parish. They fight the way the land fights — slowly, patiently, with roots and frost and the memory of every body buried in it. The Darklords own the map. The Wardens keep the ground."
+  ],
+  quote: { text: "The Count owns the castle. The soil owns the Count.", by: "Warden Petru, at the binding of the Ninth Waystone" }
+},
+{
+  id: "hunter", name: "Hunter", kind: "path", triad: "land", parent: "landsworn",
+  epithet: "The Preparation", role: "Tracker · trapmaster",
+  primary: "stamina", attributes: ["Agility", "Fortitude"],
+  skills: ["Stealth", "Perception", "Alchemy"],
+  armor: "Light or Medium",
+  weapons: [
+    { name: "Yew Hunting Bow", cat: "Bow", dmg: "1d4 + Body", tags: "—" },
+    { name: "Silvered Shortsword", cat: "One-handed", dmg: "1d4 + Strength", tags: "Silver" },
+    { name: "Snare Kit & Javelins", cat: "Thrown", dmg: "1d4 + Strength", tags: "Traps" }
+  ],
+  stats: { hp: 10, mana: 0, stamina: 10, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "Preparations", text: "You carry 2 prepared tricks per scene (traps, oils, snares — Alchemy or Perception to craft). Choose one favored prey type (undead, lycanthrope, spirit): +2 to track and identify it." },
+  abilities: [
+    { rank: "Initiate", name: "Snare & Stake", type: "Action", cost: "1 AP · 3 Stamina", cd: 2, range: "1.5 tiles",
+      effect: "Set a trap: the first enemy to enter the tile takes 1d6 damage and is restrained for 1 turn (Escape Artist DC 13 to slip free).",
+      horror: null, flavor: "The forest is a weapon. You are merely its aim." },
+    { rank: "Adept", name: "Silvered Shot", type: "Action", cost: "1 AP · 1 Stamina", cd: 0, range: "10 tiles (bow)",
+      effect: "A prepared arrow: +1 damage, or +1d4 damage against undead and lycanthropes (silver).",
+      horror: null, flavor: "Silver is expensive. Knowing where to put it is free." },
+    { rank: "Master", name: "The Long Hunt", type: "Special", cost: "1 SP · 8 Stamina", cd: 4, range: "10 tiles",
+      effect: "Designate one quarry: +2 Accuracy and +1d4 damage against it, and you always know its direction, for the scene. If it dies by your hand, reduce your Fear by 20.",
+      horror: null, flavor: "Some hunts end in a kill. The good ones end in a quiet village." }
+  ],
+  lore: [
+    "The Hunters are the Wardens' forward edge — the ones who go out past the waystones with a bow, a bag of salt, and a list. Their lists are famous: not of trophies, but of names. Every Hunter keeps the names of what they have killed and what they have failed to kill, and the second column is always longer.",
+    "They hunt the way their grandparents hunted deer: patiently, respectfully, and with the understanding that the forest is watching. In Barovia the forest watches back. A Hunter's craft is preparation — the right oil, the right snare, the right silver — because the things they hunt cannot be outfought, only out-thought, and only once each."
+  ],
+  quote: { text: "I do not hate the wolf. I hate what the wolf ate. The distinction keeps me honest.", by: "Hunter Sanda Voss, list-carrier" }
+},
+{
+  id: "guardian", name: "Guardian", kind: "path", triad: "land", parent: "landsworn",
+  epithet: "The Anchor", role: "Protector · hearth-warden",
+  primary: "stamina", attributes: ["Body", "Charisma"],
+  skills: ["Grapple", "First Aid", "Willpower"],
+  armor: "Heavy",
+  weapons: [
+    { name: "Tower Shield & War Mace", cat: "One-handed", dmg: "1d4 + Strength", tags: "Shield +1 AC" },
+    { name: "Hearth Pike", cat: "Two-handed", dmg: "2d3 + Strength", tags: "Reach" },
+    { name: "Hearth Hammer", cat: "Two-handed", dmg: "2d3 + Strength", tags: "—" }
+  ],
+  stats: { hp: 15, mana: 0, stamina: 0, ac: 1, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "The Anchor", text: "Allies within 1.5 tiles gain 5 less Fear from any source. Once per turn, when an adjacent ally is hit, you may take the damage instead (your DR applies; costs 2 Stamina)." },
+  abilities: [
+    { rank: "Initiate", name: "Bulwark Stance", type: "Action", cost: "1 AP · 3 Stamina", cd: 2, range: "Self",
+      effect: "Plant yourself for 2 turns: +2 AC and +1 DR, but you cannot use Movement Points while the stance holds.",
+      horror: null, flavor: "The doorway is not a place. It is a person." },
+    { rank: "Adept", name: "Consecrate Hearth", type: "Action", cost: "1 AP · 5 Stamina · 3 Mana", cd: 3, range: "5-tile radius",
+      effect: "Kindle the hearth-ward for 3 turns: allies inside reduce Fear by 10 (once) and gain +1 Spell Defense; undead entering take 1d4 holy damage.",
+      horror: null, flavor: "A fire that remembers every family that ever warmed at it." },
+    { rank: "Master", name: "Unbroken Vigil", type: "Special", cost: "1 SP · 10 Stamina", cd: 4, range: "5-tile radius",
+      effect: "For 3 turns you cannot fall below 1 HP, and allies within range gain no Fear. Afterward: −1 to all rolls for 1 turn.",
+      horror: null, flavor: "Sleep is a promise you make to the dead. Not tonight." }
+  ],
+  lore: [
+    "The Guardians are the Wardens who stayed. Where Hunters go out and Mistwalkers go between, Guardians stand in doorways — of taverns, of chapels, of the last house on the lane. They bind their waystone into the hearth itself, and the hearth binds them back: a Guardian cannot abandon their parish, and the parish cannot survive without them.",
+    "Their armor is patched with pieces of the things they have stopped: a claw here, a fang there, a shard of a Darklord's carriage door. A Guardian's greatest battle is usually invisible — the night nothing happened, the morning the children still had a village. They keep no lists. The village keeps it for them, in the form of being alive."
+  ],
+  quote: { text: "Behind me: everything. In front of me: the only thing that matters.", by: "Guardian Brannoc, the Doorway of Krezk" }
+},
+{
+  id: "mistwalker", name: "Mistwalker", kind: "path", triad: "land", parent: "landsworn",
+  epithet: "The Grey Road", role: "Mist-strider · border scout",
+  primary: "stamina", attributes: ["Agility", "Fortitude"],
+  skills: ["Stealth", "Escape Artist", "Perception"],
+  armor: "Light",
+  weapons: [
+    { name: "Fog-Cutter Falchion", cat: "One-handed", dmg: "1d4 + Strength", tags: "Cold iron" },
+    { name: "Way-Lantern", cat: "One-handed", dmg: "1d4 + Strength", tags: "Light · ward" },
+    { name: "Grey-Road Knives", cat: "Thrown", dmg: "1d4 + Strength", tags: "Concealable" }
+  ],
+  stats: { hp: 0, mana: 5, stamina: 10, ac: 0, dr: 0, acc: 0, dodge: 1 },
+  trait: { name: "Mist-Stride", text: "In fog, mist or darkness you gain +2 Stealth. Once per turn you may mist-step 5 tiles between patches of mist or shadow (3 Stamina) instead of walking." },
+  abilities: [
+    { rank: "Initiate", name: "Fog Bank", type: "Action", cost: "1 AP · 5 Stamina · 3 Mana", cd: 3, range: "5-tile radius",
+      effect: "Conjure a fog bank for 3 turns: sight beyond 1.5 tiles inside is blocked. You see through it normally.",
+      horror: null, flavor: "The Mists are a wall. You have a door." },
+    { rank: "Adept", name: "Border Step", type: "Action", cost: "1 AP · 6 Stamina", cd: 3, range: "5 tiles",
+      effect: "Step through the grey between two points you can see (or two mist patches): teleport 5 tiles. Cannot pass solid walls.",
+      horror: null, flavor: "Every border is a seam. You walk the seams." },
+    { rank: "Master", name: "The Grey Road", type: "Special", cost: "1 SP · 10 Stamina · 5 Mana", cd: 4, range: "10 tiles",
+      effect: "Lead yourself and up to 2 allies through the mist to a point within 10 tiles. Enemies along the path gain +10 Fear (they see what walks beside you).",
+      horror: "−3 Sanity. The road between domains is not empty.", flavor: "The Mists take everyone. You are the first to ask for directions." }
+  ],
+  lore: [
+    "The Mists are the Domains' true terrain — not weather but architecture, the walls of the world's prison. The Mistwalkers are the Wardens who learned to read the walls. They patrol the borders no one else can find, mark the safe seams with rowan knots, and guide the lost out of the fog before the fog decides to keep them.",
+    "Every Mistwalker has a story about the thing that walked beside them in the grey, matching their pace, wearing their shape but wrong. They do not tell these stories to outsiders. They tell them to each other, quietly, at the waystones, because the Grey Road is the only road in Ravenloft that the Darklords do not fully own — and something else owns the rest of it."
+  ],
+  quote: { text: "Stay on the road. If the road moves, stay on the road anyway.", by: "Mistwalker Eleri, Border-Runner of the Western Seam" }
+},
+/* hybrids born of the Land */
+{
+  id: "hexhunter", name: "Hexhunter", kind: "hybrid", triad: "land", parent: "hunter", partner: "veil",
+  epithet: "Hunter × Occultist", role: "Monster scholar · precision killer",
+  primary: "stamina", attributes: ["Agility", "Fortitude"],
+  skills: ["Deciphering", "Perception", "Alchemy"],
+  armor: "Light or Medium",
+  weapons: [
+    { name: "Silvered Hunting Bow", cat: "Bow", dmg: "1d4 + Body", tags: "Silver" },
+    { name: "Hex-Nails", cat: "Thrown", dmg: "1d4 + Strength", tags: "Cold iron · etched" },
+    { name: "Monster-Bane Shortsword", cat: "One-handed", dmg: "1d4 + Strength", tags: "Silver · named" }
+  ],
+  stats: { hp: 0, mana: 10, stamina: 5, ac: 0, dr: 0, acc: 0, dodge: 0 },
+  trait: { name: "The Annotated Prey", text: "Gain the Occultist trait Veil-Sight. Your Hunter list gains a third column: weaknesses. Once you identify a creature type, your Preparations against it cost no resources." },
+  abilities: [
+    { rank: "Initiate", name: "Read the Monster", type: "Action", cost: "1 AP · 3 Mana", cd: 2, range: "10 tiles",
+      effect: "Deciphering or Perception DC 13: learn a creature's type, one weakness and one resistance. You gain +1 Accuracy against it for the scene.",
+      horror: null, flavor: "Every monster is a book. Most people only read the teeth." },
+    { rank: "Adept", name: "Sigil Trap", type: "Action", cost: "1 AP · 5 Mana · 3 Stamina", cd: 3, range: "1.5 tiles",
+      effect: "Inscribe a trap: the first supernatural creature (undead, spirit, lycanthrope, shifter) to enter takes 1d6 force damage and cannot shift or teleport for 2 turns.",
+      horror: null, flavor: "The snare is salt. The stake is a syllable." },
+    { rank: "Master", name: "The Named Bullet", type: "Special", cost: "1 SP · 8 Mana · 4 Stamina", cd: 4, range: "10 tiles",
+      effect: "Carve a true name or type into an arrow or blade: your next ranged attack against that creature type deals +2d6 damage and ignores its DR. Once per scene per type.",
+      horror: "−3 Sanity. Names have weight, and you just carried one.", flavor: "The old hunters carved tally-marks. You carve obituaries." }
+  ],
+  lore: [
+    "The Hexhunters are the heirs of the great monster-hunters of Ravenloft lore — the Van Richtens who proved that a library card is deadlier than a stake. They are Hunters who took the Pallid Lantern's oath without leaving the forest: one foot in the blind, one in the archive.",
+    "A Hexhunter's bow is a bibliography. Each arrow is annotated, each nail etched with a syllable of something's true name. The Veil gives them knowledge; the Land gives them patience; the combination gives the monsters of Barovia something they have rarely felt — the experience of being studied by a predator."
+  ],
+  quote: { text: "Silver for the blood, salt for the spirit, and the correct pronunciation for the rest.", by: "Hexhunter Ludmilla Vex, annotating a quiver" }
+},
+{
+  id: "bearwarden", name: "Bearwarden", kind: "hybrid", triad: "land", parent: "guardian", partner: "blood",
+  epithet: "Guardian × Skinwalker", role: "Beast-tank · hearth protector",
+  primary: "stamina", attributes: ["Body", "Charisma"],
+  skills: ["Grapple", "First Aid", "Athletics"],
+  armor: "Heavy or hide",
+  weapons: [
+    { name: "Bear Claws", cat: "Natural", dmg: "1d4 + Strength", tags: "Cannot be disarmed" },
+    { name: "Guardian's Maul", cat: "Two-handed", dmg: "2d3 + Strength", tags: "Hearth-bound" },
+    { name: "Hide & Shield", cat: "One-handed", dmg: "1d4 + Strength", tags: "Shield +1 AC" }
+  ],
+  stats: { hp: 15, mana: 0, stamina: 0, ac: 0, dr: 1, acc: 0, dodge: 0 },
+  trait: { name: "The Hearth-Beast", text: "Gain the Skinwalker trait The Beast Within. Your Shifts while defending your bound waystone or parish cost no Corruption — the hearth vouches for the bear." },
+  abilities: [
+    { rank: "Initiate", name: "Ursine Vigil", type: "Action", cost: "1 AP · 6 Stamina", cd: 3, range: "Self",
+      effect: "Bear-shift as a guardian for 3 turns: +2 DR, and your Anchor interception reaches allies within 5 tiles instead of 1.5.",
+      horror: "+1 Corruption (waived in your parish). The bear keeps the door.", flavor: "The doorway grows fur. The promise does not change." },
+    { rank: "Adept", name: "Mauling Guard", type: "Action", cost: "1 AP · 4 Stamina", cd: 0, range: "Melee",
+      effect: "After you intercept a hit this turn, immediately counter the attacker: 1d6 + Strength. Once per turn.",
+      horror: null, flavor: "Touch the hearth. Meet what warms it." },
+    { rank: "Master", name: "The Great Bear", type: "Special", cost: "1 SP · 12 Stamina", cd: 4, range: "5-tile radius",
+      effect: "For 3 turns: +20 temporary HP, +3 DR, and allies within range gain no Fear. You cannot use Mana abilities while the Great Bear holds. Afterward: −1 to all rolls for 1 turn.",
+      horror: "+3 Corruption. Somewhere under the bear, the person sleeps.", flavor: "The village sleeps. The mountain keeps watch." }
+  ],
+  lore: [
+    "The Bearwardens are the Red Kin's oldest apology: cursed bloodlines that chose, generations ago, to stand in doorways instead of breaking them down. The bear blood is the gentlest of the Kin's curses and the most terrible when provoked — a Bearwarden's fury is not the wolf's red haze but a slow, geological certainty.",
+    "Villages that keep a Bearwarden do not lock their doors. They leave them open, because the bear prefers to see who comes. The Kin tells the story of the Bearwarden who held a bridge for a night and a day while the village fled, and was found afterward still standing, still breathing, still refusing to fall — and the things that had come for the village had learned to go around."
+  ],
+  quote: { text: "I am the wall. The wall is warm. The wall has teeth.", by: "Bearwarden Ursa of the Open Doors" }
+},
+{
+  id: "mistshroud", name: "Mistshroud", kind: "hybrid", triad: "land", parent: "mistwalker", partner: "blood",
+  epithet: "Mistwalker × Skinwalker", role: "Vapor-shifter · infiltrator",
+  primary: "stamina", attributes: ["Agility", "Fortitude"],
+  skills: ["Stealth", "Escape Artist", "Sleight of Hand"],
+  armor: "Light",
+  weapons: [
+    { name: "Fog-Cutter", cat: "One-handed", dmg: "1d4 + Strength", tags: "Cold iron" },
+    { name: "Vapor Claws", cat: "Natural", dmg: "1d4 + Strength", tags: "Condense from mist" },
+    { name: "Mist Knives", cat: "Thrown", dmg: "1d4 + Strength", tags: "Concealable" }
+  ],
+  stats: { hp: 5, mana: 0, stamina: 10, ac: 0, dr: 0, acc: 0, dodge: 1 },
+  trait: { name: "The Worn Mist", text: "Gain the Skinwalker trait The Beast Within — but your Shift is into vapor, not beast: while shifted you cannot be grappled or bound, and your natural weapons condense from the fog. +1 Corruption per Shift as usual." },
+  abilities: [
+    { rank: "Initiate", name: "Vapor Skin", type: "Action", cost: "1 AP · 6 Stamina", cd: 2, range: "Self",
+      effect: "Half-dissolve for 2 turns: +3 Dodge Defense and immunity to grapple and Binding. You may still attack (the fog condenses a blade).",
+      horror: "+1 Corruption. The mist learns your shape a little better each time.", flavor: "You cannot bind what has already left." },
+    { rank: "Adept", name: "Creeping Dread", type: "Action", cost: "1 AP · 5 Stamina · 3 Mana", cd: 3, range: "5-tile radius",
+      effect: "A fog that whispers for 3 turns: enemies inside gain +10 Fear and −1 Accuracy; you gain +2 Stealth inside it.",
+      horror: null, flavor: "The fog does not hide you. It introduces you." },
+    { rank: "Master", name: "The White Silence", type: "Special", cost: "1 SP · 10 Stamina · 6 Mana", cd: 4, range: "5-tile radius",
+      effect: "Become mist for 2 turns: physical damage against you is halved (after DR), you pass through gaps and cannot be targeted by melee. Enemies within range gain +15 Fear.",
+      horror: "+3 Corruption, −3 Sanity. Silence this white has a heartbeat. It is not yours.", flavor: "For two turns, the Mists are not the prison. They are the prisoner — and you are the shape it takes." }
+  ],
+  lore: [
+    "The Mistshrouds are the strangest of the Turning: Mistwalkers whose Blood answered the Grey Road's oldest question — what walks beside you in the fog? — with 'you do.' They do not shift into beasts. They shift into the Mists themselves, wearing the prison's walls as a skin.",
+    "The Red Kin finds them uncanny; the Wardens find them useful; the Pallid Lantern finds them alarming, because the Mists are the Dark Powers' architecture, and a Mistshroud is a person-shaped door in it. Every Mistshroud eventually reports the same dream: standing in the fog, feeling something try them on. They stop reporting it when they realize the dream is a memory."
+  ],
+  quote: { text: "The Mists take everyone. I simply agreed to be taken, professionally.", by: "Mistshroud Vey, of the Western Seam" }
+}
+];
+
+/* ---- derived helpers ---- */
+const CLASS_BY_ID = Object.fromEntries(CLASSES.map(c => [c.id, c]));
+const BASES = CLASSES.filter(c => c.kind === "base");
+const PATHS = CLASSES.filter(c => c.kind === "path");
+const HYBRIDS = CLASSES.filter(c => c.kind === "hybrid");
+const RANKS = ["Initiate", "Adept", "Master"];
+
+/* Unlock ladder (levels 1–10, milestone-based per project plan) */
+const LEVEL_LADDER = [
+  { level: 1, grant: "Base class: trait + Initiate ability + weapon & armor proficiencies." },
+  { level: 2, grant: "Choose a Progression (path): path trait + Initiate ability." },
+  { level: 3, grant: "Base Adept ability. +5 HP, +5 primary resource." },
+  { level: 4, grant: "Path Adept ability. +1 Accuracy. Rite of Crossing becomes available (optional hybrid)." },
+  { level: 5, grant: "Base Master ability. +5 HP, +5 primary resource." },
+  { level: 6, grant: "Path Master ability." },
+  { level: 7, grant: "Hybrid Adept ability (if crossed). +5 HP, +5 primary resource." },
+  { level: 8, grant: "+1 Accuracy. Veteran techniques (roleplay tier)." },
+  { level: 9, grant: "Hybrid Master ability (if crossed). +5 HP, +5 primary resource." },
+  { level: 10, grant: "Capstone: +10 HP, +10 primary resource. Title of the Order." }
+];
+
+/* Rite of Crossing costs — crossing INTO a triad member */
+const CROSSING_COSTS = {
+  veil:  { track: "Sanity",     delta: "−10 Sanity",     text: "You read what the partner knows. The Veil reads you back." },
+  blood: { track: "Corruption", delta: "+10 Corruption", text: "You take the partner's blood into your own. It takes interest." },
+  land:  { track: "Fear",       delta: "+10 Fear",       text: "You swear the terrain oath and witness what the land remembers. The Fear does not fully leave." }
+};

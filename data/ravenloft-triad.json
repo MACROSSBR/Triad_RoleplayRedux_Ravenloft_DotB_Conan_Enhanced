@@ -2351,15 +2351,15 @@
   "weaponTags": [
     {
       "tag": "Silver",
-      "effect": "+1d4 damage vs lycanthropes. ⚖"
+      "effect": "+1d4 damage vs lycanthropes."
     },
     {
       "tag": "Blessed",
-      "effect": "+1d4 damage vs undead and spirits. ⚖"
+      "effect": "+1d4 damage vs undead and spirits."
     },
     {
       "tag": "Cold Iron",
-      "effect": "+1d4 damage vs spirits and fey. ⚖"
+      "effect": "+1d4 damage vs spirits and fey."
     },
     {
       "tag": "Natural",
@@ -2375,11 +2375,11 @@
     },
     {
       "tag": "Reach",
-      "effect": "+0.5 tile melee reach. ⚖"
+      "effect": "+0.5 tile melee reach."
     },
     {
       "tag": "Shield",
-      "effect": "+1 AC while wielded. ⚖"
+      "effect": "+1 AC while wielded."
     }
   ],
   "armorRules": [

@@ -1,7 +1,7 @@
 /* ============================================================
    RAVENLOFT — THE TRIAD SYSTEM · RULES & SETTING CONTENT
    Source-of-truth alignment: Sistema_de_Combate_Regras.md,
-   Ravenloft RPR Project Plan.md, Plano de Orquestração.
+   Ravenloft RPR Project 
    ============================================================ */
 
 const SKILL_TREE = [

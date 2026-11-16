@@ -2,7 +2,6 @@
    RAVENLOFT — THE TRIAD SYSTEM · RULES & SETTING CONTENT
    Source-of-truth alignment: Sistema_de_Combate_Regras.md,
    Ravenloft RPR Project Plan.md, Plano de Orquestração.
-   Values flagged ⚖ are playtest-calibratable.
    ============================================================ */
 
 const SKILL_TREE = [
@@ -85,14 +84,14 @@ const WEAPON_RULES = [
 ];
 
 const WEAPON_TAGS = [
-  { tag: "Silver", effect: "+1d4 damage vs lycanthropes. ⚖" },
-  { tag: "Blessed", effect: "+1d4 damage vs undead and spirits. ⚖" },
-  { tag: "Cold Iron", effect: "+1d4 damage vs spirits and fey. ⚖" },
+  { tag: "Silver", effect: "+1d4 damage vs lycanthropes." },
+  { tag: "Blessed", effect: "+1d4 damage vs undead and spirits." },
+  { tag: "Cold Iron", effect: "+1d4 damage vs spirits and fey." },
   { tag: "Natural", effect: "Counts as one-handed; cannot be disarmed." },
   { tag: "Ritual Focus", effect: "Required for some rites; channels Mana abilities." },
   { tag: "Throwable", effect: "May be thrown using the thrown profile (1d4 + Strength)." },
-  { tag: "Reach", effect: "+0.5 tile melee reach. ⚖" },
-  { tag: "Shield", effect: "+1 AC while wielded. ⚖" }
+  { tag: "Reach", effect: "+0.5 tile melee reach." },
+  { tag: "Shield", effect: "+1 AC while wielded." }
 ];
 
 const ARMOR_RULES = [
@@ -125,8 +124,8 @@ const COMBAT_PIPELINE = [
 
 const GLOSSARY = [
   ["AP — Action Point", "2 per turn. Common actions (attacks, most abilities) cost 1 AP."],
-  ["SP — Special Action", "1 per turn, separate pool. Master-tier and heavy abilities cost 1 SP."],
-  ["Mov — Movement Point", "1 per turn. One movement opportunity (5 tiles ⚖) costs 1 Mov + 1 Stamina."],
+  ["SP — Special Action", "1 per combat, separate pool. Signature Abilities cost 1 SP (once per combat)."],
+  ["Mov — Movement Point", "1 per turn. One movement opportunity (5 tiles) costs 1 Mov + 1 Stamina."],
   ["AC — Armor Class", "Fixed defense. Base 10 + class + armor. Does not scale with attributes in this system."],
   ["DR — Damage Reduction", "Subtracted once from gross damage after a hit. Base 1 + class + armor."],
   ["Dodge Defense", "Agility + ⌊Fortitude/2⌋ + ⌊Body/3⌋ + class bonuses. Attribute-driven."],
@@ -141,7 +140,6 @@ const GLOSSARY = [
   ["The Turning", "The sanctioned crossing between triad members that produces hybrids."],
   ["Dark Gift", "A bargain with the Dark Powers: real power, +10 Corruption, a narrative debt."],
   ["The Mists", "The architecture of the Domains of Dread. Walls, roads, and sometimes a predator."],
-  ["⚖ (scales)", "Marks a playtest-calibratable value, per the project's calibration doctrine."]
 ];
 
 /* ============================ PAGE CONTENT ============================ */
@@ -205,7 +203,7 @@ ${SKILL_TREE.map(a => `
 <h2>How rolls work</h2>
 <ul>
 <li><strong>Skill check:</strong> 1d20 + effective skill, where <em>effective skill = purchased rank + parent attribute</em>. Accuracy and Initiative use their purchased value alone.</li>
-<li><strong>Difficulty Classes:</strong> 8 (easy) · 10 (routine) · 13 (hard) · 15 (very hard) · 18 (extreme) · 20 (near-impossible). ⚖</li>
+<li><strong>Difficulty Classes:</strong> 8 (easy) · 10 (routine) · 13 (hard) · 15 (very hard) · 18 (extreme) · 20 (near-impossible).</li>
 <li><strong>Situational modifiers:</strong> ±1, exceptionally ±2. Stacked bonuses cap at +2. Advantage/disadvantage = 2d20 keep high/low; they do not stack.</li>
 <li><strong>Natural 20:</strong> critical success (a minor extra benefit). <strong>Natural 1:</strong> critical failure (a complication, if risk exists).</li>
 <li><strong>Opposed checks:</strong> higher total wins; ties favor the defender/reactor.</li>
@@ -218,7 +216,7 @@ ${SKILL_TREE.map(a => `
 <h2>Cost ladder (per attribute or skill)</h2>
 <table class="rules-table"><tr><th>Rank bought</th><th>Cost of that point</th><th>Total spent</th></tr>
 ${COST_LADDER.map(r => `<tr><td>${r.rank}</td><td>${r.cost}</td><td>${r.total}</td></tr>`).join("")}</table>
-<p class="note">The cap counts <em>points spent</em>, not ranks: with 10 points the highest purchasable rank is <strong>+5</strong> (9 points); the 10th point cannot buy +6 (cost 3). The +8 row exists only for earned progression beyond the creation cap. ⚖</p>
+<p class="note">The cap counts <em>points spent</em>, not ranks: with 10 points the highest purchasable rank is <strong>+5</strong> (9 points); the 10th point cannot buy +6 (cost 3). The +8 row exists only for earned progression beyond the creation cap.</p>
 <h2>Design note — why attributes don't scale resources</h2>
 <p>This system deliberately departs from the Combat Core draft formulas (<code>HP = 50 + 5·Body…</code>). The approved chassis is flat — HP 100, Mana 50, Stamina 75, AC 10, DR 1 — and class identity, not attribute arithmetic, decides survivability. The two evasion defenses (<strong>Dodge Defense</strong>, <strong>Spell Defense</strong>) remain attribute-driven, exactly as in the Combat Core document, because they are roll targets, not resources.</p>
 `};
@@ -238,7 +236,7 @@ PAGES["rules-creation"] = {
 <li><strong>Allocation.</strong> Cost ladder enforced; caps enforced; overspend rejected.</li>
 <li><strong>Review & save.</strong> Summary of every grant's origin (ancestry / class / background / optional / discretionary). Changing an earlier choice rebuilds the sheet — no residual bonuses.</li>
 </ol>
-<h2>Backgrounds (provisional ⚖)</h2>
+<h2>Backgrounds (provisional)</h2>
 <table class="rules-table"><tr><th>Background</th><th>Fixed grants</th><th>Narrative benefit</th></tr>
 ${BACKGROUNDS.map(b => `<tr><td>${b.name}</td><td>${b.grants}</td><td>${b.note}</td></tr>`).join("")}</table>
 <h2>The Universal Chassis</h2>
@@ -251,7 +249,7 @@ ${BACKGROUNDS.map(b => `<tr><td>${b.name}</td><td>${b.grants}</td><td>${b.note}<
 <tr><td>Accuracy</td><td>+1</td><td>Levels 4 & 8 (+1 each)</td></tr>
 <tr><td>Action Points</td><td>2 / turn</td><td>—</td></tr>
 <tr><td>Movement Points</td><td>1 / turn</td><td>Class abilities (e.g., Moon-Fury)</td></tr>
-<tr><td>Special Actions</td><td>1 / turn</td><td>—</td></tr>
+<tr><td>Special Actions</td><td>1 / combat</td><td>Signature Ability</td></tr>
 <tr><td>Fear</td><td>0 / 100</td><td>Events, abilities, recovery</td></tr>
 <tr><td>Sanity</td><td>100 / 100</td><td>Rites, knowledge, recovery</td></tr>
 <tr><td>Corruption</td><td>0 / 100</td><td>Shifts, gifts, choices, atonement</td></tr></table>
@@ -269,9 +267,9 @@ PAGES["rules-combat"] = {
 <h2>The Turn</h2>
 <table class="rules-table"><tr><th>Pool</th><th>Per turn</th><th>Spent on</th></tr>
 <tr><td>Action Points</td><td>2</td><td>Common actions: attacks, most abilities (1 AP each)</td></tr>
-<tr><td>Movement Points</td><td>1</td><td>One movement opportunity: 5 tiles ⚖ + 1 Stamina</td></tr>
-<tr><td>Special Actions</td><td>1</td><td>Master-tier / heavy abilities (1 SP + resources)</td></tr></table>
-<p>Common and special pools are separate: a turn can hold two common actions, one special and one movement, resources permitting. The first personal turn is 1. Re-opening an already-active turn never refreshes pools.</p>
+<tr><td>Movement Points</td><td>1</td><td>One movement opportunity: 5 tiles + 1 Stamina</td></tr>
+<tr><td>Special Actions</td><td>1 per combat</td><td>Signature Ability (1 SP + resources)</td></tr></table>
+<p>Common and special pools are separate: a turn can hold two common actions and one movement; the Special Action is a once-per-combat Signature pool. The first personal turn is 1. Re-opening an already-active turn never refreshes pools.</p>
 <h2>Rounds & Initiative</h2>
 <p>Initiative: 1d20 + Initiative, rolled once; the order is fixed for the whole combat. A <strong>round</strong> completes when the last combatant in the list ends their turn and the first begins again. Joining mid-round adds you to the list; you are counted from the next round. Cooldowns count <em>personal turns</em>, never rounds or minutes.</p>
 <h2>The Three Defenses</h2>
@@ -297,7 +295,7 @@ ${WEAPON_RULES.map(w => `<tr><td>${w.attack}</td><td><code>${w.gross}</code></td
 <ol class="steps">${COMBAT_PIPELINE.map(s => `<li>${s}</li>`).join("")}</ol>
 <p class="note">A blocked attempt (insufficient resources, out of range, on cooldown) consumes nothing. An executed attack that misses consumes its costs normally. No ammunition is tracked. There is no line-of-sight check — participant common sense governs.</p>
 <h2>Rest (during combat)</h2>
-<p>Rest replaces the entire turn. Requirements: your turn, conscious, no common/special/movement action used yet. Effects: <strong>+16 Mana, +16 Stamina</strong> (⌊50/3⌋), capped at effective maxima; no HP recovery; all pools exhausted; no second Rest that turn; end the turn manually. <strong>Triad addition:</strong> Rest also reduces Fear by 10. ⚖</p>
+<p>Rest replaces the entire turn. Requirements: your turn, conscious, no common/special/movement action used yet. Effects: <strong>+16 Mana, +16 Stamina</strong> (⌊50/3⌋), capped at effective maxima; no HP recovery; all pools exhausted; no second Rest that turn; end the turn manually. <strong>Triad addition:</strong> Rest also reduces Fear by 10.</p>
 <h2>Cooldowns</h2>
 <table class="rules-table"><tr><th>Cooldown</th><th>Used on turn 1</th><th>Next use</th></tr>
 <tr><td>2</td><td>Turn 1</td><td>Turn 3</td></tr><tr><td>3</td><td>Turn 1</td><td>Turn 4</td></tr><tr><td>4</td><td>Turn 1</td><td>Turn 5</td></tr></table>
@@ -320,9 +318,9 @@ ${HORROR_TRACKS.map(t => `
   <p><strong>Recovery:</strong> ${t.recovery}</p>
 </div>`).join("")}
 <h2>Steady Yourself</h2>
-<p>Any character may spend their Special Action to steady: Willpower DC 13, success reduces Fear by 10. Allies can help — a Medium's Séance Whisper, a Guardian's Anchor, a Hunter's completed Long Hunt.</p>
+<p>Any character may spend their once-per-combat Special Action to steady: Willpower DC 13, success reduces Fear by 10. Allies can help — a Medium's Séance Whisper, a Guardian's Anchor, a Hunter's completed Long Hunt.</p>
 <h2>Dark Gifts</h2>
-<p>The Dark Powers bargain. A Dark Gift is real power with a real price: always <strong>+10 Corruption</strong>, always a narrative debt, always GM-approved. Three canonical examples: ⚖</p>
+<p>The Dark Powers bargain. A Dark Gift is real power with a real price: always <strong>+10 Corruption</strong>, always a narrative debt, always GM-approved. Three canonical examples:</p>
 <table class="rules-table"><tr><th>Gift</th><th>Triad</th><th>Power</th><th>Price</th></tr>
 ${DARK_GIFTS.map(g => `<tr><td><strong>${g.name}</strong></td><td>${TRIAD[g.triad].name}</td><td>${g.gift}</td><td>${g.price}</td></tr>`).join("")}</table>
 <h2>Design principles</h2>
@@ -341,7 +339,7 @@ PAGES["rules-progression"] = {
 <h2>The Ladder</h2>
 <table class="rules-table"><tr><th>Level</th><th>Grant</th></tr>
 ${LEVEL_LADDER.map(l => `<tr><td>${l.level}</td><td>${l.grant}</td></tr>`).join("")}</table>
-<p class="note">"Primary resource" = Mana for the Veil, Stamina for the Blood and the Land. Hybrids keep their base class's primary. Earned discretionary points: +2 skill points per level, +1 attribute point every even level. ⚖ Milestone awards are idempotent — one grant per source per scene/day, ledgered.</p>
+<p class="note">"Primary resource" = Mana for the Veil, Stamina for the Blood and the Land. Hybrids keep their base class's primary. Earned discretionary points: +2 skill points per level, +1 attribute point every even level. Milestone awards are idempotent — one grant per source per scene/day, ledgered.</p>
 <h2>Choosing a Progression (level 2)</h2>
 <p>Each base class offers three paths. The choice is narrative as well as mechanical: an Occultist becomes Inquisitor, Scholar or Medium; a Skinwalker becomes Wolfbound, Ravenkin or Wanderer; a Landsworn becomes Hunter, Guardian or Mistwalker. Path traits and abilities stack on top of the base class — nothing is replaced.</p>
 <h2>The Rite of Crossing (level 4+)</h2>
@@ -378,10 +376,10 @@ PAGES["appendix-weapons"] = {
 <h2>Attack profiles</h2>
 <table class="rules-table"><tr><th>Attack</th><th>Gross damage</th><th>Cost</th><th>Range</th></tr>
 ${WEAPON_RULES.map(w => `<tr><td>${w.attack}</td><td><code>${w.gross}</code></td><td>${w.cost}</td><td>${w.range}</td></tr>`).join("")}</table>
-<h2>Weapon tags ⚖</h2>
+<h2>Weapon tags</h2>
 <table class="rules-table"><tr><th>Tag</th><th>Effect</th></tr>
 ${WEAPON_TAGS.map(t => `<tr><td><strong>${t.tag}</strong></td><td>${t.effect}</td></tr>`).join("")}</table>
-<h2>Armor ⚖</h2>
+<h2>Armor</h2>
 <table class="rules-table"><tr><th>Armor</th><th>AC</th><th>DR</th><th>Penalty</th></tr>
 ${ARMOR_RULES.map(a => `<tr><td>${a.armor}</td><td>${a.ac}</td><td>${a.dr}</td><td>${a.penalty}</td></tr>`).join("")}</table>
 <p class="note">Armor proficiency is granted by class (see each class page). Wearing armor you lack proficiency in: its AC bonus is halved and its Stealth penalty doubles. Equipment bonuses to defenses were left open in the Combat Core; the values above are the Triad proposal, marked calibratable.</p>
@@ -422,15 +420,15 @@ PAGES["appendix-design"] = {
 <ul>
 <li><strong>Sistema_de_Combate_Regras.md:</strong> attribute/skill tree (verbatim), d20 + Accuracy vs fixed defenses, defense categories, damage profiles, crit ×2 then DR once, AP 2 / Mov 1 / SP 1, Rest +16/+16, personal-turn cooldowns, ranges 1.5 / 10 tiles, Unconscious at 0 HP, 15/35 budgets and the cost ladder, RPR cooldown-field limitation.</li>
 <li><strong>Ravenloft RPR Project Plan.md:</strong> sequential creation workflow, grant-origin accounting, no duplicate benefits, rebuild-on-change, low starting power, magic with a price.</li>
-<li><strong>Plano de Orquestração:</strong> DC ladder 8–20, +2 bonus cap, milestone/idempotent progression, levels 1–10, calibration doctrine (⚖), the six legacy class identities, horror-as-decisions.</li>
+<li><strong>Plano de Orquestração:</strong> DC ladder 8–20, +2 bonus cap, milestone/idempotent progression, levels 1–10, calibration doctrine (), the six legacy class identities, horror-as-decisions.</li>
 <li><strong>FlowChart Composition Blueprint:</strong> data-driven catalog structure — this wiki's class data is exported as JSON for direct reuse in <code>SYS_TableLookup</code> defs.</li>
 </ul>
 <h2>Deliberate departures</h2>
 <ul>
 <li>Resource formulas rebased to the flat chassis (approved). Dodge/Spell Defense remain attribute-driven (they are roll targets, not resources).</li>
 <li>Fear/Sanity/Corruption rescaled to 0–100 with three thresholds each (approved), replacing Stress 0–6 / Medo 0–2 / Sanidade 0–10 / Corrupção 0–3.</li>
-<li>Rest additionally reduces Fear by 10 (Triad addition, ⚖).</li>
-<li>Magic Bolt priced at 4 Mana (3 for Veil workers) — the Combat Core left the cost open. ⚖</li>
+<li>Rest additionally reduces Fear by 10 (Triad addition,).</li>
+<li>Magic Bolt priced at 4 Mana (3 for Veil workers) — the Combat Core left the cost open.</li>
 </ul>
 <h2>Still open (later modules, per plan)</h2>
 <p>Buffs/debuffs and class mutators · vampirism & full lycanthropy as ancestries · equipment bonus catalog · Resolution phase (injuries, victory progression) · social combat comparisons · Darklord attention & domain profiles · RPR runtime validation gates (F0: persistence, events, dice capture, sheet writes, concurrency). Nothing in this wiki claims runtime validation; all automation claims remain provisional until DevKit evidence exists.</p>

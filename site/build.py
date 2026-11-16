@@ -25,9 +25,9 @@ html = html.replace("/*__DATA_CLASSES__*/", data_classes)
 html = html.replace("/*__DATA_RULES__*/", data_rules)
 html = html.replace("/*__APP__*/", app)
 
-out = ROOT / "Ravenloft_Triad_Wiki.html"
-out.write_text(html, encoding="utf-8")
-print(f"Built {out} ({len(html)/1024:.1f} KB)")
+for out in (ROOT / "Ravenloft_Triad_Wiki.html", ROOT / "index.html"):
+    out.write_text(html, encoding="utf-8")
+    print(f"Built {out} ({len(html)/1024:.1f} KB)")
 
 # ---- JSON export for the FlowChart/data-driven pipeline ----
 # run node to dump the class catalog as JSON
